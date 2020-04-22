@@ -1,0 +1,17 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Validation",
+      "field": "rules",
+      "type": "ValidationRule",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Validation",
+      "field": "ValidationRules"
+    }
+  ]
+}

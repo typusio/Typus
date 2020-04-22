@@ -1,0 +1,17 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Form",
+      "field": "confirmation",
+      "type": "Confirmation",
+      "arity": "Optional"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Form",
+      "field": "response"
+    }
+  ]
+}

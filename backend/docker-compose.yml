@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  app:
+    image: node:13
+    volumes:
+      - ./:/app
+    working_dir: /app
+    depends_on:
+      - postgres
+    environment:
+      NODE_ENV: development
+    ports:
+      - 4000:4000
+    links:
+      - postgres
+    command: npm run start
+
+  postgres:
+    image: postgres
+    restart: 'always'
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    environment:
+      POSTGRES_USER: 'admin'
+      POSTGRES_DB: 'tumble'
+      POSTGRES_PASSWORD: abc123
+      PGPORT: 5432
+
+  redis:
+    image: 'bitnami/redis:5.0'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis_data:/redis/data'
+
+  minio:
+    image: minio/minio:RELEASE.2020-04-10T03-34-42Z
+    volumes:
+      - minio_data:/minio_data
+    ports:
+      - '9000:9000'
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
+    command: server minio_data:/minio_data
+
+volumes:
+  redis_data:
+  minio_data:

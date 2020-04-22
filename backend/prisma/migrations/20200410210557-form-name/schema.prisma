@@ -1,0 +1,37 @@
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
+
+model User {
+  id       String @default(uuid()) @id
+  email    String @unique
+  password String
+  forms    Form[]
+}
+
+model Ip {
+  address     String       @id
+  submissions Submission[]
+}
+
+model Submission {
+  id     Int    @default(autoincrement()) @id
+  data   String
+  formId String
+  form   Form   @relation(fields: [formId], references: [id])
+  ipId   String
+  ip     Ip     @relation(fields: [ipId], references: [address])
+}
+
+model Form {
+  id      String @id
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id])
+  name    String
+}

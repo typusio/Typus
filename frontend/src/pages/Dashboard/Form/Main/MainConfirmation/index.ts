@@ -1,0 +1,1 @@
+export { MainConfirmation } from './MainConfirmation';
