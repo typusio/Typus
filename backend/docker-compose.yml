@@ -25,7 +25,7 @@ services:
       - 5432
     environment:
       POSTGRES_USER: 'admin'
-      POSTGRES_DB: 'tumble'
+      POSTGRES_DB: 'typus'
       POSTGRES_PASSWORD: abc123
       PGPORT: 5432
 

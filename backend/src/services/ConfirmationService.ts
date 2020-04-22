@@ -6,8 +6,8 @@ import { mailgun } from '../Mailgun';
 @Service()
 export class ConfirmationService {
   private generateFrom(confirmation: Confirmation) {
-    return `${confirmation.fromName ? confirmation.fromName : 'Tumble Confirmation'} <${
-      confirmation.fromAddress ? confirmation.fromAddress : 'noreply@tumble.com'
+    return `${confirmation.fromName ? confirmation.fromName : 'typus Confirmation'} <${
+      confirmation.fromAddress ? confirmation.fromAddress : 'noreply@typus.com'
     }>`;
   }
 

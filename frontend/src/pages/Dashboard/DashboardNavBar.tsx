@@ -33,7 +33,7 @@ export const DashboardNavBar = () => {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <h1 className="text-gray-200 font-semibold text-lg">
-                  <Link to={'/dashboard'}>Tumble</Link>
+                  <Link to={'/dashboard'}>Typus</Link>
                 </h1>
               </div>
               <div className="hidden md:block">
