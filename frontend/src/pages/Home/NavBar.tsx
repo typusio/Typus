@@ -13,7 +13,7 @@ export const NavBar = () => {
           <div className="flex items-center flex-1 md:absolute md:inset-y-0 md:left-0">
             <div className="flex items-center justify-between w-full md:w-auto">
               <a href="/">
-                <h1 className="h-8 w-auto text-xlli text-blue-600 font-bold">Tumble</h1>
+                <h1 className="h-8 w-auto text-xlli text-blue-600 font-bold">Typus</h1>
               </a>
               <div className="-mr-2 flex items-center md:hidden">
                 <button
@@ -72,7 +72,7 @@ export const NavBar = () => {
           <div className="rounded-lg bg-white shadow-xs overflow-hidden rounded-lg shadow-md transition transform origin-top-right">
             <div className="px-5 pt-4 flex items-center justify-between">
               <div>
-                <h1 className="h-8 w-auto text-xl text-blue-600 font-bold">Tumble</h1>
+                <h1 className="h-8 w-auto text-xl text-blue-600 font-bold">typus</h1>
               </div>
               <div className="-mr-2">
                 <button

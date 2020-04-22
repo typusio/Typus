@@ -67,7 +67,7 @@ export const ConfirmationForm = ({ confirmation, formId, onDelete }: { confirmat
                     className={classNames('form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5', {
                       'shadow-outline-red border-red-300': errors.fromName,
                     })}
-                    placeholder={'Tumble Confirmation'}
+                    placeholder={'typus Confirmation'}
                     name="fromName"
                     value={values.fromName}
                     onChange={handleChange}
@@ -85,7 +85,7 @@ export const ConfirmationForm = ({ confirmation, formId, onDelete }: { confirmat
                     className={classNames('form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5', {
                       'shadow-outline-red border-red-300': errors.fromAddress,
                     })}
-                    placeholder={'noreply@tumble.com'}
+                    placeholder={'noreply@typus.com'}
                     name="fromAddress"
                     value={values.fromAddress}
                     onChange={handleChange}
