@@ -1,5 +1,6 @@
 import { GlobalAcceptMimesMiddleware, ServerLoader, ServerSettings } from '@tsed/common';
 import '@tsed/ajv';
+
 const rootDir = __dirname;
 
 import * as session from 'express-session';

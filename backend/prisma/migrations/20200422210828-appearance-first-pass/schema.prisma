@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -49,7 +49,6 @@ model Appearance {
   formId                 String
   form                   Form    @relation(fields: [formId], references: [id])
   // Success
-  successMode            String  @default("Our")
   successCustomRedirect  String  @default("")
   successTickBackground  String  @default("#def7ec")
   successTickColor       String  @default("#057a55")
@@ -57,14 +56,6 @@ model Appearance {
   successButtonColor     String  @default("#057a55")
   successBackgroundColor String  @default("#fafafa")
   successDots            Boolean @default(true)
-  // Error
-  errorMode              String  @default("Our")
-  errorCustomRedirect    String  @default("")
-  errorIconBackground    String  @default("#fde8e8")
-  errorIconColor         String  @default("#e02424")
-  errorButtonColor       String  @default("#e02424")
-  errorBackgroundColor   String  @default("#fafafa")
-  errorDots              Boolean @default(true)
 }
 
 model Confirmation {

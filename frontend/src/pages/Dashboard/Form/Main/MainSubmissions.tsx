@@ -44,6 +44,11 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
     setShown(shown.filter(s => !selected.includes(s.id)));
     setTotal(total - selected.length);
     setSelected([]);
+
+    if (page > Math.ceil(total / perPage)) {
+      setPage(Math.ceil(total / perPage));
+      fetchSubmissions(Math.ceil(total / perPage));
+    }
   }
 
   useEffect(() => {

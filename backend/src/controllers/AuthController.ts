@@ -38,7 +38,6 @@ export class AuthController {
     return new Promise((res, rej) =>
       req.session!.destroy(err => {
         if (err) {
-          console.log(err);
           return rej(false);
         }
 

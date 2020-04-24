@@ -12,7 +12,7 @@ import { UploadedFile } from 'express-fileupload';
 import { RequireFormOwner } from '../middleware/RequireFormOwner';
 import { ConfirmationService } from '../services/ConfirmationService';
 import { RequireFormAccess } from '../middleware/RequireFormAccess';
-import { hasFormAccess } from '../util/hasFornAccess';
+import { hasFormAccess } from '../util/hasFormAccess';
 
 @Controller('/:formId')
 @MergeParams()
@@ -42,26 +42,44 @@ export class SubmissionController {
     return req.body;
   }
 
-  private handleValidationError(req: Request, res: Response, field: string, error: string) {
+  private async handleValidationError(req: Request, res: Response, field: string, error: string, formId: string) {
     if (req.headers['content-type']?.includes('application/json')) {
       return res.status(400).json({ message: 'validation error', field, error });
     }
 
-    return res.render('validationfailed', { error });
+    const appearance = await db.form.findOne({ where: { id: formId } }).appearance();
+
+    if (appearance!.errorMode == 'Custom' && appearance!.errorCustomRedirect) {
+      let url = appearance!.errorCustomRedirect;
+
+      if (!url.includes('http')) url = `https://` + url;
+
+      return res.redirect(url);
+    }
+
+    return res.render('validationerror', { error, appearance });
   }
 
-  private handleSuccess(req: Request, res: Response, origin: string) {
+  private async handleSuccess(req: Request, res: Response, origin: string, formId: string) {
     if (req.headers['content-type']?.includes('application/json')) {
       return res.status(201).json({ message: 'recieved successfully' });
     }
 
-    return res.render('success', { origin });
+    const appearance = await db.form.findOne({ where: { id: formId } }).appearance();
+
+    if (appearance!.successMode == 'Custom' && appearance!.successCustomRedirect) {
+      let url = appearance!.successCustomRedirect;
+
+      if (!url.includes('http')) url = `https://` + url;
+
+      return res.redirect(url);
+    }
+
+    return res.render('success', { origin, appearance });
   }
 
   @Post('/')
   async create(@Req() req: Request, @PathParams('formId') formId: string, @Res() res: Response) {
-    console.log(req.headers['content-type']);
-
     const ip = await this.ipService.find(req);
     const form = await db.form.findOne({ where: { id: formId } });
 
@@ -92,6 +110,7 @@ export class SubmissionController {
               .replace('{field}', rule.field.charAt(0).toUpperCase() + rule.field.slice(1))
               .replace('{detail}', rule.detail ? rule.detail : '')
               .replace('{value}', req.body[rule.field]),
+            form.id,
           );
         }
       }
@@ -103,7 +122,7 @@ export class SubmissionController {
       data: { data: JSON.stringify(req.body), form: { connect: { id: form.id } }, ip: { connect: { address: ip.address } } },
     });
 
-    this.handleSuccess(req, res, req.originalUrl.toString());
+    await this.handleSuccess(req, res, req.get('host')?.toString() ?? '', form.id);
 
     this.confirmationService.handleSubmission(form, submission);
   }

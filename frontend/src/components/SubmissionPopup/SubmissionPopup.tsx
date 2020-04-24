@@ -56,9 +56,12 @@ export const SubmissionPopup = ({ submissionId, formId, onClose, onRemove }: Pro
 
   return (
     <div className="fixed top-0 inset-x-0 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center z-50" style={{ height: '90vh' }}>
+      <div className="fixed inset-0 transition-opacity">
+        <div className="absolute inset-0 bg-gray-700 opacity-50"></div>
+      </div>
       {submission && (
         <div
-          className="relative bg-white rounded-lg px-8 pt-5 pb-4 overflow-hidden shadow-2xl transform transition-all w-full h-full mt-2 md:mt-14 md:w-2/5"
+          className="relative bg-white rounded-lg px-8 pt-5 pb-4 overflow-hidden shadow-2xl transform transition-all w-full h-full mt-2 md:mt-14 lg:w-2/5"
           ref={popupRef as any}
         >
           <div className="flex flex-row">
@@ -75,7 +78,7 @@ export const SubmissionPopup = ({ submissionId, formId, onClose, onRemove }: Pro
             </h3>
             {submission.spam && (
               <span className="text-red-500 ml-2 flex flex-row my-auto">
-                <svg fill="currentColor" viewBox="0 0 20 20" className="w-4 h-4 my-auto">
+                <svg fill="currentColor" viewBox="0 0 20 20" className="w-4 h-4 my-auto flex-shrink-0">
                   <path
                     fillRule="evenodd"
                     d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
@@ -149,7 +152,7 @@ export const SubmissionPopup = ({ submissionId, formId, onClose, onRemove }: Pro
                     onClick={() => markAsSpam()}
                     className="mb-2 w-full inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 transition ease-in-out duration-150"
                   >
-                    <svg fill="currentColor" viewBox="0 0 20 20" className="-ml-1 mr-1 h-5 w-5">
+                    <svg fill="currentColor" viewBox="0 0 20 20" className="-ml-1 mr-1 h-5 w-5 flex-shrink-0">
                       <path
                         fillRule="evenodd"
                         d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
@@ -165,7 +168,7 @@ export const SubmissionPopup = ({ submissionId, formId, onClose, onRemove }: Pro
                     type="button"
                     className="mb-2 w-full inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 transition ease-in-out duration-150"
                   >
-                    <svg fill="currentColor" viewBox="0 0 20 20" className="-ml-1 mr-2 h-5 w-5">
+                    <svg fill="currentColor" viewBox="0 0 20 20" className="-ml-1 mr-2 h-5 w-5 flex-shrink-0">
                       <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"></path>
                       <path
                         fillRule="evenodd"
@@ -183,7 +186,7 @@ export const SubmissionPopup = ({ submissionId, formId, onClose, onRemove }: Pro
                     onClick={() => deleteSubmission()}
                     className="w-full inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-500 hover:bg-red-400 focus:outline-none focus:shadow-outline-red focus:border-red-600 transition duration-150 ease-in-out"
                   >
-                    <svg fill="currentColor" viewBox="0 0 20 20" className="-ml-1 mr-2 h-5 w-5">
+                    <svg fill="currentColor" viewBox="0 0 20 20" className="-ml-1 mr-2 h-5 w-5 flex-shrink-0">
                       <path
                         fillRule="evenodd"
                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
