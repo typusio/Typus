@@ -47,7 +47,7 @@ export const SettingsCollaborators = ({ formId }: { formId: string }) => {
   return (
     <div>
       {!unauthorized && (
-        <div className="-mt-3">
+        <div className="flex justify-end mt-2 sm:mt-0">
           <span className="inline-flex rounded-md shadow-sm">
             <button
               type="button"
