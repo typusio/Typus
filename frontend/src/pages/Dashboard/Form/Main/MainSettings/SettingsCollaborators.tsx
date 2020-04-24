@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { User } from '../../../../util/interfaces';
+import { User } from '../../../../../util/interfaces';
 
-import Team from '../../../../assets/team.svg';
-import Denied from '../../../../assets/denied.svg';
+import Team from '../../../../../assets/team.svg';
+import Denied from '../../../../../assets/denied.svg';
 
-import { API_URL } from '../../../../util/api';
-import { AddCollaboratorModal } from '../../../../components/AddCollaboratorModal';
+import { API_URL } from '../../../../../util/api';
+import { AddCollaboratorModal } from '../../../../../components/AddCollaboratorModal';
 
-export const MainCollaborators = ({ formId }: { formId: string }) => {
+export const SettingsCollaborators = ({ formId }: { formId: string }) => {
   const [collaborators, setCollaborators] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
