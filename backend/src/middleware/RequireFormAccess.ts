@@ -2,7 +2,7 @@ import { Middleware, Req, PathParams, Locals } from '@tsed/common';
 import { Request } from 'express';
 import { db } from '../Prisma';
 import { NotFound, BadRequest } from 'ts-httpexceptions';
-import { hasFormAccess } from '../util/hasFornAccess';
+import { hasFormAccess } from '../util/hasFormAccess';
 
 @Middleware()
 export class RequireFormAccess {

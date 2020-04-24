@@ -11,8 +11,6 @@ export const RuleCard = ({ rule, rules, onRemove }: Props) => {
   const [field, setField] = useState(rule.field);
   const [detail, setDetail] = useState(rule.detail);
 
-  console.log(field);
-
   return (
     <li>
       <div className="flex flex-col">

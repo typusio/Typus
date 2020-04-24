@@ -123,7 +123,7 @@ export const FormMain = ({ formId }: { formId: string }) => {
             {selected == 'Notifications' && <MainNotifications formId={formId} />}
             {selected == 'Confirmation' && <MainConfirmation formId={formId} />}
             {selected == 'Collaborators' && <MainCollaborators formId={formId} />}
-            {selected == 'Settings' && <MainSettings />}
+            {selected == 'Settings' && <MainSettings formId={formId} />}
           </div>
         </div>
       </div>
