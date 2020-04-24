@@ -8,7 +8,6 @@ import { MainValidation } from './MainValidation';
 import { MainNotifications } from './MainNotifications';
 import { Form } from '../../../../util/interfaces';
 import { MainConfirmation } from './MainConfirmation';
-import { MainCollaborators } from './MainCollaborators';
 
 export const FormMain = ({ formId }: { formId: string }) => {
   const {
@@ -44,7 +43,6 @@ export const FormMain = ({ formId }: { formId: string }) => {
                   <option>Validation</option>
                   <option>Notifications</option>
                   <option>Confirmation</option>
-                  <option>Collaborators</option>
                   <option>Settings</option>
                 </select>
               </div>
@@ -94,12 +92,6 @@ export const FormMain = ({ formId }: { formId: string }) => {
                       </svg>
                       Confirmation
                     </a>
-                    <a onClick={() => setSelected('Collaborators')} className={selected == 'Collaborators' ? SELETCED_STYLE : UNSELECTED_STYLE}>
-                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected == 'Collaborators' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
-                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
-                      </svg>
-                      Collaborators
-                    </a>
                     <a onClick={() => setSelected('Settings')} className={selected == 'Settings' ? SELETCED_STYLE : UNSELECTED_STYLE}>
                       <svg fill="currentColor" viewBox="0 0 20 20" className={selected == 'Settings' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
                         <path
@@ -122,7 +114,6 @@ export const FormMain = ({ formId }: { formId: string }) => {
             {selected == 'Validation' && <MainValidation formId={formId} />}
             {selected == 'Notifications' && <MainNotifications formId={formId} />}
             {selected == 'Confirmation' && <MainConfirmation formId={formId} />}
-            {selected == 'Collaborators' && <MainCollaborators formId={formId} />}
             {selected == 'Settings' && <MainSettings formId={formId} />}
           </div>
         </div>
