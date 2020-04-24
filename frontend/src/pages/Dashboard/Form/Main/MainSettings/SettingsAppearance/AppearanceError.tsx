@@ -87,7 +87,7 @@ export const AppearanceError = ({ values, setValues, handleChange, formId }: Pro
 
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mx-auto mt-4">
               <div className="mb-6">
-                <label className="block text-sm font-medium leading-5 text-gray-700">Tick background color</label>
+                <label className="block text-sm font-medium leading-5 text-gray-700">Icon background color</label>
 
                 <div className="mt-2">
                   <SketchPicker color={values.errorIconBackground} onChangeComplete={color => setValues({ ...values, errorIconBackground: color.hex })} />
@@ -95,7 +95,7 @@ export const AppearanceError = ({ values, setValues, handleChange, formId }: Pro
               </div>
 
               <div className="mb-6">
-                <label className="block text-sm font-medium leading-5 text-gray-700">Tick color</label>
+                <label className="block text-sm font-medium leading-5 text-gray-700">Icon color</label>
 
                 <div className="mt-2">
                   <SketchPicker color={values.errorIconColor} onChangeComplete={color => setValues({ ...values, errorIconColor: color.hex })} />

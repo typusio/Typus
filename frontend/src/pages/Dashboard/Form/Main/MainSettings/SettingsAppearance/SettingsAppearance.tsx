@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
-
-import { SketchPicker } from 'react-color';
-
-import classNames from 'classnames';
 import { API_URL } from '../../../../../../util/api';
 import { AppearanceSuccess } from './AppearanceSuccess';
 import { AppearanceError } from './AppearanceError';
