@@ -89,6 +89,15 @@
     source-map-support "0.5.16"
     tslib "1.11.1"
 
+"@tsed/core@5.49.0":
+  version "5.49.0"
+  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-5.49.0.tgz#fb24d8063e2a3f6887b3581c25c3bf1cff9cb48f"
+  integrity sha512-nPXZ5bhxh3qzArHZKUuuU5FiUL7K6i8ZFgpYg6hBKi/OB2j/olyKpnaupfHoLWezX/F3q0nx++omTI3hk1MiRg==
+  dependencies:
+    reflect-metadata "^0.1.13"
+    source-map-support "0.5.16"
+    tslib "1.11.1"
+
 "@tsed/di@5.44.17":
   version "5.44.17"
   resolved "https://registry.yarnpkg.com/@tsed/di/-/di-5.44.17.tgz#2f94369d69303040c2843066fac8e18deebe6387"
