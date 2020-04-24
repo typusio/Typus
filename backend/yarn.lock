@@ -59,13 +59,14 @@
   dependencies:
     tslib "1.11.1"
 
-"@tsed/common@5.44.17":
-  version "5.44.17"
-  resolved "https://registry.yarnpkg.com/@tsed/common/-/common-5.44.17.tgz#dd9a7b192fd9cac3ac6d7fdae32684b2480dbb53"
-  integrity sha512-iE3mK7cKdTryQ2iYcTOx1BvZI095yW+dZ6aUohF7qXh0fLW4bFndaJ4wUn5hB76qpAYWpoU2sE3zuvVS3d1kvQ==
+"@tsed/common@5.49.0":
+  version "5.49.0"
+  resolved "https://registry.yarnpkg.com/@tsed/common/-/common-5.49.0.tgz#6c8490f0af2ec29257d99c6f23b428653d146314"
+  integrity sha512-p1vuc5U2nN2PUQxCxYnY1VoBwL0y3TUcdgeUcE3FnKIYpPCyQ4ncuhKorkshreAgAwPKK8sK+XoYdaePyfdsPA==
   dependencies:
-    "@tsed/core" "5.44.17"
-    "@tsed/di" "5.44.17"
+    "@tsed/core" "5.49.0"
+    "@tsed/di" "5.49.0"
+    "@tsed/exceptions" "5.49.0"
     "@tsed/logger" "^5.4.1"
     "@types/json-schema" "^7.0.3"
     globby "11.0.0"
@@ -73,7 +74,6 @@
     normalize-path "3.0.0"
     on-finished "2.3.0"
     rxjs "^6.5.2"
-    ts-httpexceptions "4.1.0"
     ts-log-debug "^5.4.1"
     tslib "1.11.1"
     uuid "3.3.3"
@@ -103,6 +103,22 @@
   dependencies:
     "@tsed/core" "5.44.17"
     chalk "3.0.0"
+    tslib "1.11.1"
+
+"@tsed/di@5.49.0":
+  version "5.49.0"
+  resolved "https://registry.yarnpkg.com/@tsed/di/-/di-5.49.0.tgz#3752f1c886b059b274e48388b01fda342c2a6eb5"
+  integrity sha512-6IZo3m4OUI+u/TtEbxhiYVtj2i9/mJWteWtDvCl3NqNJT3OkFot+7Cu/hcJNq7ZvxtQnTTsnj+5IIPkk19FxxA==
+  dependencies:
+    "@tsed/core" "5.49.0"
+    chalk "3.0.0"
+    tslib "1.11.1"
+
+"@tsed/exceptions@5.49.0":
+  version "5.49.0"
+  resolved "https://registry.yarnpkg.com/@tsed/exceptions/-/exceptions-5.49.0.tgz#afe84e73b6e91e43826b106d06d952671da0c0de"
+  integrity sha512-i5p/h95EA6aFnFUzSfJ+FxEN/hRvchNItq0TrgdcSRrqoPsQEfhrm4RQ6ZpimSG7V1iIKusbnD4o6g0cchBwsA==
+  dependencies:
     tslib "1.11.1"
 
 "@tsed/logger@5.4.1", "@tsed/logger@^5.4.1":
