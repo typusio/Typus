@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import { SketchPicker } from 'react-color';
 
 import classNames from 'classnames';
-import { Appearance } from '../../../../../../util/interfaces';
 import { API_URL } from '../../../../../../util/api';
 import { AppearanceSuccess } from './AppearanceSuccess';
 import { AppearanceError } from './AppearanceError';

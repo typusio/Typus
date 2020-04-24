@@ -67,14 +67,3 @@ export interface Confirmation {
   subject: string;
   body: string;
 }
-
-export interface Appearance {
-  successMode: 'Our' | 'Custom';
-  successCustomRedirect: string;
-  successTickBackground: string;
-  successTickColor: string;
-  successText: string;
-  successButtonColor: string;
-  successBackgroundColor: string;
-  successDots: string;
-}
