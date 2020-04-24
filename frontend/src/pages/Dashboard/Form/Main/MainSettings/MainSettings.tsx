@@ -3,6 +3,7 @@ import { SettingsAppearance } from './SettingsAppearance/SettingsAppearance';
 
 import classNames from 'classnames';
 import { SettingsCollaborators } from './SettingsCollaborators';
+import { SettingsGeneral } from './SettingsGeneral';
 
 export const MainSettings = ({ formId }: { formId: string }) => {
   const [selected, setSelected] = useState('General');
@@ -21,13 +22,17 @@ export const MainSettings = ({ formId }: { formId: string }) => {
     <div className="flex flex-col sm:flex-row">
       <nav className="w-full sm:w-1/4 -mt-7 sm:-mt-3">
         <a onClick={() => setSelected('General')} className={selected == 'General' ? SELECTED_STYLE : UNSELECTED_STYLE}>
-          <svg className={selected == 'General' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE} stroke="currentColor" fill="none" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10M9 21h6"
-            />
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            className={selected == 'General' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}
+          >
+            <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
           </svg>
           <span className="truncate">General</span>
         </a>
@@ -56,6 +61,7 @@ export const MainSettings = ({ formId }: { formId: string }) => {
         </a>
       </nav>
       <div className="sm:ml-5 sm:w-3/4">
+        {selected == 'General' && <SettingsGeneral formId={formId} />}
         {selected == 'Appearance' && <SettingsAppearance formId={formId} />}
         {selected == 'Collaborators' && <SettingsCollaborators formId={formId} />}
       </div>
