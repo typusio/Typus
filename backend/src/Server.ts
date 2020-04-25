@@ -26,7 +26,7 @@ import { UserController } from './controllers/UserController';
     '/': [UserController, ValidationController, `${rootDir}/controllers/**/*.ts`],
   },
   exclude: ['**/*.spec.ts'],
-  ajv: { errorFormat: error => `'${error.data}' ${error.message}`, options: { verbose: false } },
+  ajv: { errorFormat: (error: any) => `'${error.data}' ${error.message}`, options: { verbose: false } },
   logger: undefined,
   componentsScan: [`${rootDir}/services/**/*.ts`, `${rootDir}/middleware/**/*.ts`],
 })
