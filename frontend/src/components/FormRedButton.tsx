@@ -29,7 +29,7 @@ const DeleteButton = ({ formId }: { formId: string }) => {
         open={modalOpen}
       />
 
-      <span className="sm:ml-3 shadow-sm rounded-md">
+      <span className="shadow-sm rounded-md">
         <button
           type="button"
           onClick={() => setModalOpen(true)}
@@ -72,7 +72,7 @@ const LeaveButton = ({ formId }: { formId: string }) => {
         buttonText="Leave"
         open={modalOpen}
       />
-      <span className="sm:ml-3 shadow-sm rounded-md">
+      <span className="shadow-sm rounded-md">
         <button
           type="button"
           onClick={() => setModalOpen(true)}

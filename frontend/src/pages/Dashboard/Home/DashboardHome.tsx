@@ -49,8 +49,8 @@ export const DashboardHome = () => {
       )}
 
       {!loading && (
-        <main className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 mt-4 mx-auto gap-4">
-          <Link to={`/dashboard/new`} className="rounded-md w-48 h-64 font-semibold text-lg mr-5 mt-1 bg-gray-800">
+        <main className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 mt-4 mx-auto gap-4">
+          <Link to={`/dashboard/new`} className="rounded-md sm:w-48 w-full h-64 font-semibold text-lg mr-5 mt-1 bg-gray-800">
             <div className="flex flex-col h-full">
               <svg fill="currentColor" viewBox="0 0 20 20" className="w-10 h-10 my-auto text-center text-white mx-auto">
                 <path
@@ -66,11 +66,11 @@ export const DashboardHome = () => {
             <Link
               to={`/dashboard/form/${form.form.id}`}
               style={{ backgroundImage: `linear-gradient(to right, ${gradients[index].colors[0]}, ${gradients[index].colors[1]})` }}
-              className="rounded-md w-48 h-64 font-semibold text-lg mr-5 mt-1"
+              className="rounded-md sm:w-48 w-full h-64 font-semibold text-lg mr-5 mt-1"
             >
               <div className="flex flex-col h-full">
-                <div className="my-auto text-center text-white px-5">{form.form.name}</div>
-                <div className="my-auto text-center text-white px-5 font-normal text-sm">
+                <div className="my-auto text-center text-white px-5 sm:text-base text-xl">{form.form.name}</div>
+                <div className="my-auto text-center text-white px-5 font-normal sm:text-sm">
                   {form.submissions} submission{form.submissions == 1 ? '' : 's'}
                 </div>
               </div>

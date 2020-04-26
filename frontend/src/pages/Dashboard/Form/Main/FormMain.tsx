@@ -33,7 +33,7 @@ export const FormMain = ({ formId }: { formId: string }) => {
             <div className="pb-4 sm:p-0">
               <div className="md:hidden">
                 <select
-                  className="form-select block w-full my-auto -mt-1 border-0"
+                  className="form-select block w-full my-auto -mt-1 border-0 focus:outline-none"
                   onChange={e => {
                     setSelected(e.target.value);
                   }}

@@ -5,6 +5,7 @@ import { PopupNote } from './PopupNote';
 import { PopupUser } from './PopupUser';
 import { API_URL } from '../../util/api';
 import { Transition } from '../Transition';
+import { PopupInfo } from './PopupInfo';
 
 interface Props {
   submissionId: number;
@@ -148,24 +149,9 @@ export const SubmissionPopup = ({ submissionId, formId, onClose, onRemove, open 
 
                   <PopupUser submission={submission} />
                   <PopupNote submission={submission} />
-
-                  <div className="flex flex-row mt-5">
-                    <svg
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      className="w-5 h-5 text-gray-700"
-                    >
-                      <path d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"></path>
-                    </svg>
-
-                    <h3 className="text-lg leading-6 font-medium text-gray-900 ml-2">Info</h3>
-                  </div>
+                  <PopupInfo submission={submission} />
                 </div>
-                <div className="w-full sm:w-3/10">
+                <div className="w-full sm:w-3/10 mt-5 sm:mt-0">
                   <div className="flex flex-col">
                     <span className="sm:ml-3 shadow-sm rounded-md">
                       <button
