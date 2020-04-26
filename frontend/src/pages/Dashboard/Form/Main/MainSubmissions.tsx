@@ -70,14 +70,13 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
         }}
         open={popup !== 0}
       />
-      {selected.length !== 0 && (
-        <SelectedDeleteBanner
-          numSelected={selected.length}
-          onClick={() => {
-            deleteSubmissions();
-          }}
-        />
-      )}
+      <SelectedDeleteBanner
+        numSelected={selected.length}
+        onClick={() => {
+          deleteSubmissions();
+        }}
+        show={selected.length !== 0}
+      />
 
       {loading && (
         <div className="spinner">
