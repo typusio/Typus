@@ -1,20 +1,20 @@
-import { Required } from '@tsed/common';
+import { Required, Allow } from '@tsed/common';
 
 export class EditAppearanceModel {
-  successMode: string;
-  successCustomRedirect: string;
-  successTickBackground: string;
-  successTickColor: string;
-  successText: string;
-  successButtonColor: string;
-  successBackgroundColor: string;
-  successDots: boolean;
+  @Allow() successMode: string;
+  @Allow() successCustomRedirect: string;
+  @Allow() successTickBackground: string;
+  @Allow() successTickColor: string;
+  @Allow() successText: string;
+  @Allow() successButtonColor: string;
+  @Allow() successBackgroundColor: string;
+  @Allow() successDots: boolean;
 
-  errorMode: string;
-  errorCustomRedirect: string;
-  errorIconBackground: string;
-  errorIconColor: string;
-  errorButtonColor: string;
-  errorBackgroundColor: string;
-  errorDots: boolean;
+  @Allow() errorMode: string;
+  @Allow() errorCustomRedirect: string;
+  @Allow() errorIconBackground: string;
+  @Allow() errorIconColor: string;
+  @Allow() errorButtonColor: string;
+  @Allow() errorBackgroundColor: string;
+  @Allow() errorDots: boolean;
 }

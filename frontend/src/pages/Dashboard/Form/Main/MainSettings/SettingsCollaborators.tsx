@@ -72,16 +72,15 @@ export const SettingsCollaborators = ({ formId }: { formId: string }) => {
         </div>
       )}
 
-      {modalOpen && (
-        <AddCollaboratorModal
-          onClose={() => setModalOpen(false)}
-          onAdd={(user: User) => {
-            setCollaborators([...collaborators, user]);
-            setModalOpen(false);
-          }}
-          formId={formId}
-        />
-      )}
+      <AddCollaboratorModal
+        onClose={() => setModalOpen(false)}
+        onAdd={(user: User) => {
+          setCollaborators([...collaborators, user]);
+          setModalOpen(false);
+        }}
+        formId={formId}
+        open={modalOpen}
+      />
 
       {loading && (
         <div className="spinner">

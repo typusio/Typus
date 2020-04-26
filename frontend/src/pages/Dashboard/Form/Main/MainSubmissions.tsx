@@ -56,7 +56,20 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
   }, []);
 
   return (
-    <div>
+    <div className="-mt-4 sm:mt-0">
+      <SubmissionPopup
+        submissionId={popup}
+        formId={formId}
+        onClose={() => {
+          setPopup(0);
+        }}
+        onRemove={() => {
+          setShown(shown.filter(s => s.id !== popup));
+          setTotal(total - 1);
+          setPopup(0);
+        }}
+        open={popup !== 0}
+      />
       {selected.length !== 0 && (
         <SelectedDeleteBanner
           numSelected={selected.length}
@@ -82,12 +95,12 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
 
       {shown.length !== 0 && (
         <div>
-          <div>
+          <div className="mb-3 sm:mb-0">
             <div className="flex rounded-md ">
               <input
                 id="remember_me"
                 type="checkbox"
-                className="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out my-auto ml-2 mr-3"
+                className="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out my-auto ml-1 mr-3 sm:ml-2"
                 onChange={e => {
                   if (e.target.checked) {
                     return setSelected(shown.map(s => s.id));
@@ -117,19 +130,6 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
           <ul>
             {shown.map((sub, index) => (
               <li>
-                {popup == sub.id && (
-                  <SubmissionPopup
-                    submissionId={sub.id}
-                    formId={formId}
-                    onClose={() => {
-                      setPopup(0);
-                    }}
-                    onRemove={() => {
-                      setShown(shown.filter(s => s.id !== sub.id));
-                      setTotal(total - 1);
-                    }}
-                  />
-                )}
                 <a
                   className={classNames('block hover:bg-gray-50 focus:outline-none transition duration-150 ease-in-out cursor-pointer', {
                     'bg-gray-100 hover:bg-gray-200': index % 2 !== 0,
@@ -144,7 +144,7 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
                     <input
                       id="remember_me"
                       type="checkbox"
-                      className="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out absolute left-2 z-20"
+                      className="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out absolute sm:left-2 left-1 z-20"
                       style={{ top: '40%' }}
                       checked={selected.includes(sub.id)}
                       onChange={e => {

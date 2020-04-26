@@ -149,6 +149,8 @@ export class SubmissionController {
     for (const submission of req.body.submissions as number[]) {
       const dbSubmission = await db.submission.findOne({ where: { id: submission }, include: { form: true } });
 
+      console.log(dbSubmission);
+
       if (!(await hasFormAccess(dbSubmission!.form.id, req.session!.user))) {
         throw new BadRequest('You must be the owner of these submissions to do this');
       }

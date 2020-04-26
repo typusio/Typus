@@ -101,17 +101,16 @@ export const MainValidation = ({ formId }: { formId: string }) => {
 
       {validation && rules && !noValidation && (
         <div>
-          {modalOpen && (
-            <CreateRuleModal
-              rules={rules}
-              formId={formId}
-              onClose={() => setModalOpen(false)}
-              onCreate={rule => {
-                setValidation({ ...validation, rules: [...validation.rules, rule] });
-                setModalOpen(false);
-              }}
-            />
-          )}
+          <CreateRuleModal
+            rules={rules}
+            formId={formId}
+            onClose={() => setModalOpen(false)}
+            onCreate={rule => {
+              setValidation({ ...validation, rules: [...validation.rules, rule] });
+              setModalOpen(false);
+            }}
+            open={modalOpen}
+          />
 
           <div className="flex flex-row justify-between -mt-3">
             <h2 className="text-xl my-auto">

@@ -1,3 +1,5 @@
+import { Allow } from '@tsed/common';
+
 export class EditFormModel {
-  name: string;
+  @Allow() name: string;
 }

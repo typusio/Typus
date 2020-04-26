@@ -1,4 +1,4 @@
-import { Required, MinLength } from '@tsed/common';
+import { Required, MinLength, Allow } from '@tsed/common';
 
 export class CreateRuleModel {
   @Required()
@@ -8,7 +8,9 @@ export class CreateRuleModel {
   @Required()
   validator: string;
 
+  @Allow()
   detail?: string;
 
+  @Allow()
   errorMessage?: string;
 }
