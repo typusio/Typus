@@ -30,7 +30,7 @@
     "ejs": "3.0.2",
     "express": "4.17.1",
     "express-fileupload": "1.1.7-alpha.3",
-    "express-session": "1.17.0",
+    "express-session": "1.17.1",
     "ioredis": "4.16.1",
     "json2csv": "^5.0.0",
     "liquid": "4.0.1",
