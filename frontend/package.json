@@ -23,7 +23,7 @@
     "react-scripts": "3.4.1",
     "react-toast-notifications": "2.4.0",
     "react-transition-group": "4.3.0",
-    "typescript": "3.7.5",
+    "typescript": "3.8.3",
     "yup": "0.28.4"
   },
   "scripts": {
