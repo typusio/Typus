@@ -8,6 +8,7 @@ import NoData from '../../../assets/no-data.svg';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../../../util/api';
 import { FormRedButton } from '../../../components/FormRedButton';
+import { ExportButton } from '../../../components/ExportButton';
 
 export const DashboardForm = () => {
   const {
@@ -106,21 +107,7 @@ export const DashboardForm = () => {
                 <div className="mt-5 flex lg:mt-0 lg:ml-4">
                   <FormRedButton form={form} />
 
-                  <span className="sm:ml-3 shadow-sm rounded-md ml-2 sm:ml-0">
-                    <button
-                      type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-gray-700 hover:bg-gray-600 focus:outline-none focus:shadow-outline-gray focus:border-gray-800 transition duration-150 ease-in-out"
-                    >
-                      <svg fill="currentColor" viewBox="0 0 20 20" className="-ml-1 mr-2 h-5 w-5">
-                        <path
-                          fillRule="evenodd"
-                          d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                      Export
-                    </button>
-                  </span>
+                  <ExportButton formId={form.id} />
                 </div>
               </div>
             </div>

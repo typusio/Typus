@@ -1,19 +1,23 @@
 import * as crypto from 'crypto';
 
-import { Controller, Post, UseAuth, Middleware, UseBefore, Req, Session, BodyParams, Get, PathParams, Delete, Locals, Patch } from '@tsed/common';
+import { Controller, Post, UseAuth, Middleware, UseBefore, Req, Session, BodyParams, Get, PathParams, Delete, Locals, Patch, Res } from '@tsed/common';
 import { CreateFormModel } from './models/CreateFormModel';
 import { db } from '../Prisma';
 import { RequireAuth } from '../middleware/RequireAuth';
 
 import { Request } from 'express';
-import { NotFound, Unauthorized, BadRequest } from 'ts-httpexceptions';
-import { RequireFormOwner } from '../middleware/RequireFormOwner';
-import { Form } from '@prisma/client';
+import { Form, Submission } from '@prisma/client';
 import { RequireFormAccess } from '../middleware/RequireFormAccess';
 import { EditFormModel } from './models/EditFormModel';
 
+import { Parser } from 'json2csv';
+import { Response } from 'express';
+import { ExportService } from '../services/ExportService';
+
 @Controller('/form')
 export class FormController {
+  public constructor(private readonly exportService: ExportService) {}
+
   private generateUrl(name: string) {
     return name.trimLeft().trimRight().toLowerCase().split(' ').join('-') + '-' + crypto.randomBytes(2).toString('hex');
   }
@@ -82,5 +86,17 @@ export class FormController {
     const today = await db.submission.count({ where: { createdAt: { gt: new Date(startToday) } } });
 
     return { submissions, spam, today };
+  }
+
+  @Get('/:formId/data.json')
+  @UseBefore(RequireAuth, RequireFormAccess)
+  async exportJson(@Locals('form') form: Form) {
+    return this.exportService.exportJson(form.id);
+  }
+
+  @Get('/:formId/data.csv')
+  @UseBefore(RequireAuth, RequireFormAccess)
+  async exportCsv(@Locals('form') form: Form, @Res() res: Response) {
+    return Buffer.from(await this.exportService.exportCsv(form.id));
   }
 }

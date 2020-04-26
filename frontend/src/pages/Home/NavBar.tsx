@@ -60,7 +60,6 @@ export const NavBar = () => {
 
       <div className={classNames('absolute top-0 inset-x-0 p-2 md:hidden', { hidden: !open, block: open })}>
         <Transition
-          className="rounded-lg shadow-md transition transform origin-top-right"
           show={open}
           enter="duration-150 ease-out"
           enterFrom="opacity-0 scale-95"

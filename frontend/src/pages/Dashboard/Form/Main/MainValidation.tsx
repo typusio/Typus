@@ -88,17 +88,16 @@ export const MainValidation = ({ formId }: { formId: string }) => {
         </div>
       )}
 
-      {deleteModalOpen && (
-        <DeleteModal
-          title={'Delete verification'}
-          body={'Are you sure? All rules will be lost. This action cannot be undone.'}
-          onClose={() => setDeleteModalOpen(false)}
-          onConfirm={() => {
-            deleteValidation();
-            setDeleteModalOpen(false);
-          }}
-        />
-      )}
+      <DeleteModal
+        title={'Delete verification'}
+        body={'Are you sure? All rules will be lost. This action cannot be undone.'}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={() => {
+          deleteValidation();
+          setDeleteModalOpen(false);
+        }}
+        open={deleteModalOpen}
+      />
 
       {validation && rules && !noValidation && (
         <div>

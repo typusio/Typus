@@ -21,14 +21,13 @@ const DeleteButton = ({ formId }: { formId: string }) => {
 
   return (
     <div>
-      {modalOpen && (
-        <DeleteModal
-          title="Delete form"
-          body="Are you sure? All submissions and configuration will be lost. This action cannot be undone."
-          onClose={() => setModalOpen(false)}
-          onConfirm={() => deleteForm()}
-        />
-      )}
+      <DeleteModal
+        title="Delete form"
+        body="Are you sure? All submissions and configuration will be lost. This action cannot be undone."
+        onClose={() => setModalOpen(false)}
+        onConfirm={() => deleteForm()}
+        open={modalOpen}
+      />
 
       <span className="sm:ml-3 shadow-sm rounded-md">
         <button
@@ -65,15 +64,14 @@ const LeaveButton = ({ formId }: { formId: string }) => {
 
   return (
     <div>
-      {modalOpen && (
-        <DeleteModal
-          title="Leave form"
-          body="Are you sure you want to leave? You will not be able to rejoin unless the owner readds you."
-          onClose={() => setModalOpen(false)}
-          onConfirm={() => leaveForm()}
-          buttonText="Leave"
-        />
-      )}
+      <DeleteModal
+        title="Leave form"
+        body="Are you sure you want to leave? You will not be able to rejoin unless the owner readds you."
+        onClose={() => setModalOpen(false)}
+        onConfirm={() => leaveForm()}
+        buttonText="Leave"
+        open={modalOpen}
+      />
       <span className="sm:ml-3 shadow-sm rounded-md">
         <button
           type="button"

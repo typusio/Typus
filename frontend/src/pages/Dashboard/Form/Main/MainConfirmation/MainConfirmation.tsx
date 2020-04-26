@@ -51,14 +51,13 @@ export const MainConfirmation = ({ formId }: { formId: string }) => {
 
   return (
     <div>
-      {modalOpen && (
-        <DeleteModal
-          title="Delete confirmation"
-          body={'Are you sure? This action cannot be undone.'}
-          onClose={() => setModalOpen(false)}
-          onConfirm={() => deleteConfirmation()}
-        />
-      )}
+      <DeleteModal
+        title="Delete confirmation"
+        body={'Are you sure? This action cannot be undone.'}
+        onClose={() => setModalOpen(false)}
+        onConfirm={() => deleteConfirmation()}
+        open={modalOpen}
+      />
 
       {loading && (
         <div className="spinner">

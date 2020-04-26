@@ -12,7 +12,7 @@ export const DashboardNavBar = () => {
   const authContext = useContext(AuthContext);
 
   const dropdownRef = useRef();
-  // useOutsideClick(dropdownRef, () => setDropdownOpen(false));
+  useOutsideClick(dropdownRef, () => setDropdownOpen(false));
 
   const [open, setOpen] = useState(false);
 
@@ -69,18 +69,27 @@ export const DashboardNavBar = () => {
                       </svg>
                     </button>
                   </div>
-                  {dropdownOpen && (
-                    <div className="origin-top-right absolute right-0 mt-2 -mr-1 w-48 rounded-md shadow-lg">
+                  <Transition
+                    show={dropdownOpen}
+                    enter="transition ease-out duration-200"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <div className="origin-top-right absolute right-0 mt-2 -mr-1 w-48 rounded-md shadow-lg z-50">
                       <div className="py-1 rounded-md bg-white shadow-xs" ref={dropdownRef as any}>
-                        <a href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150">
-                          Settings
-                        </a>
-                        <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150" onClick={() => signout()}>
+                        <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 cursor-pointer">Settings</a>
+                        <a
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 cursor-pointer"
+                          onClick={() => signout()}
+                        >
                           Sign out
                         </a>
                       </div>
                     </div>
-                  )}
+                  </Transition>
                 </div>
               </div>
             </div>
