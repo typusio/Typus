@@ -31,7 +31,7 @@
     "express": "4.17.1",
     "express-fileupload": "1.1.7-alpha.3",
     "express-session": "1.17.1",
-    "ioredis": "4.16.1",
+    "ioredis": "4.16.3",
     "liquid": "4.0.1",
     "mailgun-js": "0.22.0",
     "method-override": "3.0.0",
