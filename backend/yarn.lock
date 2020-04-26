@@ -222,7 +222,7 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.4.tgz#38fd73ddfd9b55abb1e1b2ed578cb55bd7b7d339"
   integrity sha512-8+KAKzEvSUdeo+kmqnKrqgeE+LcA0tjYWFY7RPProVYwnqDjukzO+3b6dLD56rYX5TdWejnEOLJYOIeh4CXKuA==
 
-"@types/json2csv@^5.0.0":
+"@types/json2csv@5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@types/json2csv/-/json2csv-5.0.0.tgz#c2882ed4ef55f80aa6e6cdac8773a40dd36ceb77"
   integrity sha512-oGIln5Jzp8X8Tgu7rAzim3o68jsIGbE2Qd30jVvP4SxGasH+OBc+a/uwDS6Bh3D8LBLzl2ih4iYZfBRHdhPYpg==
@@ -1590,7 +1590,7 @@ json-schema@^0.2.3:
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.5.tgz#97997f50972dd0500214e208c407efa4b5d7063b"
   integrity sha512-gWJOWYFrhQ8j7pVm0EM8Slr+EPVq1Phf6lvzvD/WCeqkrx/f2xBI0xOsRRS9xCn3I4vKtP519dvs3TP09r24wQ==
 
-json2csv@^5.0.0:
+json2csv@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/json2csv/-/json2csv-5.0.0.tgz#45df7b29e364bec9815f4da1626937176957686f"
   integrity sha512-TakYvbGoC/Yn+DA+1DaT41YNzpIYZI/DodvoCAyZzAx2OdfijcLObgwxqqUtR5AY4syJtekuDOQtlvvgSVJJUw==
