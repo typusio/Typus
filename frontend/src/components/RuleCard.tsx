@@ -8,35 +8,21 @@ interface Props {
 }
 
 export const RuleCard = ({ rule, rules, onRemove }: Props) => {
-  const [field, setField] = useState(rule.field);
-  const [detail, setDetail] = useState(rule.detail);
-
   return (
     <li>
       <div className="flex flex-col">
         <div className="flex flex-row mb-2">
           <div className="flex flex-row">
-            <svg fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5 text-green-500 my-auto mr-2">
+            <svg fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5 text-green-500 my-auto mr-2 flex-shrink-0">
               <path
                 fill-rule="evenodd"
                 d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                 clip-rule="evenodd"
               ></path>
             </svg>
-            <span
-              className="bg-gray-100 px-2 py-1 focus:outline-none"
-              contentEditable={true}
-              suppressContentEditableWarning={true}
-              onInput={e => {
-                if (e.currentTarget.textContent) {
-                  setField(e.currentTarget.innerText);
-                }
-              }}
-            >
-              {field}
-            </span>
+            <span className="bg-gray-100 px-2 py-1 focus:outline-none inline-flex items-center">{rule.field}</span>
             <span className="ml-2 mr-2 my-auto">{rules[rule.validator].middleText}</span>
-            {rules[rule.validator].requireDetail && <span className="bg-gray-100 px-2 py-1">{detail}</span>}
+            {rules[rule.validator].requireDetail && <span className="bg-gray-100 px-2 py-1 inline-flex items-center">{rule.detail}</span>}
           </div>
           <span className="inline-flex rounded-md shadow-sm my-auto ml-2">
             <button

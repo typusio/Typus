@@ -135,7 +135,7 @@ export const MainValidation = ({ formId }: { formId: string }) => {
             </span>
           </div>
 
-          <ul>
+          <ul className="mt-3 sm:mt-0">
             {validation.rules.map(rule => (
               <RuleCard rule={rule} rules={rules} onRemove={() => removeRule(rule.id)} />
             ))}

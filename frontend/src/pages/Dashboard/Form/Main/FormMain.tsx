@@ -26,14 +26,14 @@ export const FormMain = ({ formId }: { formId: string }) => {
   const [selected, setSelected] = useState('Submissions');
 
   return (
-    <main className="sm:mt-64 mt-60">
+    <main className="sm:mt-64 mt-70">
       <div className="max-w-7xl mx-auto px-4 pb-12 sm:px-6 lg:px-8">
         <div className="bg-white shadow overflow-hidden rounded-md">
-          <div className="bg-white pt-1 sm:border-b sm:border-gray-200 md:px-6">
+          <div className="bg-white pt-1 md:px-6 sm:border-b sm:border-gray-200">
             <div className="pb-4 sm:p-0">
               <div className="md:hidden">
                 <select
-                  className="form-select block w-full my-auto -mt-1"
+                  className="form-select block w-full my-auto -mt-1 border-0"
                   onChange={e => {
                     setSelected(e.target.value);
                   }}
@@ -46,6 +46,7 @@ export const FormMain = ({ formId }: { formId: string }) => {
                   <option>Settings</option>
                 </select>
               </div>
+              <hr className="text-gray-100 mt-0.5 block md:hidden" />
               <div className="hidden md:block">
                 <div>
                   <nav className="-mb-px flex">

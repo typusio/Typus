@@ -74,7 +74,7 @@ export const SubmissionPopup = ({ submissionId, formId, onClose, onRemove, open 
 
         {submission && (
           <Transition
-            enter="ease-out duration-300"
+            enter="ease-out duration-200"
             enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             enterTo="opacity-100 translate-y-0 sm:scale-100"
             leave="ease-in duration-200"
@@ -119,8 +119,8 @@ export const SubmissionPopup = ({ submissionId, formId, onClose, onRemove, open 
                   </svg>
                 </button>
               </div>
-              <div className="flex flex-row justify-between">
-                <div className="w-2/3">
+              <div className="flex flex-col sm:flex-row sm:justify-between">
+                <div className="w-full sm:w-2/3">
                   <div className="flex flex-row mt-5">
                     <svg fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5 text-gray-700">
                       <path
@@ -165,9 +165,9 @@ export const SubmissionPopup = ({ submissionId, formId, onClose, onRemove, open 
                     <h3 className="text-lg leading-6 font-medium text-gray-900 ml-2">Info</h3>
                   </div>
                 </div>
-                <div style={{ width: '30%' }}>
+                <div className="w-full sm:w-3/10">
                   <div className="flex flex-col">
-                    <span className="ml-3 shadow-sm rounded-md">
+                    <span className="sm:ml-3 shadow-sm rounded-md">
                       <button
                         type="button"
                         onClick={() => markAsSpam()}
@@ -184,7 +184,7 @@ export const SubmissionPopup = ({ submissionId, formId, onClose, onRemove, open 
                       </button>
                     </span>
 
-                    <span className="ml-3 shadow-sm rounded-md">
+                    <span className="sm:ml-3 shadow-sm rounded-md">
                       <button
                         type="button"
                         className="mb-2 w-full inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700 transition ease-in-out duration-150"
@@ -201,7 +201,7 @@ export const SubmissionPopup = ({ submissionId, formId, onClose, onRemove, open 
                       </button>
                     </span>
 
-                    <span className="ml-3 shadow-sm rounded-md">
+                    <span className="sm:ml-3 shadow-sm rounded-md">
                       <button
                         type="button"
                         onClick={() => deleteSubmission()}

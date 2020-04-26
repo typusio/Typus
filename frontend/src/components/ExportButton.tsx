@@ -35,7 +35,7 @@ export const ExportButton = ({ formId }: { formId: string }) => {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg" ref={menuRef as any}>
+        <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg z-50" ref={menuRef as any}>
           <div className="rounded-md bg-white shadow-xs">
             <div className="py-1">
               <a

@@ -12,7 +12,7 @@ export const SelectedDeleteBanner = ({ onClick, numSelected, show }: { onClick: 
       leaveTo="opacity-0 translate-y-4"
       show={show}
     >
-      <div className="fixed bottom-0 inset-x-0 pb-2 sm:pb-5">
+      <div className="fixed bottom-0 inset-x-0 pb-2 sm:pb-5 z-50">
         <div className="max-w-screen-xl mx-auto px-2 sm:px-6 lg:px-8">
           <div className="p-2 rounded-lg bg-red-600 shadow-lg sm:p-3">
             <div className="flex items-center justify-between flex-wrap">
