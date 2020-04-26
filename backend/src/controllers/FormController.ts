@@ -10,7 +10,6 @@ import { Form, Submission } from '@prisma/client';
 import { RequireFormAccess } from '../middleware/RequireFormAccess';
 import { EditFormModel } from './models/EditFormModel';
 
-import { Parser } from 'json2csv';
 import { Response } from 'express';
 import { ExportService } from '../services/ExportService';
 
