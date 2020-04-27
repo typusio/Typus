@@ -52,10 +52,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tsed/ajv@5.49.0":
-  version "5.49.0"
-  resolved "https://registry.yarnpkg.com/@tsed/ajv/-/ajv-5.49.0.tgz#92265a7e2bd020a5981d0eea24d2608aad2070c6"
-  integrity sha512-rKt6XMgNAn6frijJYv1MlrKvH8S8/q8Lka5PjcYqK6+Enrn5XAh0VcaOXYjg1onDOvgPmxA+1BE5kXoQyKIGBg==
+"@tsed/ajv@5.49.1":
+  version "5.49.1"
+  resolved "https://registry.yarnpkg.com/@tsed/ajv/-/ajv-5.49.1.tgz#6d08737c57f9d731d91bd94157c2ab0e3141d069"
+  integrity sha512-V6B2dBoCx8orBUKiDZo3ooU5Lf6+kME4gYBWbWVGZCwUMHHmxxqLrpDm2LHRvVyl8r9QeFftq7L3NMRmiWssqg==
   dependencies:
     tslib "1.11.1"
 
