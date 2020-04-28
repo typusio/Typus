@@ -13,6 +13,7 @@ import { RequireFormOwner } from '../middleware/RequireFormOwner';
 import { ConfirmationService } from '../services/ConfirmationService';
 import { RequireFormAccess } from '../middleware/RequireFormAccess';
 import { hasFormAccess } from '../util/hasFormAccess';
+import { SecurityService } from '../services/SecurityService';
 
 @Controller('/:formId')
 @MergeParams()
@@ -21,6 +22,7 @@ export class SubmissionController {
     private readonly ipService: IpService,
     private readonly validationService: ValidationService,
     private readonly confirmationService: ConfirmationService,
+    private readonly securityService: SecurityService,
   ) {}
 
   private async handleFiles(req: Request) {
@@ -57,7 +59,7 @@ export class SubmissionController {
       return res.redirect(url);
     }
 
-    return res.render('validationerror', { error, appearance });
+    return res.render('error', { error, appearance, title: 'Validation Error' });
   }
 
   private async handleSuccess(req: Request, res: Response, origin: string, formId: string) {
@@ -80,11 +82,16 @@ export class SubmissionController {
 
   @Post('/')
   async create(@Req() req: Request, @PathParams('formId') formId: string, @Res() res: Response) {
+    console.log(req.body);
+
     const ip = await this.ipService.find(req);
     const form = await db.form.findOne({ where: { id: formId } });
 
     if (!form) throw new NotFound('Form not found');
 
+    await this.securityService.handleSecurity(form, req, res);
+
+    // TODO move validation into its own service
     const rules = await db.form
       .findOne({ where: { id: formId } })
       .validation()

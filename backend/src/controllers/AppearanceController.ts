@@ -54,6 +54,6 @@ export class AppearanceController {
       return res.redirect(url);
     }
 
-    return res.render('validationerror', { appearance, error: 'Email must be unique' });
+    return res.render('error', { appearance, error: 'Email must be unique', title: 'Validation Error' });
   }
 }
