@@ -46,19 +46,19 @@ model Form {
 }
 
 model Security {
-  id              Int    @default(autoincrement()) @id
-  formId          String
-  form            Form   @relation(fields: [formId], references: [id])
-  recaptchaSecret String @default("")
-  honey           String @default("_honey")
-  allowedDomains  String @default("")
+  id             Int    @default(autoincrement()) @id
+  formId         String
+  form           Form   @relation(fields: [formId], references: [id])
+  recaptcha      String
+  honey          String
+  allowedDomains String
 }
 
 model Appearance {
   id                     Int     @default(autoincrement()) @id
   formId                 String
   form                   Form    @relation(fields: [formId], references: [id])
-  // Success
+  // Success 
   successMode            String  @default("Our")
   successCustomRedirect  String  @default("")
   successTickBackground  String  @default("#def7ec")

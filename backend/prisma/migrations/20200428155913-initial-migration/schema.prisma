@@ -42,13 +42,24 @@ model Form {
   validation    Validation?
   confirmation  Confirmation?
   appearance    Appearance
+  security      Security
+}
+
+model Security {
+  id             Int    @default(autoincrement()) @id
+  formId         String
+  form           Form   @relation(fields: [formId], references: [id])
+  recaptcha      String
+  honey          String
+  allowedDomains String
 }
 
 model Appearance {
   id                     Int     @default(autoincrement()) @id
   formId                 String
   form                   Form    @relation(fields: [formId], references: [id])
-  // Success
+  // Success 
+  successMode            String  @default("Our")
   successCustomRedirect  String  @default("")
   successTickBackground  String  @default("#def7ec")
   successTickColor       String  @default("#057a55")
@@ -56,6 +67,14 @@ model Appearance {
   successButtonColor     String  @default("#057a55")
   successBackgroundColor String  @default("#fafafa")
   successDots            Boolean @default(true)
+  // Error
+  errorMode              String  @default("Our")
+  errorCustomRedirect    String  @default("")
+  errorIconBackground    String  @default("#fde8e8")
+  errorIconColor         String  @default("#e02424")
+  errorButtonColor       String  @default("#e02424")
+  errorBackgroundColor   String  @default("#fafafa")
+  errorDots              Boolean @default(true)
 }
 
 model Confirmation {

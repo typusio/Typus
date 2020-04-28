@@ -16,7 +16,7 @@ export class SecurityService {
     }
 
     const data = await fetch(
-      `https://google.com/recaptcha/api/siteverify?secret=${encodeURIComponent(security.recaptchaSecret)}&response=${encodeURIComponent(
+      `https://google.com/recaptcha/api/siteverify?secret=${encodeURIComponent(security.recaptcha)}&response=${encodeURIComponent(
         req.body['g-recaptcha-response'],
       )}&remoteip=${encodeURIComponent((req.headers['x-forwarded-for'] || req.connection.remoteAddress) as string)}`,
     ).then(res => res.json());
@@ -34,7 +34,7 @@ export class SecurityService {
   async handleSecurity(form: Form, req: Request, res: Response) {
     const security = await db.form.findOne({ where: { id: form.id } }).security();
 
-    if (security!.recaptchaSecret !== '') {
+    if (security!.recaptcha !== '') {
       const result = await this.handleRecaptcha(security!, req, res);
     }
   }
