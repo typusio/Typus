@@ -28,7 +28,7 @@ export const RuleCard = ({ rule, rules, onRemove }: Props) => {
             <button
               type="button"
               onClick={() => onRemove()}
-              className="inline-flex text-red-600 items-center px-2.5 py-1.5 border border-gray-300 text-xs leading-4 font-medium rounded text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
+              className="inline-flex text-red-600 items-center px-2.5 py-1.5 border border-gray-300 text-xs leading-4 font-medium rounded text-gray-700 bg-white hover:text-red-500 focus:outline-none focus:border-red-300 focus:shadow-outline-blue active:text-red-800 transition ease-in-out duration-150"
             >
               Remove
             </button>

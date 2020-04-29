@@ -1,5 +1,9 @@
 import { Service } from '@tsed/di';
 import { db } from '../Prisma';
+import { Form } from '@prisma/client';
+
+import { Request, Response } from 'express';
+import { RenderService } from './RenderService';
 
 export type Validator = (context: ValidatorContext) => boolean | Promise<boolean>;
 export type ValidatorMeta = { name: string; requireDetail: boolean; detailSubtext?: string; defaultError: string; middleText: string; required?: boolean };
@@ -13,6 +17,8 @@ type ValidatorContext = {
 
 @Service()
 export class ValidationService {
+  public constructor(private readonly renderService: RenderService) {}
+
   public validators: { [key: string]: Validator } = {
     greaterThan({ value, detail }: ValidatorContext) {
       return parseInt(value) > parseInt(detail);
@@ -85,4 +91,49 @@ export class ValidationService {
       middleText: 'must be unique',
     },
   };
+
+  private async handleValidationError(req: Request, res: Response, field: string, error: string, formId: string) {
+    if (req.headers['content-type']?.includes('application/json')) {
+      return res.status(400).json({ message: 'validation error', field, error });
+    }
+
+    return this.renderService.renderError({ error, title: 'Validation Error' }, res, formId);
+  }
+
+  async handleValidation(req: Request, res: Response, form: Form) {
+    const rules = await db.form
+      .findOne({ where: { id: form.id } })
+      .validation()
+      .rules();
+
+    if (rules) {
+      for (const rule of rules) {
+        if (!this.meta[rule.validator].required && !req.body[rule.field]) continue;
+
+        let result: boolean = await this.validators[rule.validator]({
+          formId: form.id,
+          field: rule.field,
+          value: req.body[rule.field],
+          detail: rule.detail ? rule.detail : '',
+        });
+
+        if (result == false) {
+          await this.handleValidationError(
+            req,
+            res,
+            rule.field,
+            (rule.errorMessage ? rule.errorMessage : this.meta[rule.validator].defaultError)
+              .replace('{field}', rule.field.charAt(0).toUpperCase() + rule.field.slice(1))
+              .replace('{detail}', rule.detail ? rule.detail : '')
+              .replace('{value}', req.body[rule.field]),
+            form.id,
+          );
+
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
 }

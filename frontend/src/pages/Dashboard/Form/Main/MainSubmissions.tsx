@@ -45,9 +45,16 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
     setTotal(total - selected.length);
     setSelected([]);
 
-    if (page > Math.ceil(total / perPage)) {
-      setPage(Math.ceil(total / perPage));
-      fetchSubmissions(Math.ceil(total / perPage));
+    const maxPage = Math.ceil((total - selected.length) / perPage) - 1;
+
+    if (page > maxPage) {
+      if (page == 0) {
+        setTotal(0);
+        return setLoading(false);
+      }
+
+      setPage(maxPage);
+      fetchSubmissions(maxPage);
     }
   }
 

@@ -14,6 +14,7 @@ import { ConfirmationService } from '../services/ConfirmationService';
 import { RequireFormAccess } from '../middleware/RequireFormAccess';
 import { hasFormAccess } from '../util/hasFormAccess';
 import { SecurityService } from '../services/SecurityService';
+import { RenderService } from '../services/RenderService';
 
 @Controller('/:formId')
 @MergeParams()
@@ -23,6 +24,7 @@ export class SubmissionController {
     private readonly validationService: ValidationService,
     private readonly confirmationService: ConfirmationService,
     private readonly securityService: SecurityService,
+    private readonly renderService: RenderService,
   ) {}
 
   private async handleFiles(req: Request) {
@@ -44,40 +46,12 @@ export class SubmissionController {
     return req.body;
   }
 
-  private async handleValidationError(req: Request, res: Response, field: string, error: string, formId: string) {
-    if (req.headers['content-type']?.includes('application/json')) {
-      return res.status(400).json({ message: 'validation error', field, error });
-    }
-
-    const appearance = await db.form.findOne({ where: { id: formId } }).appearance();
-
-    if (appearance!.errorMode == 'Custom' && appearance!.errorCustomRedirect) {
-      let url = appearance!.errorCustomRedirect;
-
-      if (!url.includes('http')) url = `https://` + url;
-
-      return res.redirect(url);
-    }
-
-    return res.render('error', { error, appearance, title: 'Validation Error' });
-  }
-
   private async handleSuccess(req: Request, res: Response, origin: string, formId: string) {
     if (req.headers['content-type']?.includes('application/json')) {
       return res.status(201).json({ message: 'recieved successfully' });
     }
 
-    const appearance = await db.form.findOne({ where: { id: formId } }).appearance();
-
-    if (appearance!.successMode == 'Custom' && appearance!.successCustomRedirect) {
-      let url = appearance!.successCustomRedirect;
-
-      if (!url.includes('http')) url = `https://` + url;
-
-      return res.redirect(url);
-    }
-
-    return res.render('success', { origin, appearance });
+    return this.renderService.renderSuccess(res, formId);
   }
 
   @Post('/')
@@ -89,39 +63,11 @@ export class SubmissionController {
 
     if (!form) throw new NotFound('Form not found');
 
-    await this.securityService.handleSecurity(form, req, res);
+    if (!(await this.securityService.handleSecurity(form, req, res))) return;
 
-    // TODO move validation into its own service
-    const rules = await db.form
-      .findOne({ where: { id: formId } })
-      .validation()
-      .rules();
+    delete req.body['g-recaptcha-response'];
 
-    if (rules) {
-      for (const rule of rules) {
-        if (!this.validationService.meta[rule.validator].required && !req.body[rule.field]) continue;
-
-        let result: boolean = await this.validationService.validators[rule.validator]({
-          formId: form.id,
-          field: rule.field,
-          value: req.body[rule.field],
-          detail: rule.detail ? rule.detail : '',
-        });
-
-        if (result == false) {
-          return this.handleValidationError(
-            req,
-            res,
-            rule.field,
-            (rule.errorMessage ? rule.errorMessage : this.validationService.meta[rule.validator].defaultError)
-              .replace('{field}', rule.field.charAt(0).toUpperCase() + rule.field.slice(1))
-              .replace('{detail}', rule.detail ? rule.detail : '')
-              .replace('{value}', req.body[rule.field]),
-            form.id,
-          );
-        }
-      }
-    }
+    if (!(await this.validationService.handleValidation(req, res, form))) return;
 
     req.body = await this.handleFiles(req);
 

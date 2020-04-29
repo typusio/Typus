@@ -105,9 +105,8 @@ export const DashboardForm = () => {
                   )}
                 </div>
                 <div className="mt-5 flex lg:mt-0 lg:ml-4">
-                  <FormRedButton form={form} />
-
                   <ExportButton formId={form.id} />
+                  <FormRedButton form={form} />
                 </div>
               </div>
             </div>

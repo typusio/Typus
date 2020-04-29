@@ -4,3 +4,6 @@
 # Read more about conflict resolution here: TODO
 
 20200428155913-initial-migration
+20200429140152-more-recaptcha
+20200429140305-recaptcha-secret
+20200429145742-remove-buttons
