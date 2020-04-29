@@ -15,7 +15,7 @@
     "@prisma/client": "2.0.0-beta.2",
     "@tsed/ajv": "5.49.1",
     "@tsed/common": "5.49.0",
-    "@tsed/core": "5.49.0",
+    "@tsed/core": "5.49.1",
     "@tsed/di": "5.49.0",
     "ajv": "6.12.2",
     "argon2": "0.26.2",
