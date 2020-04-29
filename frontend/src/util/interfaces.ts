@@ -54,12 +54,6 @@ export interface RuleMeta {
   middleText: string;
 }
 
-export interface Notifications {
-  id: number;
-  email: string;
-  webhooks: string[];
-}
-
 export interface Confirmation {
   field: string;
   fromName: string;

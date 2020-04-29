@@ -10,7 +10,7 @@ export const ExportButton = ({ formId }: { formId: string }) => {
   useOutsideClick(menuRef, () => setOpen(false));
 
   return (
-    <span className="sm:ml-3 shadow-sm rounded-md ml-2 sm:ml-0 relative">
+    <span className="relative shadow-sm rounded-md">
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -35,7 +35,7 @@ export const ExportButton = ({ formId }: { formId: string }) => {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg z-50" ref={menuRef as any}>
+        <div className="origin-top-left absolute left-0 mt-2 w-56 rounded-md shadow-lg z-50" ref={menuRef as any}>
           <div className="rounded-md bg-white shadow-xs">
             <div className="py-1">
               <a

@@ -14,7 +14,6 @@ export const SettingsAppearance = ({ formId }: { formId: string }) => {
       successTickBackground: '',
       successTickColor: '',
       successText: '',
-      successButtonColor: '',
       successBackgroundColor: '',
       successDots: true,
 
@@ -22,7 +21,6 @@ export const SettingsAppearance = ({ formId }: { formId: string }) => {
       errorCustomRedirect: '',
       errorIconBackground: '',
       errorIconColor: '',
-      errorButtonColor: '',
       errorBackgroundColor: '',
       errorDots: true,
     },

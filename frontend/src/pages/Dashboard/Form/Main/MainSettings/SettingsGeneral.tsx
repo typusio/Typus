@@ -43,7 +43,7 @@ export const SettingsGeneral = ({ formId }: { formId: string }) => {
   }, []);
 
   return (
-    <div>
+    <div className="mt-4">
       {loading && (
         <div className="spinner">
           <div className="double-bounce1"></div>

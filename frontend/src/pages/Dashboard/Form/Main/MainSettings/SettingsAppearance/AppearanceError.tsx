@@ -103,14 +103,6 @@ export const AppearanceError = ({ values, setValues, handleChange, formId }: Pro
               </div>
 
               <div className="mb-6">
-                <label className="block text-sm font-medium leading-5 text-gray-700">Button Color</label>
-
-                <div className="mt-2">
-                  <SketchPicker color={values.errorButtonColor} onChangeComplete={color => setValues({ ...values, errorButtonColor: color.hex })} />
-                </div>
-              </div>
-
-              <div className="mb-6">
                 <label className="block text-sm font-medium leading-5 text-gray-700">Background Color</label>
 
                 <div className="mt-2">

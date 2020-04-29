@@ -30,6 +30,7 @@ export class FormController {
         owner: { connect: { id: req.session!.user } },
         name,
         appearance: { create: {} },
+        security: { create: { recaptchaSecret: '', honey: crypto.randomBytes(2).toString('hex'), allowedDomains: '' } },
       },
     });
 

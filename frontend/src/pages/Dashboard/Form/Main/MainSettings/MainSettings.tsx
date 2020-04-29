@@ -4,6 +4,7 @@ import { SettingsAppearance } from './SettingsAppearance/SettingsAppearance';
 import classNames from 'classnames';
 import { SettingsCollaborators } from './SettingsCollaborators';
 import { SettingsGeneral } from './SettingsGeneral';
+import { SettingsSecurity } from './SettingsSecurity';
 
 export const MainSettings = ({ formId }: { formId: string }) => {
   const [selected, setSelected] = useState('General');
@@ -20,7 +21,7 @@ export const MainSettings = ({ formId }: { formId: string }) => {
 
   return (
     <div className="flex flex-col sm:flex-row">
-      <nav className="w-full sm:w-1/4 -mt-7 sm:-mt-3">
+      <nav className="w-full md:w-1/5 sm:w-1/4 -mt-7 sm:-mt-3">
         <a onClick={() => setSelected('General')} className={selected == 'General' ? SELECTED_STYLE : UNSELECTED_STYLE}>
           <svg
             fill="none"
@@ -59,11 +60,26 @@ export const MainSettings = ({ formId }: { formId: string }) => {
           </svg>
           <span className="truncate">Collaborators</span>
         </a>
+        <a onClick={() => setSelected('Security')} className={selected == 'Security' ? SELECTED_STYLE : UNSELECTED_STYLE}>
+          <svg
+            className={selected == 'Collaborators' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+          </svg>
+          <span className="truncate">Security</span>
+        </a>
       </nav>
-      <div className="sm:ml-5 sm:w-3/4">
+      <div className="sm:ml-5 md:w-4/5 sm:3/4">
         {selected == 'General' && <SettingsGeneral formId={formId} />}
         {selected == 'Appearance' && <SettingsAppearance formId={formId} />}
         {selected == 'Collaborators' && <SettingsCollaborators formId={formId} />}
+        {selected == 'Security' && <SettingsSecurity formId={formId} />}
       </div>
     </div>
   );

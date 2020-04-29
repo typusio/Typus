@@ -1,8 +1,8 @@
 <html>
   <%- include("partials/header.ejs") %>
 
-  <body class="relative overflow-hidden" style="background-color: <%- appearance.successBackgroundColor %>;">
-    <% if(appearance.successDots) { %>
+  <body class="relative overflow-hidden" style="background-color: <%- appearance.errorBackgroundColor %>;">
+    <% if(appearance.errorDots) { %>
     <svg class="absolute right-full transform translate-y-1/4 translate-x-1/4 lg:translate-x-1/2" width="404" height="784" fill="none" viewBox="0 0 404 784">
       <defs>
         <pattern id="f210dbf6-a58d-4871-961e-36d5016a0f49" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -26,21 +26,26 @@
       <rect width="404" height="784" fill="url(#5d0dd344-b041-4d26-bec4-8d33ea57ec9b)" />
     </svg>
     <% } %>
+
     <div class="flex items-center justify-center h-screen">
       <div class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-sm sm:w-full sm:p-6">
         <div>
-          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full" style="background-color: <%- appearance.successTickBackground %>;">
-            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24" style="color: <%- appearance.successTickColor %>;">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full" style="background-color: <%- appearance.errorIconBackground %>;">
+            <svg fill="currentColor" viewBox="0 0 20 20" class="w-7 h-7" style="color: <%- appearance.errorIconColor %>;">
+              <path
+                fill-rule="evenodd"
+                d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd"
+              ></path>
             </svg>
           </div>
           <div class="mt-3 text-center sm:mt-5">
             <h3 class="text-lg leading-6 font-medium text-gray-900">
-              Successfully recieved!
+              <%- title %>
             </h3>
             <div class="mt-2">
               <p class="text-sm leading-5 text-gray-500">
-                <%- appearance.successText %>
+                <%- error %>
               </p>
             </div>
           </div>
