@@ -4,12 +4,14 @@ import { API_URL } from '../../util/api';
 
 export const PopupUser = ({ submission }: { submission: Submission }) => {
   const [numSubmissions, setNumSubmissions] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchSubmissions() {
       const data = await fetch(`${API_URL}/ip/${submission.form.id}/${submission.ip.address}`, { credentials: 'include' }).then(res => res.json());
 
       setNumSubmissions(data.length);
+      setLoading(false);
     }
 
     fetchSubmissions();
@@ -28,7 +30,7 @@ export const PopupUser = ({ submission }: { submission: Submission }) => {
       </div>
 
       <h2 className="sm:ml-7">
-        This user has created <span className="font-bold">{numSubmissions - 1}</span> other submissions.
+        This user has created <span className="font-bold">{loading ? 'loading...' : numSubmissions - 1}</span> other submissions.
       </h2>
     </div>
   );

@@ -13,6 +13,10 @@ import { RequireFormOwner } from '../middleware/RequireFormOwner';
 import { ConfirmationService } from '../services/ConfirmationService';
 import { RequireFormAccess } from '../middleware/RequireFormAccess';
 import { hasFormAccess } from '../util/hasFormAccess';
+import { SecurityService } from '../services/SecurityService';
+import { RenderService } from '../services/RenderService';
+import { NotificationsService } from '../services/NotificationsService';
+import { Submission } from '@prisma/client';
 
 @Controller('/:formId')
 @MergeParams()
@@ -21,6 +25,9 @@ export class SubmissionController {
     private readonly ipService: IpService,
     private readonly validationService: ValidationService,
     private readonly confirmationService: ConfirmationService,
+    private readonly securityService: SecurityService,
+    private readonly renderService: RenderService,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   private async handleFiles(req: Request) {
@@ -42,79 +49,28 @@ export class SubmissionController {
     return req.body;
   }
 
-  private async handleValidationError(req: Request, res: Response, field: string, error: string, formId: string) {
-    if (req.headers['content-type']?.includes('application/json')) {
-      return res.status(400).json({ message: 'validation error', field, error });
-    }
-
-    const appearance = await db.form.findOne({ where: { id: formId } }).appearance();
-
-    if (appearance!.errorMode == 'Custom' && appearance!.errorCustomRedirect) {
-      let url = appearance!.errorCustomRedirect;
-
-      if (!url.includes('http')) url = `https://` + url;
-
-      return res.redirect(url);
-    }
-
-    return res.render('validationerror', { error, appearance });
-  }
-
-  private async handleSuccess(req: Request, res: Response, origin: string, formId: string) {
+  private async handleSuccess(req: Request, res: Response, formId: string, submission: Submission) {
     if (req.headers['content-type']?.includes('application/json')) {
       return res.status(201).json({ message: 'recieved successfully' });
     }
 
-    const appearance = await db.form.findOne({ where: { id: formId } }).appearance();
-
-    if (appearance!.successMode == 'Custom' && appearance!.successCustomRedirect) {
-      let url = appearance!.successCustomRedirect;
-
-      if (!url.includes('http')) url = `https://` + url;
-
-      return res.redirect(url);
-    }
-
-    return res.render('success', { origin, appearance });
+    return this.renderService.renderSuccess(res, formId, submission);
   }
 
   @Post('/')
   async create(@Req() req: Request, @PathParams('formId') formId: string, @Res() res: Response) {
+    console.log(req.body);
+
     const ip = await this.ipService.find(req);
     const form = await db.form.findOne({ where: { id: formId } });
 
     if (!form) throw new NotFound('Form not found');
 
-    const rules = await db.form
-      .findOne({ where: { id: formId } })
-      .validation()
-      .rules();
+    if (!(await this.securityService.handleSecurity(form, req, res))) return;
 
-    if (rules) {
-      for (const rule of rules) {
-        if (!this.validationService.meta[rule.validator].required && !req.body[rule.field]) continue;
+    delete req.body['g-recaptcha-response'];
 
-        let result: boolean = await this.validationService.validators[rule.validator]({
-          formId: form.id,
-          field: rule.field,
-          value: req.body[rule.field],
-          detail: rule.detail ? rule.detail : '',
-        });
-
-        if (result == false) {
-          return this.handleValidationError(
-            req,
-            res,
-            rule.field,
-            (rule.errorMessage ? rule.errorMessage : this.validationService.meta[rule.validator].defaultError)
-              .replace('{field}', rule.field.charAt(0).toUpperCase() + rule.field.slice(1))
-              .replace('{detail}', rule.detail ? rule.detail : '')
-              .replace('{value}', req.body[rule.field]),
-            form.id,
-          );
-        }
-      }
-    }
+    if (!(await this.validationService.handleValidation(req, res, form))) return;
 
     req.body = await this.handleFiles(req);
 
@@ -122,9 +78,10 @@ export class SubmissionController {
       data: { data: JSON.stringify(req.body), form: { connect: { id: form.id } }, ip: { connect: { address: ip.address } } },
     });
 
-    await this.handleSuccess(req, res, req.get('host')?.toString() ?? '', form.id);
+    await this.handleSuccess(req, res, form.id, submission);
 
     this.confirmationService.handleSubmission(form, submission);
+    this.notificationsService.handleSubmission(form, submission);
   }
 
   @Get('/submissions')

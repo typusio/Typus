@@ -6,9 +6,12 @@ import { db } from '../Prisma';
 import { EditAppearanceModel } from './models/EditAppearanceModel';
 import { BadRequest } from 'ts-httpexceptions';
 import { Response } from 'express';
+import { RenderService } from '../services/RenderService';
 
 @Controller('/appearance')
 export class AppearanceController {
+  public constructor(private readonly renderService: RenderService) {}
+
   @Get('/:formId')
   @UseBefore(RequireAuth, RequireFormAccess)
   async get(@Locals('form') form: Form) {
@@ -28,32 +31,12 @@ export class AppearanceController {
   @Get('/:formId/preview/success')
   @UseBefore(RequireAuth, RequireFormAccess)
   async previewSuccess(@Locals('form') form: Form, @Res() res: Response) {
-    const appearance = await db.form.findOne({ where: { id: form.id } }).appearance();
-
-    if (appearance!.successMode == 'Custom' && appearance!.successCustomRedirect) {
-      let url = appearance!.successCustomRedirect;
-
-      if (!url.includes('http')) url = `https://` + url;
-
-      return res.redirect(url);
-    }
-
-    return res.render('success', { origin: '', appearance });
+    return this.renderService.renderSuccess(res, form.id);
   }
 
   @Get('/:formId/preview/error')
   @UseBefore(RequireAuth, RequireFormAccess)
   async previewError(@Locals('form') form: Form, @Res() res: Response) {
-    const appearance = await db.form.findOne({ where: { id: form.id } }).appearance();
-
-    if (appearance!.errorMode == 'Custom' && appearance!.errorCustomRedirect) {
-      let url = appearance!.errorCustomRedirect;
-
-      if (!url.includes('http')) url = `https://` + url;
-
-      return res.redirect(url);
-    }
-
-    return res.render('validationerror', { appearance, error: 'Email must be unique' });
+    return this.renderService.renderError({ error: 'Email must be unique', title: 'Validation Error' }, res, form.id);
   }
 }

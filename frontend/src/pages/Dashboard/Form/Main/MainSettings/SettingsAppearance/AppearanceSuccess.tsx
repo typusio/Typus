@@ -116,14 +116,6 @@ export const AppearanceSuccess = ({ values, setValues, handleChange, formId }: P
               </div>
 
               <div className="mb-6">
-                <label className="block text-sm font-medium leading-5 text-gray-700">Button Color</label>
-
-                <div className="mt-2">
-                  <SketchPicker color={values.successButtonColor} onChangeComplete={color => setValues({ ...values, successButtonColor: color.hex })} />
-                </div>
-              </div>
-
-              <div className="mb-6">
                 <label className="block text-sm font-medium leading-5 text-gray-700">Background Color</label>
 
                 <div className="mt-2">

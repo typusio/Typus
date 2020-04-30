@@ -83,7 +83,7 @@ export const SubmissionPopup = ({ submissionId, formId, onClose, onRemove, open 
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div
-              className="relative bg-white rounded-lg px-8 pt-5 pb-4 overflow-hidden shadow-2xl transform transition-all w-full h-full mt-2 md:mt-14 lg:w-2/5"
+              className="relative bg-white rounded-lg px-8 pt-5 pb-4 overflow-hidden shadow-2xl transform transition-all w-full h-full mt-2 md:mt-14 lg:w-2/5 overflow-y-auto"
               ref={popupRef as any}
             >
               <div className="flex flex-row">

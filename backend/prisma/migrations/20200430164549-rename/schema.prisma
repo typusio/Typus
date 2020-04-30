@@ -1,0 +1,120 @@
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
+
+model User {
+  id                 String @default(uuid()) @id
+  email              String @unique
+  password           String
+  forms              Form[]
+  collaboratingForms Form[] @relation("collaboratingForms")
+}
+
+model Ip {
+  address     String       @id
+  submissions Submission[]
+}
+
+model Submission {
+  id        Int      @default(autoincrement()) @id
+  data      String
+  formId    String
+  form      Form     @relation(fields: [formId], references: [id])
+  ipId      String
+  ip        Ip       @relation(fields: [ipId], references: [address])
+  spam      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  note      String   @default("")
+}
+
+model Form {
+  id            String        @id
+  ownerId       String
+  owner         User          @relation(fields: [ownerId], references: [id])
+  collaborators User[]        @relation("collaboratingForms", references: [id])
+  name          String
+  validation    Validation?
+  confirmation  Confirmation?
+  appearance    Appearance
+  security      Security
+  notifications Notifications
+}
+
+model Notifications {
+  id              Int     @default(autoincrement()) @id
+  formId          String
+  form            Form    @relation(fields: [formId], references: [id])
+  // Emails
+  emailsEnabled   Boolean @default(false)
+  emails          String  @default("")
+  // Webhooks
+  webhooksEnabled Boolean @default(false)
+  webhooks        String  @default("")
+}
+
+model Security {
+  id               Int     @default(autoincrement()) @id
+  formId           String
+  form             Form    @relation(fields: [formId], references: [id])
+  recaptchaEnabled Boolean @default(false)
+  recaptchaSecret  String
+  honey            String
+  allowedDomains   String
+}
+
+model Appearance {
+  id                     Int     @default(autoincrement()) @id
+  formId                 String
+  form                   Form    @relation(fields: [formId], references: [id])
+  // Success 
+  successMode            String  @default("Our")
+  successCustomRedirect  String  @default("")
+  successTickBackground  String  @default("#def7ec")
+  successTickColor       String  @default("#057a55")
+  successText            String  @default("Your form has successfully been recieved and processed. Thank you!")
+  successBackgroundColor String  @default("#fafafa")
+  successDots            Boolean @default(true)
+  // Error
+  errorMode              String  @default("Our")
+  errorCustomRedirect    String  @default("")
+  errorIconBackground    String  @default("#fde8e8")
+  errorIconColor         String  @default("#e02424")
+  errorBackgroundColor   String  @default("#fafafa")
+  errorDots              Boolean @default(true)
+}
+
+model Confirmation {
+  id          Int    @default(autoincrement()) @id
+  field       String @default("")
+  fromName    String @default("")
+  fromAddress String @default("")
+  subject     String @default("")
+  body        String @default("")
+  formId      String
+  form        Form   @relation(fields: [formId], references: [id])
+}
+
+model ValidationRule {
+  id           Int        @default(autoincrement()) @id
+  field        String
+  validator    String
+  detail       String?
+  errorMessage String?
+  validationId Int
+  validation   Validation @relation(fields: [validationId], references: [id])
+  createdAt    DateTime   @default(now())
+}
+
+model Validation {
+  id           Int              @default(autoincrement()) @id
+  allowUnknown Boolean          @default(true)
+  rules        ValidationRule[]
+  formId       String
+  form         Form             @relation(fields: [formId], references: [id])
+}

@@ -42,19 +42,42 @@ model Form {
   validation    Validation?
   confirmation  Confirmation?
   appearance    Appearance
+  security      Security
+  notifications Notifications
+}
+
+model Notifications {
+  id              Int     @default(autoincrement()) @id
+  formId          String
+  form            Form    @relation(fields: [formId], references: [id])
+  // Emails
+  emailsEnabled   Boolean @default(false)
+  emails          String  @default("")
+  // Webhooks
+  webhooksEnabled Boolean @default(false)
+  webhooks        String  @default("")
+}
+
+model Security {
+  id               Int     @default(autoincrement()) @id
+  formId           String
+  form             Form    @relation(fields: [formId], references: [id])
+  recaptchaEnabled Boolean @default(false)
+  recaptchaSecret  String
+  honey            String
+  allowedDomains   String
 }
 
 model Appearance {
   id                     Int     @default(autoincrement()) @id
   formId                 String
   form                   Form    @relation(fields: [formId], references: [id])
-  // Success
+  // Success 
   successMode            String  @default("Our")
   successCustomRedirect  String  @default("")
   successTickBackground  String  @default("#def7ec")
   successTickColor       String  @default("#057a55")
   successText            String  @default("Your form has successfully been recieved and processed. Thank you!")
-  successButtonColor     String  @default("#057a55")
   successBackgroundColor String  @default("#fafafa")
   successDots            Boolean @default(true)
   // Error
@@ -62,7 +85,6 @@ model Appearance {
   errorCustomRedirect    String  @default("")
   errorIconBackground    String  @default("#fde8e8")
   errorIconColor         String  @default("#e02424")
-  errorButtonColor       String  @default("#e02424")
   errorBackgroundColor   String  @default("#fafafa")
   errorDots              Boolean @default(true)
 }

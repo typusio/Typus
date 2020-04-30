@@ -3,33 +3,10 @@
 # Prisma Migrate lockfile v1
 # Read more about conflict resolution here: TODO
 
-20200410160424-initial-migration
-20200410185620-initial-form-setup
-20200410210557-form-name
-20200411192427-add-spam
-20200411225540-created-at
-20200412160830-submission-note
-20200412160954-fix-note
-20200412185025-validation-first-pass
-20200412190756-rename-actions-to-rules
-20200412190907-fix
-20200413225035-field-name
-20200414001026-custom-error-message
-20200414135954-rename-actions-to-validators
-20200414214604-file-uploads
-20200414214620-rename-file-upload
-20200414222605-remove-uploads
-20200415212436-initial-notifications
-20200416144505-add-email-options
-20200416151638-change-recepients-to-string
-20200416225548-redo-notifications
-20200417123337-response
-20200417192255-rename-response-to-confirmation
-20200417200833-forgot
-20200417203155-add-custom-from-customisation
-20200419221450-initial-collaborator-setup
-20200420124721-fix
-20200421190349-add-appearence
-20200422210828-appearance-first-pass
-20200423134720-appearance-mode
-20200424114410-error-appearance
+20200428155913-initial-migration
+20200429140152-more-recaptcha
+20200429140305-recaptcha-secret
+20200429145742-remove-buttons
+20200429211116-initial-notifications
+20200430163720-webhooks
+20200430164549-rename
