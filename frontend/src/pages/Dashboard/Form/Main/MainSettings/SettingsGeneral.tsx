@@ -13,6 +13,8 @@ export const SettingsGeneral = ({ formId }: { formId: string }) => {
   const { setValues, values, handleChange, handleSubmit } = useFormik({
     initialValues: {
       name: '',
+      hiddenFields: '',
+      mappedFields: '',
     },
     async onSubmit() {
       await fetch(`${API_URL}/form/${formId}`, {
@@ -36,7 +38,7 @@ export const SettingsGeneral = ({ formId }: { formId: string }) => {
 
       setLoading(false);
       setForm(data);
-      setValues({ name: data.name });
+      setValues({ name: data.name, hiddenFields: data.hiddenFields, mappedFields: data.mappedFields });
     }
 
     fetchForm();
@@ -64,6 +66,38 @@ export const SettingsGeneral = ({ formId }: { formId: string }) => {
                   onChange={handleChange}
                 />
               </div>
+            </div>
+
+            <label className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+              Hidden fields <span className="text-blue-600">Read More</span>
+            </label>
+            <div className="mt-1 sm:mt-0 sm:col-span-2">
+              <div className="max-w-lg rounded-md shadow-sm">
+                <input
+                  className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  name="hiddenFields"
+                  onChange={handleChange}
+                  value={values.hiddenFields}
+                  placeholder="mjk4w, jnuw, a67yw, 9rghw"
+                />
+              </div>
+              <p className="mt-1 text-sm text-gray-500">Seperated by commas</p>
+            </div>
+
+            <label className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+              Mapped fields <span className="text-blue-600">Read More</span>
+            </label>
+            <div className="mt-1 sm:mt-0 sm:col-span-2">
+              <div className="max-w-lg rounded-md shadow-sm">
+                <input
+                  className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  name="mappedFields"
+                  onChange={handleChange}
+                  value={values.mappedFields}
+                  placeholder="mjk4w:name, jnuw:message"
+                />
+              </div>
+              <p className="mt-1 text-sm text-gray-500">Raw value and mapped value, seperated with a colon. Seperated by commas</p>
             </div>
           </div>
 

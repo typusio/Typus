@@ -16,7 +16,7 @@ import { hasFormAccess } from '../util/hasFormAccess';
 import { SecurityService } from '../services/SecurityService';
 import { RenderService } from '../services/RenderService';
 import { NotificationsService } from '../services/NotificationsService';
-import { Submission } from '@prisma/client';
+import { Submission, Form } from '@prisma/client';
 
 @Controller('/:formId')
 @MergeParams()
@@ -57,6 +57,25 @@ export class SubmissionController {
     return this.renderService.renderSuccess(res, formId, submission);
   }
 
+  private handleFields(form: Form, data: any) {
+    for (const value of form.hiddenFields.split(',').map(f => f.trim())) {
+      delete data[value];
+    }
+
+    for (const mapping of form.mappedFields
+      .split(',')
+      .map(f => f.trim())
+      .map(f => f.split(':'))) {
+      const value = data[mapping[0]];
+
+      delete data[mapping[0]];
+
+      data[mapping[1]] = value;
+    }
+
+    return data;
+  }
+
   @Post('/')
   async create(@Req() req: Request, @PathParams('formId') formId: string, @Res() res: Response) {
     console.log(req.body);
@@ -65,6 +84,8 @@ export class SubmissionController {
     const form = await db.form.findOne({ where: { id: formId } });
 
     if (!form) throw new NotFound('Form not found');
+
+    req.body = this.handleFields(form, req.body);
 
     if (!(await this.securityService.handleSecurity(form, req, res))) return;
 
