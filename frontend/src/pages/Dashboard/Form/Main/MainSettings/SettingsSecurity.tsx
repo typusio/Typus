@@ -3,42 +3,18 @@ import { useFormik } from 'formik';
 
 import classNames from 'classnames';
 import { API_URL } from '../../../../../util/api';
+import { useApiForm } from '../../../../../util/hooks';
 
 export const SettingsSecurity = ({ formId }: { formId: string }) => {
-  const [loading, setLoading] = useState(true);
-
-  const { values, handleChange, setValues, handleSubmit } = useFormik({
+  const { loading, values, setValues, handleChange, handleSubmit } = useApiForm(`/security/${formId}`, {
     initialValues: {
       recaptchaSecret: '',
       honey: '',
       allowedDomains: '',
       recaptchaEnabled: false,
     },
-    async onSubmit(values) {
-      await fetch(`${API_URL}/security/${formId}`, {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'PATCH',
-        body: JSON.stringify(values),
-      });
-    },
+    ignoredValues: ['formId', 'id'],
   });
-
-  useEffect(() => {
-    async function fetchSecurity() {
-      const data = await fetch(`${API_URL}/security/${formId}`, { credentials: 'include' }).then(res => res.json());
-
-      delete data.id;
-      delete data.formId;
-
-      setValues(data);
-      setLoading(false);
-    }
-
-    fetchSecurity();
-  }, []);
 
   return (
     <div className="mt-4">

@@ -15,6 +15,8 @@ import { RequireFormAccess } from '../middleware/RequireFormAccess';
 import { hasFormAccess } from '../util/hasFormAccess';
 import { SecurityService } from '../services/SecurityService';
 import { RenderService } from '../services/RenderService';
+import { NotificationsService } from '../services/NotificationsService';
+import { Submission } from '@prisma/client';
 
 @Controller('/:formId')
 @MergeParams()
@@ -25,6 +27,7 @@ export class SubmissionController {
     private readonly confirmationService: ConfirmationService,
     private readonly securityService: SecurityService,
     private readonly renderService: RenderService,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   private async handleFiles(req: Request) {
@@ -46,12 +49,12 @@ export class SubmissionController {
     return req.body;
   }
 
-  private async handleSuccess(req: Request, res: Response, origin: string, formId: string) {
+  private async handleSuccess(req: Request, res: Response, formId: string, submission: Submission) {
     if (req.headers['content-type']?.includes('application/json')) {
       return res.status(201).json({ message: 'recieved successfully' });
     }
 
-    return this.renderService.renderSuccess(res, formId);
+    return this.renderService.renderSuccess(res, formId, submission);
   }
 
   @Post('/')
@@ -75,9 +78,10 @@ export class SubmissionController {
       data: { data: JSON.stringify(req.body), form: { connect: { id: form.id } }, ip: { connect: { address: ip.address } } },
     });
 
-    await this.handleSuccess(req, res, req.get('host')?.toString() ?? '', form.id);
+    await this.handleSuccess(req, res, form.id, submission);
 
     this.confirmationService.handleSubmission(form, submission);
+    this.notificationsService.handleSubmission(form, submission);
   }
 
   @Get('/submissions')

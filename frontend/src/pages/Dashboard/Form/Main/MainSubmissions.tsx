@@ -170,7 +170,7 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
                               {Object.keys(JSON.parse(sub.data)).map(key => (
                                 <tr>
                                   <td className="text-gray-600 pr-5">{key} </td>
-                                  <td className=" max-w-xs">{JSON.parse(sub.data)[key]}</td>
+                                  <td className="max-w-xs truncate break-normal">{JSON.parse(sub.data)[key]}</td>
                                 </tr>
                               ))}
                             </tbody>

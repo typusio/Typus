@@ -1,0 +1,64 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+
+        <mj-text font-size="50px" color="black" align="center">
+          Typus
+        </mj-text>
+
+        <mj-divider border-color="#1c64f2"></mj-divider>
+
+        <mj-text font-size="20px" align="center">
+          There was a new submission on your form
+        </mj-text>
+        <mj-text font-weight=700 font-size="30px" color="#1c64f2" align="center" padding-top="0">
+          <mj-raw>
+            <%- formName %>
+          </mj-raw>
+        </mj-text>
+
+        <mj-text font-size="20px" align="center">
+          Heres what they had to say:
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section>
+      <mj-column width="100%">
+        <mj-text>
+          <mj-table align="center">
+            <tbody align="center">
+              <mj-raw>
+                <% for(const key of Object.keys(data)) { %>
+              </mj-raw>
+              <tr>
+                <td style="font-size: 20px; font-weight: 500;">
+                  <mj-raw>
+                    <%- key %>
+                  </mj-raw>
+                </td>
+                <td style="font-size: 20px;">
+                  <mj-raw>
+                    <%- data[key] %>
+                  </mj-raw>
+                </td>
+              </tr>
+              <mj-raw>
+                <% } %>
+              </mj-raw>
+            </tbody>
+          </mj-table>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section>
+      <mj-column width="100%">
+        <mj-button width="100%" background-color="#1c64f2" font-size="25px" font-weight="500">
+          View your form
+        </mj-button>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

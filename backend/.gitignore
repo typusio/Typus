@@ -55,3 +55,4 @@ test/**/*.js.map
 uploads/
 
 .env
+src/views/emails/*

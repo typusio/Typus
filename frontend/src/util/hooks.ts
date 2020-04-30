@@ -2,6 +2,8 @@ import { useMemo, MutableRefObject, useEffect, useState } from 'react';
 import { useParams, useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 
 import queryString from 'query-string';
+import { useFormik, FormikValues } from 'formik';
+import { API_URL } from './api';
 
 export function useRouter() {
   const params = useParams();
@@ -63,4 +65,37 @@ export function useDebounce<T>(value: T, delay: number) {
   }, [value, delay]);
 
   return debouncedValue;
+}
+
+export function useApiForm(route: string, { ignoredValues, initialValues }: { ignoredValues: string[]; initialValues: { [key: string]: any } }) {
+  const [loading, setLoading] = useState(true);
+
+  const formik = useFormik({
+    initialValues,
+    async onSubmit(values) {
+      await fetch(`${API_URL}${route}`, {
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        method: 'PATCH',
+        body: JSON.stringify(values),
+      });
+    },
+  });
+
+  useEffect(() => {
+    async function fetchValues() {
+      const data = await fetch(`${API_URL}${route}`, { credentials: 'include' }).then(res => res.json());
+
+      for (const value of ignoredValues) {
+        delete data[value];
+      }
+
+      formik.setValues(data);
+      setLoading(false);
+    }
+
+    fetchValues();
+  }, []);
+
+  return { ...formik, loading };
 }

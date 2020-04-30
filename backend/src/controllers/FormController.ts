@@ -31,6 +31,7 @@ export class FormController {
         name,
         appearance: { create: {} },
         security: { create: { recaptchaSecret: '', honey: crypto.randomBytes(2).toString('hex'), allowedDomains: '' } },
+        notifications: { create: {} },
       },
     });
 

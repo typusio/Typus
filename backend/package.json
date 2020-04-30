@@ -9,7 +9,8 @@
     "start": "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate save --experimental && prisma migrate up --experimental"
+    "prisma:migrate": "prisma migrate save --experimental && prisma migrate up --experimental",
+    "emails:compile": "mjml src/emails/submission.mjml -o src/views/emails/submission.ejs"
   },
   "dependencies": {
     "@prisma/client": "2.0.0-beta.2",
@@ -35,6 +36,7 @@
     "liquid": "4.0.1",
     "mailgun-js": "0.22.0",
     "method-override": "3.0.0",
+    "mjml": "^4.6.2",
     "node-fetch": "^2.6.0",
     "ts-httpexceptions": "4.1.0"
   },

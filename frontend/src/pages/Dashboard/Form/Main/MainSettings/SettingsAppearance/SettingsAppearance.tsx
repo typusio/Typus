@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useFormik } from 'formik';
-import { API_URL } from '../../../../../../util/api';
 import { AppearanceSuccess } from './AppearanceSuccess';
 import { AppearanceError } from './AppearanceError';
+import { useApiForm } from '../../../../../../util/hooks';
 
 export const SettingsAppearance = ({ formId }: { formId: string }) => {
-  const [loading, setLoading] = useState(true);
-
-  const { values, setValues, handleChange, handleSubmit } = useFormik({
+  const { loading, handleChange, values, setValues, handleSubmit } = useApiForm(`/appearance/${formId}`, {
     initialValues: {
       successMode: 'Our',
       successCustomRedirect: '',
@@ -24,31 +21,8 @@ export const SettingsAppearance = ({ formId }: { formId: string }) => {
       errorBackgroundColor: '',
       errorDots: true,
     },
-    async onSubmit() {
-      await fetch(`${API_URL}/appearance/${formId}`, {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-        method: 'PATCH',
-      });
-    },
+    ignoredValues: ['formId', 'id'],
   });
-
-  useEffect(() => {
-    async function fetchAppearance() {
-      const data = await fetch(`${API_URL}/appearance/${formId}`, { credentials: 'include' }).then(res => res.json());
-
-      delete data.formId;
-      delete data.id;
-
-      setLoading(false);
-      setValues(data);
-    }
-
-    fetchAppearance();
-  }, []);
 
   return (
     <form>

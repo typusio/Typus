@@ -1,4 +1,4 @@
-import { Required, MaxLength, Email } from '@tsed/common';
+import { Required, MaxLength, Email, Allow } from '@tsed/common';
 import { isEmpty } from '@tsed/core';
 
 export class EditConfirmationModel {
@@ -14,5 +14,6 @@ export class EditConfirmationModel {
   @MaxLength(60)
   fromName: string;
 
+  @Allow()
   fromAddress: string;
 }
