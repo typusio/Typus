@@ -13,6 +13,7 @@
     "emails:compile": "mjml src/emails/submission.mjml -o src/views/emails/submission.ejs"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^7.6.1",
     "@prisma/client": "2.0.0-beta.2",
     "@tsed/ajv": "5.49.1",
     "@tsed/common": "5.49.0",
@@ -22,7 +23,6 @@
     "argon2": "0.26.2",
     "body-parser": "1.19.0",
     "compression": "1.7.4",
-    "concurrently": "5.2.0",
     "connect-redis": "4.0.4",
     "cookie-parser": "1.4.5",
     "cors": "2.8.5",
@@ -36,7 +36,6 @@
     "liquid": "4.0.1",
     "mailgun-js": "0.22.0",
     "method-override": "3.0.0",
-    "mjml": "^4.6.2",
     "node-fetch": "^2.6.0",
     "ts-httpexceptions": "4.1.0"
   },
@@ -56,7 +55,7 @@
     "@types/method-override": "0.0.31",
     "@types/node": "13.13.4",
     "@types/node-fetch": "^2.5.7",
-    "concurrently": "5.2.0",
+    "mjml": "^4.6.2",
     "nodemon": "2.0.3",
     "ts-node": "8.9.1",
     "typescript": "3.8.3"

@@ -8,48 +8,62 @@ services:
     working_dir: /app
     depends_on:
       - postgres
+      - redis
+      - elasticsearch
+    networks:
+      - postgres
+      - redis
+      - elastic
     environment:
       NODE_ENV: development
     ports:
       - 4000:4000
-    links:
-      - postgres
     command: npm run start
 
   postgres:
     image: postgres
-    restart: 'always'
-    ports:
-      - 5432:5432
-    expose:
-      - 5432
+    restart: always
+    networks:
+      - postgres
     environment:
       POSTGRES_USER: 'admin'
       POSTGRES_DB: 'typus'
       POSTGRES_PASSWORD: abc123
       PGPORT: 5432
+    volumes:
+      - 'postgres_data:/postgres/data'
+    ports: 
+      - 5432:5432
 
   redis:
-    image: 'bitnami/redis:5.0'
+    image: bitnami/redis:5.0
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
     ports:
       - '6379:6379'
-    volumes:
+    networks:
+      - redis
+  volumes:
       - 'redis_data:/redis/data'
 
-  minio:
-    image: minio/minio:RELEASE.2020-04-10T03-34-42Z
+  elasticsearch:
+    image: blacktop/elasticsearch
     volumes:
-      - minio_data:/minio_data
+      - ./elasticsearch:/usr/share/elasticsearch/data
+    networks:
+      - elastic
     ports:
-      - '9000:9000'
-    environment:
-      MINIO_ACCESS_KEY: minio
-      MINIO_SECRET_KEY: minio123
-    command: server minio_data:/minio_data
+      - '9200:9200'
+    volumes:
+      - 'elastic_data:/elastic/data'
 
 volumes:
   redis_data:
-  minio_data:
+  postgres_data:
+  elastic_data:
+
+networks:
+  redis:
+  postgres:
+  elastic:

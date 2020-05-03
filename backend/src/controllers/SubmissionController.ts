@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Res, Req, PathParams, MergeParams, QueryParams, Delete, BodyParams, UseBefore, Patch, Put } from '@tsed/common';
+import { Controller, Get, Post, Res, Req, PathParams, MergeParams, QueryParams, Delete, BodyParams, UseBefore, Patch, Put, Locals } from '@tsed/common';
 import { Request, Response } from 'express';
 import { db } from '../Prisma';
 import { IpService } from '../services/IpService';
@@ -9,7 +9,6 @@ import { EditNoteModel } from './models/EditNoteModel';
 import * as crypto from 'crypto';
 import { ValidationService } from '../services/ValidationService';
 import { UploadedFile } from 'express-fileupload';
-import { RequireFormOwner } from '../middleware/RequireFormOwner';
 import { ConfirmationService } from '../services/ConfirmationService';
 import { RequireFormAccess } from '../middleware/RequireFormAccess';
 import { hasFormAccess } from '../util/hasFormAccess';
@@ -17,6 +16,8 @@ import { SecurityService } from '../services/SecurityService';
 import { RenderService } from '../services/RenderService';
 import { NotificationsService } from '../services/NotificationsService';
 import { Submission, Form } from '@prisma/client';
+import { ElasticService } from '../services/ElasticService';
+import { elastic } from '../Elastic';
 
 @Controller('/:formId')
 @MergeParams()
@@ -28,6 +29,7 @@ export class SubmissionController {
     private readonly securityService: SecurityService,
     private readonly renderService: RenderService,
     private readonly notificationsService: NotificationsService,
+    private readonly elasticService: ElasticService,
   ) {}
 
   private async handleFiles(req: Request) {
@@ -88,7 +90,6 @@ export class SubmissionController {
     req.body = this.handleFields(form, req.body);
 
     if (!(await this.securityService.handleSecurity(form, req, res))) return;
-
     delete req.body['g-recaptcha-response'];
 
     if (!(await this.validationService.handleValidation(req, res, form))) return;
@@ -100,6 +101,8 @@ export class SubmissionController {
     });
 
     await this.handleSuccess(req, res, form.id, submission);
+
+    await this.elasticService.indexSubmission(submission, form);
 
     this.confirmationService.handleSubmission(form, submission);
     this.notificationsService.handleSubmission(form, submission);
@@ -127,13 +130,14 @@ export class SubmissionController {
     for (const submission of req.body.submissions as number[]) {
       const dbSubmission = await db.submission.findOne({ where: { id: submission }, include: { form: true } });
 
-      console.log(dbSubmission);
-
       if (!(await hasFormAccess(dbSubmission!.form.id, req.session!.user))) {
         throw new BadRequest('You must be the owner of these submissions to do this');
       }
 
-      if (dbSubmission) await db.submission.delete({ where: { id: submission } });
+      if (dbSubmission) {
+        await db.submission.delete({ where: { id: submission } });
+        await this.elasticService.deleteSubmission(submission);
+      }
     }
   }
 
@@ -180,5 +184,23 @@ export class SubmissionController {
     await db.submission.update({ where: { id: submissionId }, data: { spam: true } });
 
     return 'spam_added';
+  }
+
+  @Get('/search/:query')
+  @UseBefore(RequireAuth, RequireFormAccess)
+  async search(@PathParams('query') query: string, @Locals('form') form: Form) {
+    const { body } = await elastic.search({ index: 'submissions', body: { query: { multi_match: { query, fields: ['data.*'], fuzziness: '1' } } } });
+    const hits = body.hits.hits.sort((a: any, b: any) => a._score + b._score);
+
+    const result = [];
+
+    for (const hit of hits) {
+      let submission = await db.submission.findOne({ where: { id: hit._source.id }, include: { ip: true, form: true } });
+      if (!submission) continue;
+
+      result.push(submission);
+    }
+
+    return result;
   }
 }

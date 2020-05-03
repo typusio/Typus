@@ -4,6 +4,7 @@ import { Form } from '@prisma/client';
 
 import { Request, Response } from 'express';
 import { RenderService } from './RenderService';
+import { elastic } from '../Elastic';
 
 export type Validator = (context: ValidatorContext) => boolean | Promise<boolean>;
 export type ValidatorMeta = { name: string; requireDetail: boolean; detailSubtext?: string; defaultError: string; middleText: string; required?: boolean };
@@ -36,13 +37,31 @@ export class ValidationService {
       return !!value;
     },
     async unique({ formId, value, field }: ValidatorContext) {
-      const submissions = await db.form.findOne({ where: { id: formId } }).submission();
+      await elastic.indices.refresh({ index: 'submissions' });
 
-      for (const submission of submissions) {
-        if (JSON.parse(submission.data)[field] == value) {
-          return false;
-        }
-      }
+      const { body } = await elastic.search({
+        index: 'submissions',
+        body: {
+          query: {
+            bool: {
+              must: [
+                {
+                  match: {
+                    [`data.${field}`]: value,
+                  },
+                },
+                {
+                  match: {
+                    formId,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      });
+
+      if (body.hits?.total?.value > 0) return false;
 
       return true;
     },

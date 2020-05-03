@@ -12,10 +12,11 @@ import { EditFormModel } from './models/EditFormModel';
 
 import { Response } from 'express';
 import { ExportService } from '../services/ExportService';
+import { ElasticService } from '../services/ElasticService';
 
 @Controller('/form')
 export class FormController {
-  public constructor(private readonly exportService: ExportService) {}
+  public constructor(private readonly exportService: ExportService, private readonly elasticService: ElasticService) {}
 
   private generateUrl(name: string) {
     return name.trimLeft().trimRight().toLowerCase().split(' ').join('-') + '-' + crypto.randomBytes(2).toString('hex');
@@ -41,6 +42,7 @@ export class FormController {
   @Delete('/:formId')
   @UseBefore(RequireAuth, RequireFormAccess)
   async delete(@PathParams('formId') formId: string, @Req() req: Request, @Locals('form') form: Form) {
+    await this.elasticService.deleteFormIndexes(formId);
     await db.form.delete({ where: { id: formId } });
 
     return 'Form deleted';
