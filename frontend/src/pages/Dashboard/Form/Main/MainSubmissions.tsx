@@ -8,6 +8,9 @@ import { SubmissionPopup } from '../../../../components/SubmissionPopup';
 
 import Void from '../../../../assets/void.svg';
 import { API_URL } from '../../../../util/api';
+import { useDebounce } from '../../../../util/hooks';
+
+import FileSearching from '../../../../assets/file-searching.svg';
 
 export const MainSubmissions = ({ formId }: { formId: string }) => {
   const [perPage] = useState(10);
@@ -15,9 +18,41 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
   const [page, setPage] = useState(0);
 
   const [shown, setShown] = useState<Submission[]>([]);
+  const [paginatedRetults, setPaginatedResults] = useState<Submission[]>([]);
 
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<number[]>([]);
+
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchLoading, setSearchLoading] = useState(false);
+
+  useEffect(() => {
+    if (searchQuery) {
+      setIsSearching(true);
+      setSearchLoading(true);
+      return setShown([]);
+    }
+
+    setIsSearching(false);
+    setShown(paginatedRetults);
+    setSearchLoading(false);
+  }, [searchQuery]);
+
+  const debouncedSearch = useDebounce(searchQuery, 1000);
+
+  useEffect(() => {
+    async function search() {
+      if (searchQuery) {
+        const data = await fetch(`${API_URL}/${formId}/search/${encodeURIComponent(searchQuery)}`, { credentials: 'include' }).then(res => res.json());
+
+        setShown(data);
+        setSearchLoading(false);
+      }
+    }
+
+    search();
+  }, [debouncedSearch]);
 
   const [popup, setPopup] = useState(0);
 
@@ -27,6 +62,7 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
     const data = await res.json();
 
     setShown(data.submissions);
+    setPaginatedResults(data.submissions);
     setTotal(data.total);
 
     setPage(page);
@@ -46,6 +82,11 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
     setSelected([]);
 
     const maxPage = Math.ceil((total - selected.length) / perPage) - 1;
+
+    if (isSearching && selected.length == shown.length) {
+      setPaginatedResults(paginatedRetults.filter(s => !selected.includes(s.id)));
+      setSearchQuery('');
+    }
 
     if (page > maxPage) {
       if (page == 0) {
@@ -92,14 +133,14 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
         </div>
       )}
 
-      {!loading && total == 0 && (
+      {!loading && total == 0 && !isSearching && (
         <div>
           <img src={Void} className="w-1/4 h-1/4 mt-2 mx-auto"></img>
           <h2 className="text-center text-xl mt-3 mb-5">No submissions yet</h2>
         </div>
       )}
 
-      {shown.length !== 0 && (
+      {total !== 0 && (
         <div>
           <div className="mb-3 sm:mb-0">
             <div className="flex rounded-md ">
@@ -129,13 +170,58 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
                   id="filter"
                   className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 transition ease-in-out duration-150"
                   placeholder="Search submissions"
+                  value={searchQuery}
+                  onChange={e => {
+                    setSearchQuery(e.target.value);
+                  }}
                 />
               </div>
             </div>
           </div>
           <ul>
+            {!loading && searchLoading && (
+              <div className="w-full">
+                <div className="flex mt-8">
+                  <span className="text-center mx-auto text-xl justify-center">Searching...</span>
+                </div>
+
+                <div className="flex flex-row justify-center">
+                  <div className="spinner">
+                    <div className="double-bounce1"></div>
+                    <div className="double-bounce2"></div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {isSearching && !searchLoading && shown.length !== 0 && (
+              <div className="w-full flex flex-col mt-2">
+                <span className="text-center mx-auto">Showing results for "{searchQuery}"</span>
+
+                <span className="inline-flex rounded-md shadow-sm mt-2 mx-auto">
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
+                  >
+                    Reset search
+                  </button>
+                </span>
+              </div>
+            )}
+
+            {isSearching && !searchLoading && shown.length == 0 && (
+              <div className="mt-2">
+                <img src={FileSearching} alt="" className="mx-auto w-48" />
+                <div className="flex flex-col mt-3">
+                  <span className="text-center text-xl">No results found for "{searchQuery}".</span>
+                  <span className="text-center mt-1 text-gray-500">Try searching something else?</span>
+                </div>
+              </div>
+            )}
+
             {shown.map((sub, index) => (
-              <li>
+              <li className="mt-2">
                 <a
                   className={classNames('block hover:bg-gray-50 focus:outline-none transition duration-150 ease-in-out cursor-pointer', {
                     'bg-gray-100 hover:bg-gray-200': index % 2 !== 0,
@@ -212,35 +298,37 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
               </li>
             ))}
           </ul>
-          <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-            <div className="hidden sm:block">
-              <p className="text-sm leading-5 text-gray-700">
-                Showing page <span className="font-medium">{page + 1}</span> of<span className="font-medium"> {Math.ceil(total / perPage)}</span>
-              </p>
+          {!isSearching && (
+            <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+              <div className="hidden sm:block">
+                <p className="text-sm leading-5 text-gray-700">
+                  Showing page <span className="font-medium">{page + 1}</span> of<span className="font-medium"> {Math.ceil(total / perPage)}</span>
+                </p>
+              </div>
+              <div className="flex-1 flex justify-between sm:justify-end">
+                {page !== 0 && (
+                  <a
+                    onClick={() => {
+                      fetchSubmissions(page - 1);
+                    }}
+                    className="mr-2 cursor-pointer relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
+                  >
+                    Previous
+                  </a>
+                )}
+                {page + 1 !== Math.ceil(total / perPage) && (
+                  <a
+                    onClick={() => {
+                      fetchSubmissions(page + 1);
+                    }}
+                    className="cursor-pointer relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
+                  >
+                    Next
+                  </a>
+                )}
+              </div>
             </div>
-            <div className="flex-1 flex justify-between sm:justify-end">
-              {page !== 0 && (
-                <a
-                  onClick={() => {
-                    fetchSubmissions(page - 1);
-                  }}
-                  className="mr-2 cursor-pointer relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
-                >
-                  Previous
-                </a>
-              )}
-              {page + 1 !== Math.ceil(total / perPage) && (
-                <a
-                  onClick={() => {
-                    fetchSubmissions(page + 1);
-                  }}
-                  className="cursor-pointer relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
-                >
-                  Next
-                </a>
-              )}
-            </div>
-          </div>
+          )}
         </div>
       )}
     </div>
