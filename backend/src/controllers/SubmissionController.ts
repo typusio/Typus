@@ -37,6 +37,10 @@ export class SubmissionController {
       for (const key of Object.keys(req.files)) {
         const file = req.files[key] as UploadedFile;
 
+        if (file.size > 5e7) {
+          throw new BadRequest(`Uploaded files must be less then 50mb.`);
+        }
+
         let split = file.name.split('.');
         split[split.length - 1] = crypto.randomBytes(4).toString('hex') + '.' + split[split.length - 1];
 
