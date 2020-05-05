@@ -10,7 +10,8 @@
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate save --experimental && prisma migrate up --experimental",
-    "emails:compile": "mjml src/emails/submission.mjml -o src/views/emails/submission.ejs"
+    "emails:compile": "mjml src/emails/submission.mjml -o src/views/emails/submission.ejs",
+    "copy:views": "cp -r ./src/views ./dist/views"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.6.1",
