@@ -20,7 +20,7 @@
     "@tsed/ajv": "5.49.1",
     "@tsed/common": "5.49.0",
     "@tsed/core": "5.49.0",
-    "@tsed/di": "5.49.0",
+    "@tsed/di": "5.52.1",
     "ajv": "6.12.2",
     "argon2": "0.26.2",
     "body-parser": "1.19.0",
