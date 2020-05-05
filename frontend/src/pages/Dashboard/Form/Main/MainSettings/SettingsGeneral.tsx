@@ -69,7 +69,9 @@ export const SettingsGeneral = ({ formId }: { formId: string }) => {
             </div>
 
             <label className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
-              Hidden fields <span className="text-blue-600">Read More</span>
+              Hidden fields
+              <br />
+              <span className="text-blue-600">Read More</span>
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <div className="max-w-lg rounded-md shadow-sm">
@@ -85,7 +87,9 @@ export const SettingsGeneral = ({ formId }: { formId: string }) => {
             </div>
 
             <label className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
-              Mapped fields <span className="text-blue-600">Read More</span>
+              Mapped fields
+              <br />
+              <span className="text-blue-600">Read More</span>
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <div className="max-w-lg rounded-md shadow-sm">

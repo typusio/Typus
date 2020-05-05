@@ -85,7 +85,7 @@ export const SettingsSecurity = ({ formId }: { formId: string }) => {
               <div>
                 <h3 className="text-lg leading-6 font-medium text-gray-900">Honeypot Field</h3>
                 <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-                  Lure in bots by having a hidden field on your site. <span className="text-blue-600 cursor-pointer font-semibold">Read more</span>
+                  Lure in bots by having a hidden field on your site. <span className="text-blue-600 cursor-pointer">Read more</span>
                 </p>
               </div>
               <div className="mt-6 sm:mt-5">
@@ -108,7 +108,7 @@ export const SettingsSecurity = ({ formId }: { formId: string }) => {
               <div>
                 <h3 className="text-lg leading-6 font-medium text-gray-900">Allowed Domains</h3>
                 <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-                  Restrict submissions to only come from certail domains. <span className="text-blue-600 cursor-pointer font-semibold">Read more</span>
+                  Restrict submissions to only come from certail domains. <span className="text-blue-600 cursor-pointer">Read more</span>
                 </p>
               </div>
               <div className="mt-6 sm:mt-5">

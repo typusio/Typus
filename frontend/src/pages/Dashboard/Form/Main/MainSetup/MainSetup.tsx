@@ -91,7 +91,7 @@ export const MainSetup = ({ formId }: { formId: string }) => {
       </div>
 
       <div className="flex justify-center">
-        <a className="mx-auto text-blue-600 mt-8 text-lg active:underline" href={DOCS_URL} target="_blank">
+        <a className="mx-auto text-blue-600 mt-8 text-lg active:underline" href={`${DOCS_URL}/getting-started/setup`} target="_blank">
           Read our docs to learn about validation, file uploads, and many other features.
         </a>
       </div>

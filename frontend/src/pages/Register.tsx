@@ -107,7 +107,7 @@ export const RegisterPage = () => {
 
             <div className="mt-6">
               <label htmlFor="password" className="block text-sm font-medium leading-5 text-gray-700">
-                Password
+                Confirm Password
               </label>
               <div className="mt-1 rounded-md shadow-sm">
                 <input

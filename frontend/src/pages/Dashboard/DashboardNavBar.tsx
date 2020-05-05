@@ -22,7 +22,7 @@ export const DashboardNavBar = () => {
     authContext.loggedIn = false;
     authContext.user = null;
 
-    return push('/login');
+    return push('/');
   }
 
   return (

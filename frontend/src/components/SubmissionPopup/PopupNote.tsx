@@ -46,9 +46,6 @@ export const PopupNote = ({ submission }: { submission: Submission }) => {
             onChange={e => setValue(e.target.value)}
           ></textarea>
         </div>
-        <div className="flex flex-row justify-between">
-          <p className="text-sm text-gray-500 mt-1">Only you can see this</p>
-        </div>
       </div>
     </div>
   );

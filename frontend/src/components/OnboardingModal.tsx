@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Transition } from './Transition';
 import { useOutsideClick } from '../util/hooks';
+import { DOCS_URL } from '../util/api';
 
 interface Props {
   onClose: () => void;
@@ -60,7 +61,7 @@ export const OnboardingModal = ({ open, onClose }: Props) => {
                 <button
                   type="button"
                   onClick={() => {
-                    window.open('google.com');
+                    window.open(`${DOCS_URL}/getting-started/setup`);
                     onClose();
                   }}
                   className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5"

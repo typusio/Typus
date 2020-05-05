@@ -86,7 +86,7 @@ export class FormController {
 
     const submissions = await db.submission.count({ where: { formId: form.id, spam: false } });
     const spam = await db.submission.count({ where: { formId: form.id, spam: true } });
-    const today = await db.submission.count({ where: { createdAt: { gt: new Date(startToday) } } });
+    const today = await db.submission.count({ where: { createdAt: { gt: new Date(startToday) }, formId: form.id } });
 
     return { submissions, spam, today };
   }
