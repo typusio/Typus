@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import { User } from '../util/interfaces';
 
 class State {

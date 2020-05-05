@@ -34,7 +34,9 @@ export const LoginPage = () => {
 
       if (res.status == 400) return addToast('Invalid username/password combination', { appearance: 'error', autoDismiss: true });
       addToast('Successfully logged in. Redirecting...', { appearance: 'success', autoDismiss: true });
+
       authContext.loggedIn = true;
+      authContext.user = await res.json();
 
       push('/dashboard');
     },

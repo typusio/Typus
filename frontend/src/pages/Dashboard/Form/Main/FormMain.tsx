@@ -111,7 +111,7 @@ export const FormMain = ({ formId }: { formId: string }) => {
 
           <div className="px-4 pt-5 pb-3 sm:px-6">
             {selected == 'Submissions' && <MainSubmissions formId={formId} />}
-            {selected == 'Setup' && <MainSetup />}
+            {selected == 'Setup' && <MainSetup formId={formId} />}
             {selected == 'Validation' && <MainValidation formId={formId} />}
             {selected == 'Notifications' && <MainNotifications formId={formId} />}
             {selected == 'Confirmation' && <MainConfirmation formId={formId} />}

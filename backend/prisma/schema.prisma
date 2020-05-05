@@ -46,6 +46,7 @@ model Form {
   notifications Notifications
   hiddenFields  String        @default("")
   mappedFields  String        @default("")
+  submissions   Submission[]
 }
 
 model Notifications {

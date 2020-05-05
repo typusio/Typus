@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { API_URL } from '../../../util/api';
 import { FormRedButton } from '../../../components/FormRedButton';
 import { ExportButton } from '../../../components/ExportButton';
+import { OnboardingModal } from '../../../components/OnboardingModal';
 
 export const DashboardForm = () => {
   const {
@@ -21,6 +22,12 @@ export const DashboardForm = () => {
   const [loading, setLoading] = useState(true);
 
   const [counts, setCounts] = useState<FormCounts>();
+
+  const [onboardingShown, setOnboardingShown] = useState(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem('onboardingShown')) setOnboardingShown(true);
+  }, []);
 
   const id = (params as any).id;
 
@@ -48,6 +55,15 @@ export const DashboardForm = () => {
 
   return (
     <div>
+      <OnboardingModal
+        open={onboardingShown}
+        onClose={() => {
+          localStorage.setItem('onboardingShown', 'true');
+
+          setOnboardingShown(false);
+        }}
+      />
+
       {!loading && notFound && (
         <div>
           <img src={NoData} className="mx-auto w-1/4 mt-5" />

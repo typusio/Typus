@@ -35,7 +35,8 @@ export const RegisterPage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ email: values.email, password: values.password }),
+        credentials: 'include',
       });
 
       if (res.status == 400) return setErrors({ email: 'This email is already in use' });

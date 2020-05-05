@@ -33,23 +33,17 @@ export class SubmissionController {
   ) {}
 
   private async handleFiles(req: Request) {
-    if (req.files) {
-      for (const key of Object.keys(req.files)) {
-        const file = req.files[key] as UploadedFile;
+    for (const key of Object.keys(req.files!)) {
+      const file = req.files![key] as UploadedFile;
 
-        if (file.size > 5e7) {
-          throw new BadRequest(`Uploaded files must be less then 50mb.`);
-        }
+      let split = file.name.split('.');
+      split[split.length - 1] = crypto.randomBytes(4).toString('hex') + '.' + split[split.length - 1];
 
-        let split = file.name.split('.');
-        split[split.length - 1] = crypto.randomBytes(4).toString('hex') + '.' + split[split.length - 1];
+      const path = split.join('.');
 
-        const path = split.join('.');
+      await file.mv(`./uploads/${path}`);
 
-        await file.mv(`./uploads/${path}`);
-
-        req.body[key] = `fileupload:${path}`;
-      }
+      req.body[key] = `fileupload:${path}`;
     }
 
     return req.body;
@@ -84,8 +78,6 @@ export class SubmissionController {
 
   @Post('/')
   async create(@Req() req: Request, @PathParams('formId') formId: string, @Res() res: Response) {
-    console.log(req.body);
-
     const ip = await this.ipService.find(req);
     const form = await db.form.findOne({ where: { id: formId } });
 
@@ -93,12 +85,22 @@ export class SubmissionController {
 
     req.body = this.handleFields(form, req.body);
 
+    if (req.files) {
+      const size = Object.keys(req.files)
+        .map(key => (req.files![key] as UploadedFile).size)
+        .reduce((acc, curr) => acc + curr);
+
+      if (size > 2.5e7) {
+        return this.renderService.renderError({ title: 'Upload error', error: 'Your files must collectively be less then 25mb.' }, res, form.id);
+      }
+
+      req.body = await this.handleFiles(req);
+    }
+
     if (!(await this.securityService.handleSecurity(form, req, res))) return;
     delete req.body['g-recaptcha-response'];
 
     if (!(await this.validationService.handleValidation(req, res, form))) return;
-
-    req.body = await this.handleFiles(req);
 
     const submission = await db.submission.create({
       data: { data: JSON.stringify(req.body), form: { connect: { id: form.id } }, ip: { connect: { address: ip.address } } },
