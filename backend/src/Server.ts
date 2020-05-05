@@ -34,7 +34,7 @@ export class Server extends ServerLoader {
   $beforeRoutesInit() {
     const RedisStore = connectRedis(session);
 
-    this.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
+    this.use(cors({ credentials: true, origin: (o, cb) => cb(null, true) }))
       .use(GlobalAcceptMimesMiddleware)
       .use(cookieParser())
       .use(compress({}))
