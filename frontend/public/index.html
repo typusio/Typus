@@ -7,16 +7,26 @@
     <title>React App</title>
 
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.2/styles/default.min.css" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.2/highlight.min.js"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
     <script>
-      hljs.initHighlightingOnLoad();
+      (function (f, a, t, h, o, m) {
+        a[h] =
+          a[h] ||
+          function () {
+            (a[h].q = a[h].q || []).push(arguments);
+          };
+        (o = f.createElement('script')), (m = f.getElementsByTagName('script')[0]);
+        o.async = 1;
+        o.src = t;
+        o.id = 'fathom-script';
+        m.parentNode.insertBefore(o, m);
+      })(document, window, '//analytics.typus.io/tracker.js', 'fathom');
+      fathom('set', 'siteId', 'OHUTN');
+      fathom('trackPageview');
     </script>
   </body>
 </html>
