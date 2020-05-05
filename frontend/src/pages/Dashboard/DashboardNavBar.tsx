@@ -2,7 +2,7 @@ import React, { useState, useRef, useContext } from 'react';
 import { Transition } from '../../components/Transition';
 import { Link } from 'react-router-dom';
 import { useOutsideClick, useRouter } from '../../util/hooks';
-import { API_URL } from '../../util/api';
+import { API_URL, DOCS_URL } from '../../util/api';
 import { AuthContext } from '../../store/AuthContext';
 
 export const DashboardNavBar = () => {
@@ -44,6 +44,14 @@ export const DashboardNavBar = () => {
                   >
                     Dashboard
                   </Link>
+
+                  <a
+                    href={DOCS_URL}
+                    className="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition ease-in-out duration-150"
+                    target="_blank"
+                  >
+                    Documentation
+                  </a>
                 </div>
               </div>
             </div>
@@ -106,11 +114,18 @@ export const DashboardNavBar = () => {
       {open && (
         <div className="border-b border-gray-700">
           <div className="px-2 py-3 sm:px-3">
-            <a
-              href="/"
+            <Link
+              to="/dashboard"
               className="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 transition ease-in-out duration-150"
             >
               Dashboard
+            </Link>
+            <a
+              href={DOCS_URL}
+              target="_blank"
+              className="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition ease-in-out duration-150"
+            >
+              Documentation
             </a>
           </div>
           <div className="pt-2 pb-3 border-t border-gray-700">
