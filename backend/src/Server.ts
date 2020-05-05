@@ -49,7 +49,7 @@ export class Server extends ServerLoader {
         session({
           store: new RedisStore({ client: redis }),
           name: 'qid',
-          secret: 'temptemp',
+          secret: process.env.SESSION_SECRET!,
           resave: false,
           saveUninitialized: false,
           cookie: {
