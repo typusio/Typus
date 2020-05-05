@@ -44,8 +44,8 @@ services:
       - '6379:6379'
     networks:
       - redis
-  volumes:
-      - 'redis_data:/redis/data'
+    volumes:
+        - 'redis_data:/redis/data'
 
   elasticsearch:
     image: blacktop/elasticsearch
