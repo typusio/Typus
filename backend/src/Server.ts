@@ -63,6 +63,10 @@ export class Server extends ServerLoader {
       .set('view engine', 'ejs')
       .use(fileUpload({ path: './uploads', upload: true, createParentPath: true }));
 
+    if (process.env.NODE_ENV == 'production') {
+      this.set('trust proxy', 1);
+    }
+
     return null;
   }
 }
