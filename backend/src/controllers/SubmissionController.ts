@@ -78,6 +78,8 @@ export class SubmissionController {
 
   @Post('/')
   async create(@Req() req: Request, @PathParams('formId') formId: string, @Res() res: Response) {
+    console.log(req.headers);
+
     const ip = await this.ipService.find(req);
     const form = await db.form.findOne({ where: { id: formId } });
 

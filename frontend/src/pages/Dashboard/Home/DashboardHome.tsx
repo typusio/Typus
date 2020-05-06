@@ -19,6 +19,16 @@ export const DashboardHome = () => {
     fetchForms();
   }, []);
 
+  function generateGradient(name: string) {
+    let total = 0;
+
+    for (const letter of name.split('')) {
+      total += letter.charCodeAt(0);
+    }
+
+    return gradients[Math.floor(parseFloat(`0.${total.toFixed(0)}`) * gradients.length)];
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-5">
       <div className="flex flex-row justify-between">
@@ -62,10 +72,10 @@ export const DashboardHome = () => {
             </div>
           </Link>
 
-          {forms.map((form, index) => (
+          {forms.map(form => (
             <Link
               to={`/dashboard/form/${form.form.id}`}
-              style={{ backgroundImage: `linear-gradient(to right, ${gradients[index].colors[0]}, ${gradients[index].colors[1]})` }}
+              style={{ backgroundImage: `linear-gradient(to right, ${generateGradient(form.form.name)[0]}, ${generateGradient(form.form.name)[1]})` }}
               className="rounded-md sm:w-48 w-full h-64 font-semibold text-lg mr-5 mt-1"
             >
               <div className="flex flex-col h-full">

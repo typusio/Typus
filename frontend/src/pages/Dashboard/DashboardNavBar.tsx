@@ -35,7 +35,9 @@ export const DashboardNavBar = () => {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <h1 className="text-gray-200 font-semibold text-lg">
-                  <img className="h-8 w-auto" src={Logo} alt="" />
+                  <Link to={'/dashboard'}>
+                    <img className="h-8 w-auto" src={Logo} alt="" />
+                  </Link>
                 </h1>
               </div>
               <div className="hidden md:block">
