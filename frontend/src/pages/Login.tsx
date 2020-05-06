@@ -9,6 +9,8 @@ import { useRouter } from '../util/hooks';
 import { API_URL } from '../util/api';
 import { Link } from 'react-router-dom';
 
+import Logo from '../assets/logo.svg';
+
 export const LoginPage = () => {
   const { addToast } = useToasts();
   const authContext = useContext(AuthContext);
@@ -45,6 +47,8 @@ export const LoginPage = () => {
 
   return (
     <div className="bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 mt-12">
+      <img src={Logo} alt="" className="w-16 h-16 mx-auto mb-5" />
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="text-center text-3xl leading-9 font-extrabold text-gray-900">Sign in to your account</h2>
         <p className="mt-2 text-center text-sm leading-5 text-gray-600 max-w">
