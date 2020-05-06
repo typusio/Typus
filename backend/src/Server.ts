@@ -27,7 +27,7 @@ import { UserController } from './controllers/UserController';
   },
   exclude: ['**/*.spec.ts'],
   ajv: { errorFormat: (error: any) => `'${error.data}' ${error.message}`, options: { verbose: false } },
-  logger: undefined,
+  logger: { level: process.env.NODE_ENV == 'production' ? 'error' : 'info' },
   componentsScan: [`${rootDir}/services/**/*.ts`, `${rootDir}/middleware/**/*.ts`],
 })
 export class Server extends ServerLoader {
