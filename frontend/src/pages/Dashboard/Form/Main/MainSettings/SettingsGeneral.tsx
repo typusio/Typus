@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form } from '../../../../../util/interfaces';
-import { API_URL } from '../../../../../util/api';
+import { API_URL, DOCS_URL } from '../../../../../util/api';
 import { useFormik } from 'formik';
 import { useRouter } from '../../../../../util/hooks';
 
@@ -71,7 +71,9 @@ export const SettingsGeneral = ({ formId }: { formId: string }) => {
             <label className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
               Hidden fields
               <br />
-              <span className="text-blue-600">Read More</span>
+              <a className="text-blue-600" href={`${DOCS_URL}/fields/hidden-fields`} target="_blank">
+                Read More
+              </a>{' '}
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <div className="max-w-lg rounded-md shadow-sm">
@@ -89,7 +91,9 @@ export const SettingsGeneral = ({ formId }: { formId: string }) => {
             <label className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
               Mapped fields
               <br />
-              <span className="text-blue-600">Read More</span>
+              <a className="text-blue-600" href={`${DOCS_URL}/fields/mapped-fields`} target="_blank">
+                Read More
+              </a>
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <div className="max-w-lg rounded-md shadow-sm">

@@ -10,6 +10,7 @@ import { ValidationService } from '../services/ValidationService';
 import { ValidationRule, Form } from '@prisma/client';
 import { RequireFormOwner } from '../middleware/RequireFormOwner';
 import { RequireFormAccess } from '../middleware/RequireFormAccess';
+import { EditValidationModel } from './EditValidationModel';
 
 @Controller('/validation')
 export class ValidationController {
@@ -55,6 +56,14 @@ export class ValidationController {
     if (!form.validation) throw new NotFound('No validation setup');
 
     return form.validation;
+  }
+
+  @Patch('/:formId')
+  @UseBefore(RequireAuth, RequireFormAccess)
+  async edit(@Locals('form') form: Form, @Req() req: Request, @BodyParams() data: EditValidationModel) {
+    const validation = await db.form.findOne({ where: { id: form.id } }).validation();
+
+    return await db.validation.update({ where: { id: validation!.id }, data });
   }
 
   @Delete('/:formId/:ruleId')

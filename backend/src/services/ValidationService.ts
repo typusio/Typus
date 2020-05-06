@@ -120,36 +120,47 @@ export class ValidationService {
   }
 
   async handleValidation(req: Request, res: Response, form: Form) {
-    const rules = await db.form
-      .findOne({ where: { id: form.id } })
-      .validation()
-      .rules();
+    const validation = await db.form.findOne({ where: { id: form.id } }).validation({ select: { allowUnknown: true, id: true } });
 
-    if (rules) {
-      for (const rule of rules) {
-        if (!this.meta[rule.validator].required && !req.body[rule.field]) continue;
+    const rules = await db.validationRule.findMany({ where: { validationId: validation!.id } });
 
-        let result: boolean = await this.validators[rule.validator]({
-          formId: form.id,
-          field: rule.field,
-          value: req.body[rule.field],
-          detail: rule.detail ? rule.detail : '',
-        });
+    if (!rules) return true;
 
-        if (result == false) {
-          await this.handleValidationError(
-            req,
-            res,
-            rule.field,
-            (rule.errorMessage ? rule.errorMessage : this.meta[rule.validator].defaultError)
-              .replace('{field}', rule.field.charAt(0).toUpperCase() + rule.field.slice(1))
-              .replace('{detail}', rule.detail ? rule.detail : '')
-              .replace('{value}', req.body[rule.field]),
-            form.id,
-          );
+    if (validation!.allowUnknown == false) {
+      for (const field of Object.keys(req.body)) {
+        if (!req.body[field]) continue; // to deal with falsy fields
+
+        if (!rules.find(r => r.field == field)) {
+          await this.handleValidationError(req, res, field, `Field ${field} is not recognised.`, form.id);
 
           return false;
         }
+      }
+    }
+
+    for (const rule of rules) {
+      if (!this.meta[rule.validator].required && !req.body[rule.field]) continue;
+
+      let result: boolean = await this.validators[rule.validator]({
+        formId: form.id,
+        field: rule.field,
+        value: req.body[rule.field],
+        detail: rule.detail ? rule.detail : '',
+      });
+
+      if (result == false) {
+        await this.handleValidationError(
+          req,
+          res,
+          rule.field,
+          (rule.errorMessage ? rule.errorMessage : this.meta[rule.validator].defaultError)
+            .replace('{field}', rule.field.charAt(0).toUpperCase() + rule.field.slice(1))
+            .replace('{detail}', rule.detail ? rule.detail : '')
+            .replace('{value}', req.body[rule.field]),
+          form.id,
+        );
+
+        return false;
       }
     }
 

@@ -98,6 +98,7 @@ export class SubmissionController {
     }
 
     if (!(await this.securityService.handleSecurity(form, req, res))) return;
+
     delete req.body['g-recaptcha-response'];
 
     if (!(await this.validationService.handleValidation(req, res, form))) return;
