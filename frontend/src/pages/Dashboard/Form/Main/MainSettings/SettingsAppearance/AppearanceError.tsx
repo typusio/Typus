@@ -90,7 +90,7 @@ export const AppearanceError = ({ values, setValues, handleChange, formId }: Pro
                 <label className="block text-sm font-medium leading-5 text-gray-700">Icon background color</label>
 
                 <div className="mt-2">
-                  <SketchPicker color={values.errorIconBackground} onChangeComplete={color => setValues({ ...values, errorIconBackground: color.hex })} />
+                  <SketchPicker color={values.errorIconBackground} onChange={color => setValues({ ...values, errorIconBackground: color.hex })} />
                 </div>
               </div>
 
@@ -98,7 +98,7 @@ export const AppearanceError = ({ values, setValues, handleChange, formId }: Pro
                 <label className="block text-sm font-medium leading-5 text-gray-700">Icon color</label>
 
                 <div className="mt-2">
-                  <SketchPicker color={values.errorIconColor} onChangeComplete={color => setValues({ ...values, errorIconColor: color.hex })} />
+                  <SketchPicker color={values.errorIconColor} onChange={color => setValues({ ...values, errorIconColor: color.hex })} />
                 </div>
               </div>
 
@@ -106,7 +106,7 @@ export const AppearanceError = ({ values, setValues, handleChange, formId }: Pro
                 <label className="block text-sm font-medium leading-5 text-gray-700">Background Color</label>
 
                 <div className="mt-2">
-                  <SketchPicker color={values.errorBackgroundColor} onChangeComplete={color => setValues({ ...values, errorBackgroundColor: color.hex })} />
+                  <SketchPicker color={values.errorBackgroundColor} onChange={color => setValues({ ...values, errorBackgroundColor: color.hex })} />
                 </div>
               </div>
             </div>

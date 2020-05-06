@@ -103,7 +103,7 @@ export const AppearanceSuccess = ({ values, setValues, handleChange, formId }: P
                 <label className="block text-sm font-medium leading-5 text-gray-700">Tick background color</label>
 
                 <div className="mt-2">
-                  <SketchPicker color={values.successTickBackground} onChangeComplete={color => setValues({ ...values, successTickBackground: color.hex })} />
+                  <SketchPicker color={values.successTickBackground} onChange={color => setValues({ ...values, successTickBackground: color.hex })} />
                 </div>
               </div>
 
@@ -111,7 +111,7 @@ export const AppearanceSuccess = ({ values, setValues, handleChange, formId }: P
                 <label className="block text-sm font-medium leading-5 text-gray-700">Tick color</label>
 
                 <div className="mt-2">
-                  <SketchPicker color={values.successTickColor} onChangeComplete={color => setValues({ ...values, successTickColor: color.hex })} />
+                  <SketchPicker color={values.successTickColor} onChange={color => setValues({ ...values, successTickColor: color.hex })} />
                 </div>
               </div>
 
@@ -119,7 +119,7 @@ export const AppearanceSuccess = ({ values, setValues, handleChange, formId }: P
                 <label className="block text-sm font-medium leading-5 text-gray-700">Background Color</label>
 
                 <div className="mt-2">
-                  <SketchPicker color={values.successBackgroundColor} onChangeComplete={color => setValues({ ...values, successBackgroundColor: color.hex })} />
+                  <SketchPicker color={values.successBackgroundColor} onChange={color => setValues({ ...values, successBackgroundColor: color.hex })} />
                 </div>
               </div>
             </div>
