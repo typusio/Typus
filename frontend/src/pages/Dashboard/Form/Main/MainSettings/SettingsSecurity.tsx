@@ -31,7 +31,7 @@ export const SettingsSecurity = ({ formId }: { formId: string }) => {
               <div>
                 <h3 className="text-lg leading-6 font-medium text-gray-900">ReCaptcha</h3>
                 <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-                  Help secure your form with AI powered protection. <span className="text-blue-600 cursor-pointer font-semibold">Read more</span>
+                  Help secure your form with AI powered protection. <span className="text-blue-600 cursor-pointer">Read more</span>
                 </p>
               </div>
               <div className="mt-6 sm:mt-5">
@@ -74,9 +74,6 @@ export const SettingsSecurity = ({ formId }: { formId: string }) => {
                         onChange={handleChange}
                       />
                     </div>
-                    <p className="mt-2 text-sm text-gray-800" id="email-description">
-                      Wondering how to get this?
-                    </p>
                   </div>
                 </div>
               </div>

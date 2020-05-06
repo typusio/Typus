@@ -253,12 +253,15 @@ export const MainSubmissions = ({ formId }: { formId: string }) => {
                         <div>
                           <table className="text-sm">
                             <tbody>
-                              {Object.keys(JSON.parse(sub.data)).map(key => (
-                                <tr>
-                                  <td className="text-gray-600 pr-5">{key} </td>
-                                  <td className="max-w-xs truncate break-normal">{JSON.parse(sub.data)[key]}</td>
-                                </tr>
-                              ))}
+                              {Object.keys(JSON.parse(sub.data))
+                                .splice(0, 4)
+                                .map(key => (
+                                  <tr>
+                                    <td className="text-gray-600 pr-5">{key} </td>
+                                    <td className="max-w-xs truncate break-normal">{JSON.parse(sub.data)[key]}</td>
+                                  </tr>
+                                ))}
+                              {Object.keys(JSON.parse(sub.data)).length > 4 && <tr>...{Object.keys(JSON.parse(sub.data)).length - 4} more fields</tr>}
                             </tbody>
                           </table>
                         </div>

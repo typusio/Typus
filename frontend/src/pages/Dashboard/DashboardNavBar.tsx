@@ -5,6 +5,8 @@ import { useOutsideClick, useRouter } from '../../util/hooks';
 import { API_URL, DOCS_URL } from '../../util/api';
 import { AuthContext } from '../../store/AuthContext';
 
+import Logo from '../../assets/logo.svg';
+
 export const DashboardNavBar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { push } = useRouter();
@@ -33,7 +35,7 @@ export const DashboardNavBar = () => {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <h1 className="text-gray-200 font-semibold text-lg">
-                  <Link to={'/dashboard'}>Typus</Link>
+                  <img className="h-8 w-auto" src={Logo} alt="" />
                 </h1>
               </div>
               <div className="hidden md:block">
