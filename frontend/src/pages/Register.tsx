@@ -54,7 +54,7 @@ export const RegisterPage = () => {
 
   return (
     <div className="bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 mt-12">
-      <img src={Logo} alt="" className="w-16 h-16 mx-auto mb-5" />
+      <img src={Logo} alt="" className="w-16 h-16 mx-auto mb-5 cursor-pointer" onClick={() => push('/')} />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="text-center text-3xl leading-9 font-extrabold text-gray-900">Create an account</h2>
