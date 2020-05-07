@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@elastic/elasticsearch@^7.6.1":
+"@elastic/elasticsearch@7.6.1":
   version "7.6.1"
   resolved "https://registry.yarnpkg.com/@elastic/elasticsearch/-/elasticsearch-7.6.1.tgz#f23fb6146deb8053c1acc19bc4a6ddf6f9961a1e"
   integrity sha512-TEffCqUM9mK91eScc8pC/7p5+hF3+dXuz1lm40sxsB6495ilcVz7nn31BtOoocRTtmGdHjsCQRZqPpM0caatcQ==
@@ -255,7 +255,7 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.1.tgz#dc488842312a7f075149312905b5e3c0b054c79d"
   integrity sha512-FwI9gX75FgVBJ7ywgnq/P7tw+/o1GUbtP0KzbtusLigAOgIgNISRK0ZPl4qertvXSIE8YbsVJueQ90cDt9YYyw==
 
-"@types/node-fetch@^2.5.7":
+"@types/node-fetch@2.5.7":
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.7.tgz#20a2afffa882ab04d44ca786449a276f9f6bbf3c"
   integrity sha512-o2WVNf5UhWRkxlf6eq+jMZDu7kjgpgJfl4xVNlvryc95O/6F2ld8ztKX+qu+Rjyet93WAWm5LjeX9H5FGkODvw==
@@ -2639,7 +2639,7 @@ mjml-wrapper@4.6.2:
     mjml-core "4.6.2"
     mjml-section "4.6.2"
 
-mjml@^4.6.2:
+mjml@4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/mjml/-/mjml-4.6.2.tgz#b8dbfefa0663f5dd7f94f430738b83f3963e7bce"
   integrity sha512-Uc1pT08Bxd7MOlMnYZm25uwzXABq18oCqKcqCjOrxM/YhS1n+oQQrTaggda/i40/xK9LkHVlL+VElab8iQAnjg==
@@ -2736,7 +2736,7 @@ node-addon-api@^2.0.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-2.0.0.tgz#f9afb8d777a91525244b01775ea0ddbe1125483b"
   integrity sha512-ASCL5U13as7HhOExbT6OlWJJUV/lLzL2voOSP1UVehpRD8FbSrSDjfScK/KwAvVTI5AS6r4VwbOMlIqtvRidnA==
 
-node-fetch@^2.6.0:
+node-fetch@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
