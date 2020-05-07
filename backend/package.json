@@ -14,7 +14,7 @@
     "copy:views": "cp -r ./src/views ./dist/views"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^7.6.1",
+    "@elastic/elasticsearch": "7.6.1",
     "@prisma/cli": "2.0.0-beta.3",
     "@prisma/client": "2.0.0-beta.3",
     "@tsed/ajv": "5.49.1",
@@ -38,7 +38,7 @@
     "liquid": "4.0.1",
     "mailgun-js": "0.22.0",
     "method-override": "3.0.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "2.6.0",
     "ts-httpexceptions": "4.1.0"
   },
   "devDependencies": {
@@ -55,8 +55,8 @@
     "@types/mailgun-js": "0.22.4",
     "@types/method-override": "0.0.31",
     "@types/node": "13.13.4",
-    "@types/node-fetch": "^2.5.7",
-    "mjml": "^4.6.2",
+    "@types/node-fetch": "2.5.7",
+    "mjml": "4.6.2",
     "nodemon": "2.0.3",
     "ts-node": "8.9.1",
     "typescript": "3.8.3"
