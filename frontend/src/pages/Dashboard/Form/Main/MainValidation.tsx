@@ -151,7 +151,6 @@ export const MainValidation = ({ formId }: { formId: string }) => {
                       'bg-blue-600': strict,
                     })}
                   ></span>
-                  {/* On: "translate-x-5", Off: "translate-x-0" */}
                   <span
                     aria-hidden="true"
                     className={classNames(
