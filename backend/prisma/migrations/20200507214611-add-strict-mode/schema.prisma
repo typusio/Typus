@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -115,7 +115,7 @@ model ValidationRule {
 
 model Validation {
   id     Int              @default(autoincrement()) @id
-  strict Boolean          @default(false)
+  strict Boolean @default(true)
   rules  ValidationRule[]
   formId String
   form   Form             @relation(fields: [formId], references: [id])

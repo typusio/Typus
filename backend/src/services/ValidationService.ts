@@ -120,13 +120,13 @@ export class ValidationService {
   }
 
   async handleValidation(req: Request, res: Response, form: Form) {
-    const validation = await db.form.findOne({ where: { id: form.id } }).validation({ select: { allowUnknown: true, id: true } });
+    const validation = await db.form.findOne({ where: { id: form.id } }).validation({ select: { strict: true, id: true } });
 
     const rules = await db.validationRule.findMany({ where: { validationId: validation!.id } });
 
     if (!rules) return true;
 
-    if (validation!.allowUnknown == false) {
+    if (validation!.strict == true) {
       for (const field of Object.keys(req.body)) {
         if (!req.body[field]) continue; // to deal with falsy fields
 

@@ -32,7 +32,7 @@ export interface Submission {
 
 export interface Validation {
   id: number;
-  allowUnknown: boolean;
+  strict: boolean;
   rules: Rule[];
 }
 

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Confirmed from '../../../../assets/confirmed.svg';
 import { Validation, RuleMeta } from '../../../../util/interfaces';
-import { useFormik } from 'formik';
 import { CreateRuleModal } from '../../../../components/CreateRuleModal';
 import { RuleCard } from '../../../../components/RuleCard';
 import { DeleteModal } from '../../../../components/DeleteModal';
 import { API_URL } from '../../../../util/api';
+
+import classNames from 'classnames';
 
 export const MainValidation = ({ formId }: { formId: string }) => {
   const [validation, setValidation] = useState<Validation>();
@@ -17,6 +18,8 @@ export const MainValidation = ({ formId }: { formId: string }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
+  const [strict, setStrict] = useState(false);
+
   useEffect(() => {
     async function fetchValidation() {
       const res = await fetch(`${API_URL}/validation/${formId}`, { credentials: 'include' });
@@ -26,6 +29,7 @@ export const MainValidation = ({ formId }: { formId: string }) => {
       if (res.status == 404) return setNoValidation(true);
       const data: Validation = await res.json();
 
+      setStrict(data.strict);
       setValidation(data);
     }
 
@@ -58,6 +62,15 @@ export const MainValidation = ({ formId }: { formId: string }) => {
     const res = await fetch(`${API_URL}/validation/${formId}/${ruleId}`, { credentials: 'include', method: 'DELETE' });
 
     setValidation({ ...validation!, rules: validation!.rules.filter(r => r.id !== ruleId) });
+  }
+
+  async function save() {
+    await fetch(`${API_URL}/validation/${formId}`, {
+      credentials: 'include',
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ strict: !strict }),
+    });
   }
 
   return (
@@ -113,8 +126,41 @@ export const MainValidation = ({ formId }: { formId: string }) => {
           />
 
           <div className="flex flex-row justify-between -mt-3">
-            <h2 className="text-xl my-auto">
-              <span className="font-semibold">{validation.rules.length}</span> rule{validation.rules.length == 1 ? '' : 's'} currently active
+            <h2 className="text-xl my-auto flex flex-col sm:flex-row">
+              <div>
+                <span className="font-semibold">{validation.rules.length}</span> rule{validation.rules.length == 1 ? '' : 's'} currently active
+              </div>
+              <div className="flex flex-row">
+                <h3 className="text-base leading-6 text-gray-900 sm:ml-2 my-auto">
+                  Strict <a className="text-blue-600 text-sm cursor-pointer">(Read more)</a>
+                </h3>
+
+                <span
+                  role="checkbox"
+                  tabIndex={0}
+                  className="group relative inline-flex items-center justify-center flex-shrink-0 h-5 w-10 cursor-pointer focus:outline-none my-auto ml-2"
+                  onClick={() => {
+                    setStrict(!strict);
+                    save();
+                  }}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={classNames('absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200', {
+                      'bg-gray-200': !strict,
+                      'bg-blue-600': strict,
+                    })}
+                  ></span>
+                  {/* On: "translate-x-5", Off: "translate-x-0" */}
+                  <span
+                    aria-hidden="true"
+                    className={classNames(
+                      'translate-x-0 absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform group-focus:shadow-outline group-focus:border-blue-300 transition-transform ease-in-out duration-200',
+                      { 'translate-x-5': strict, 'translate-x-0': !strict },
+                    )}
+                  ></span>
+                </span>
+              </div>
             </h2>
 
             <span className="inline-flex rounded-md shadow-sm">
