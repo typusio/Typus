@@ -51,9 +51,9 @@ export const NavBar = () => {
             <span className="inline-flex rounded-md shadow-xs">
               <a
                 href="/"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-gray-100 bg-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
               >
-                Log in
+                Dashboard
               </a>
             </span>
           </span>

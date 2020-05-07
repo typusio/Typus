@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../store/AuthContext';
+import { useRouter } from '../../util/hooks';
+import { Link } from 'react-router-dom';
 
 export const Hero = () => {
+  const { loggedIn } = useContext(AuthContext);
+  const { push } = useRouter();
+
   return (
     <div className="mx-auto max-w-screen-xl px-4 sm:px-6 pb-16 md:pb-20 lg:pb-24 xl:pb-32">
       <div className="lg:grid lg:grid-cols-12 lg:gap-8">
@@ -8,7 +14,7 @@ export const Hero = () => {
           <div className="text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base">Now in beta</div>
           <h2 className="mt-1 text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl">
             Give your forms <br className="hidden md:inline" />
-            <span className="text-blue-600">super powers</span>
+            <span className="text-blue-600">superpowers</span>
           </h2>
           <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
             Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua ad ad
@@ -16,16 +22,26 @@ export const Hero = () => {
           </p>
           <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
             <div className="rounded-md shadow">
-              <a
-                href="/"
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
-              >
-                Get started
-              </a>
+              {!loggedIn && (
+                <Link
+                  to={'/register'}
+                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+                >
+                  Get started
+                </Link>
+              )}
+              {loggedIn && (
+                <Link
+                  to={'/dashboard'}
+                  className="text-gray-100 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+                >
+                  Go to Dashboard
+                </Link>
+              )}
             </div>
             <div className="mt-3 sm:mt-0 sm:ml-3">
               <a
-                href="/"
+                href="#features"
                 className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-blue-700 bg-blue-100 hover:text-blue-600 hover:bg-blue-50 focus:outline-none focus:shadow-outline focus:border-blue-300 transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
               >
                 See Features
