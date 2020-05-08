@@ -11,7 +11,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate save --experimental && prisma migrate up --experimental",
     "emails:compile": "mkdir -p src/views/emails && mjml src/emails/submission.mjml -o src/views/emails/submission.ejs",
-    "copy:views": "cp -r ./src/views ./dist/views"
+    "copy:views": "cp -r ./src/views ./dist/views",
+    "migrate:up": "prisma migrate up --experimental"
   },
   "dependencies": {
     "@elastic/elasticsearch": "7.6.1",
