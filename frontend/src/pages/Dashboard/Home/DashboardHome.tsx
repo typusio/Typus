@@ -19,10 +19,10 @@ export const DashboardHome = () => {
     fetchForms();
   }, []);
 
-  function generateGradient(name: string) {
+  function generateGradient(id: string) {
     let total = 0;
 
-    for (const letter of name.split('')) {
+    for (const letter of id.split('')) {
       total += letter.charCodeAt(0);
     }
 
@@ -75,7 +75,7 @@ export const DashboardHome = () => {
           {forms.map(form => (
             <Link
               to={`/dashboard/form/${form.form.id}`}
-              style={{ backgroundImage: `linear-gradient(to right, ${generateGradient(form.form.name)[0]}, ${generateGradient(form.form.name)[1]})` }}
+              style={{ backgroundImage: `linear-gradient(to right, ${generateGradient(form.form.id)[0]}, ${generateGradient(form.form.id)[1]})` }}
               className="rounded-md sm:w-48 w-full h-64 font-semibold text-lg mr-5 mt-1"
             >
               <div className="flex flex-col h-full">
