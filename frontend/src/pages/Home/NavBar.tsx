@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import classNames from 'classnames';
 import { Transition } from '../../components/Transition';
 import { Link } from 'react-router-dom';
 
 import Logo from '../../assets/logo.svg';
+import { AuthContext } from '../../store/AuthContext';
 
 export const NavBar = () => {
   const [open, setOpen] = useState(false);
+  const authContext = useContext(AuthContext);
 
   return (
     <div className="relative pt-6 pb-16 md:pb-20 lg:pb-24 xl:pb-32">
@@ -49,12 +51,23 @@ export const NavBar = () => {
         <div className="hidden md:block text-right">
           <span className="inline-flex rounded-md shadow-md">
             <span className="inline-flex rounded-md shadow-xs">
-              <a
-                href="/"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-gray-100 bg-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
-              >
-                Dashboard
-              </a>
+              {authContext.loggedIn && (
+                <Link
+                  to="/dashboard"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-gray-100 bg-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                >
+                  Dashboard
+                </Link>
+              )}
+
+              {!authContext.loggedIn && (
+                <Link
+                  to="/login"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
+                >
+                  Log in
+                </Link>
+              )}
             </span>
           </span>
         </div>
