@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -50,11 +50,10 @@ model Form {
 }
 
 model Schema {
-  id      Int     @default(autoincrement()) @id
-  formId  String
-  form    Form    @relation(fields: [formId], references: [id])
-  fields  Field[]
-  enabled Boolean @default(true)
+  id     Int     @default(autoincrement()) @id
+  formId String
+  form   Form    @relation(fields: [formId], references: [id])
+  fields Field[]
 }
 
 model Field {
@@ -64,7 +63,6 @@ model Field {
   name     String
   required Boolean
   rules    String  @default("{}")
-  type     String
 }
 
 model Notifications {

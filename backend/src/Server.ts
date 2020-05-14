@@ -14,7 +14,6 @@ import * as cors from 'cors';
 import * as fileUpload from 'express-fileupload';
 
 import { redis } from './Redis';
-import { ValidationController } from './controllers/ValidationController';
 import { UserController } from './controllers/UserController';
 
 @ServerSettings({
@@ -23,7 +22,7 @@ import { UserController } from './controllers/UserController';
   httpPort: process.env.PORT || 4000,
   httpsPort: false, // CHANGE
   mount: {
-    '/': [UserController, ValidationController, `${rootDir}/controllers/**/*.ts`],
+    '/': [UserController, `${rootDir}/controllers/**/*.ts`],
   },
   exclude: ['**/*.spec.ts'],
   ajv: { errorFormat: (error: any) => `'${error.data}' ${error.message}`, options: { verbose: false } },

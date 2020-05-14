@@ -15,3 +15,10 @@
 20200505094517-add-submissions-field
 20200505095238-remove-field
 20200507214611-add-strict-mode
+20200509115005-remove-migration
+20200509120727-add-schema
+20200509120844-add-defaults
+20200510130851-change-rules-to-json
+20200510185902-add-fields
+20200512085223-schema-enabled
+20200513104904-field-type

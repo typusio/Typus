@@ -7,7 +7,6 @@ import { RequireAuth } from '../middleware/RequireAuth';
 import { EditNoteModel } from './models/EditNoteModel';
 
 import * as crypto from 'crypto';
-import { ValidationService } from '../services/ValidationService';
 import { UploadedFile } from 'express-fileupload';
 import { ConfirmationService } from '../services/ConfirmationService';
 import { RequireFormAccess } from '../middleware/RequireFormAccess';
@@ -24,7 +23,6 @@ import { elastic } from '../Elastic';
 export class SubmissionController {
   public constructor(
     private readonly ipService: IpService,
-    private readonly validationService: ValidationService,
     private readonly confirmationService: ConfirmationService,
     private readonly securityService: SecurityService,
     private readonly renderService: RenderService,
@@ -102,8 +100,6 @@ export class SubmissionController {
     if (!(await this.securityService.handleSecurity(form, req, res))) return;
 
     delete req.body['g-recaptcha-response'];
-
-    if (!(await this.validationService.handleValidation(req, res, form))) return;
 
     const submission = await db.submission.create({
       data: { data: JSON.stringify(req.body), form: { connect: { id: form.id } }, ip: { connect: { address: ip.address } } },

@@ -1,0 +1,18 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "DeleteModel",
+      "model": "ValidationRule"
+    },
+    {
+      "tag": "DeleteModel",
+      "model": "Validation"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Form",
+      "field": "validation"
+    }
+  ]
+}

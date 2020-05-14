@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -45,26 +45,6 @@ model Form {
   notifications Notifications
   hiddenFields  String        @default("")
   mappedFields  String        @default("")
-  submission    Submission[]
-  schema        Schema
-}
-
-model Schema {
-  id      Int     @default(autoincrement()) @id
-  formId  String
-  form    Form    @relation(fields: [formId], references: [id])
-  fields  Field[]
-  enabled Boolean @default(true)
-}
-
-model Field {
-  id       Int     @default(autoincrement()) @id
-  schemaId Int
-  schema   Schema  @relation(fields: [schemaId], references: [id])
-  name     String
-  required Boolean
-  rules    String  @default("{}")
-  type     String
 }
 
 model Notifications {
@@ -74,7 +54,7 @@ model Notifications {
   // Emails
   emailsEnabled   Boolean @default(false)
   emails          String  @default("")
-  // Webhooks    
+  // Webhooks
   webhooksEnabled Boolean @default(false)
   webhooks        String  @default("")
 }
@@ -84,9 +64,9 @@ model Security {
   formId           String
   form             Form    @relation(fields: [formId], references: [id])
   recaptchaEnabled Boolean @default(false)
-  recaptchaSecret  String  @default("")
+  recaptchaSecret  String
   honey            String
-  allowedDomains   String  @default("")
+  allowedDomains   String
 }
 
 model Appearance {
