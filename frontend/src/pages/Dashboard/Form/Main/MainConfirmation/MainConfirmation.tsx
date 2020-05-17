@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Confirmation } from '../../../../../util/interfaces';
 
 import Newsletter from '../../../../../assets/newsletter.svg';
@@ -6,8 +6,11 @@ import { API_URL } from '../../../../../util/api';
 import { useFormik } from 'formik';
 import { ConfirmationForm } from './ConfirmationForm';
 import { DeleteModal } from '../../../../../components/DeleteModal';
+import { FormContext } from '../../../../../store/FormContext';
 
-export const MainConfirmation = ({ formId }: { formId: string }) => {
+export const MainConfirmation = () => {
+  const { form } = useContext(FormContext);
+
   const [confirmation, setConfirmation] = useState<Confirmation>();
   const [notFound, setNotFound] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -16,7 +19,7 @@ export const MainConfirmation = ({ formId }: { formId: string }) => {
 
   useEffect(() => {
     async function fetchConfirmation() {
-      const res = await fetch(`${API_URL}/confirmation/${formId}`, { credentials: 'include' });
+      const res = await fetch(`${API_URL}/confirmation/${form.id}`, { credentials: 'include' });
 
       if (res.status == 404) {
         setNotFound(true);
@@ -32,7 +35,7 @@ export const MainConfirmation = ({ formId }: { formId: string }) => {
 
   async function createConfirmation() {
     setLoading(true);
-    const data = await fetch(`${API_URL}/confirmation/${formId}`, { credentials: 'include', method: 'POST' }).then(res => res.json());
+    const data = await fetch(`${API_URL}/confirmation/${form.id}`, { credentials: 'include', method: 'POST' }).then(res => res.json());
 
     setLoading(false);
     setNotFound(false);
@@ -41,7 +44,7 @@ export const MainConfirmation = ({ formId }: { formId: string }) => {
 
   async function deleteConfirmation() {
     setLoading(true);
-    await fetch(`${API_URL}/confirmation/${formId}`, { credentials: 'include', method: 'DELETE' });
+    await fetch(`${API_URL}/confirmation/${form.id}`, { credentials: 'include', method: 'DELETE' });
 
     setLoading(false);
     setModalOpen(false);
@@ -68,15 +71,15 @@ export const MainConfirmation = ({ formId }: { formId: string }) => {
 
       {notFound && (
         <div>
-          <img src={Newsletter} className="w-1/4 h-1/4 mt-2 mx-auto"></img>
-          <h2 className="text-center text-xl mt-3">No confirmation has been setup for this form</h2>
+          <img src={Newsletter} className="w-1/4 mx-auto mt-2 h-1/4"></img>
+          <h2 className="mt-3 text-xl text-center">No confirmation has been setup for this form</h2>
           <div className="text-center text-md">Confirmations help you engage people after submitting your form</div>
-          <div className="w-full flex flex-row justify-around mt-2 mb-4">
+          <div className="flex flex-row justify-around w-full mt-2 mb-4">
             <span className="inline-flex rounded-md shadow-sm">
               <button
                 type="button"
                 onClick={() => createConfirmation()}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700"
               >
                 Set up a confirmation
               </button>
@@ -87,7 +90,7 @@ export const MainConfirmation = ({ formId }: { formId: string }) => {
 
       {confirmation && !loading && (
         <div className="relative">
-          <ConfirmationForm confirmation={confirmation} formId={formId} onDelete={() => setModalOpen(true)} />
+          <ConfirmationForm confirmation={confirmation} onDelete={() => setModalOpen(true)} />
         </div>
       )}
     </div>

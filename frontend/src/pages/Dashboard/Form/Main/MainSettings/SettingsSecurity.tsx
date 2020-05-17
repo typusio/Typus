@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useFormik } from 'formik';
 
 import classNames from 'classnames';
 import { API_URL } from '../../../../../util/api';
 import { useApiForm } from '../../../../../util/hooks';
+import { FormContext } from '../../../../../store/FormContext';
 
-export const SettingsSecurity = ({ formId }: { formId: string }) => {
-  const { loading, values, setValues, handleChange, handleSubmit } = useApiForm(`/security/${formId}`, {
+export const SettingsSecurity = () => {
+  const { form } = useContext(FormContext);
+
+  const { loading, values, setValues, handleChange, handleSubmit } = useApiForm(`/security/${form.id}`, {
     initialValues: {
       recaptchaSecret: '',
       honey: '',
@@ -29,8 +32,8 @@ export const SettingsSecurity = ({ formId }: { formId: string }) => {
           <div>
             <div>
               <div>
-                <h3 className="text-lg leading-6 font-medium text-gray-900">ReCaptcha</h3>
-                <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+                <h3 className="text-lg font-medium leading-6 text-gray-900">ReCaptcha</h3>
+                <p className="max-w-2xl mt-1 text-sm leading-5 text-gray-500">
                   Help secure your form with AI powered protection. <span className="text-blue-600 cursor-pointer">Read more</span>
                 </p>
               </div>
@@ -78,10 +81,10 @@ export const SettingsSecurity = ({ formId }: { formId: string }) => {
                 </div>
               </div>
             </div>
-            <div className="mt-8 border-t border-gray-200 pt-8 sm:mt-5 sm:pt-10">
+            <div className="pt-8 mt-8 border-t border-gray-200 sm:mt-5 sm:pt-10">
               <div>
-                <h3 className="text-lg leading-6 font-medium text-gray-900">Honeypot Field</h3>
-                <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+                <h3 className="text-lg font-medium leading-6 text-gray-900">Honeypot Field</h3>
+                <p className="max-w-2xl mt-1 text-sm leading-5 text-gray-500">
                   Lure in bots by having a hidden field on your site. <span className="text-blue-600 cursor-pointer">Read more</span>
                 </p>
               </div>
@@ -91,7 +94,7 @@ export const SettingsSecurity = ({ formId }: { formId: string }) => {
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <div className="max-w-xs rounded-md shadow-sm">
                       <input
-                        className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        className="block w-full transition duration-150 ease-in-out form-input sm:text-sm sm:leading-5"
                         name="honey"
                         value={values.honey}
                         onChange={handleChange}
@@ -101,10 +104,10 @@ export const SettingsSecurity = ({ formId }: { formId: string }) => {
                 </div>
               </div>
             </div>
-            <div className="mt-8 border-t border-gray-200 pt-8 sm:mt-5 sm:pt-10">
+            <div className="pt-8 mt-8 border-t border-gray-200 sm:mt-5 sm:pt-10">
               <div>
-                <h3 className="text-lg leading-6 font-medium text-gray-900">Allowed Domains</h3>
-                <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+                <h3 className="text-lg font-medium leading-6 text-gray-900">Allowed Domains</h3>
+                <p className="max-w-2xl mt-1 text-sm leading-5 text-gray-500">
                   Restrict submissions to only come from certail domains. <span className="text-blue-600 cursor-pointer">Read more</span>
                 </p>
               </div>
@@ -114,7 +117,7 @@ export const SettingsSecurity = ({ formId }: { formId: string }) => {
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <div className="max-w-lg rounded-md shadow-sm">
                       <input
-                        className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        className="block w-full transition duration-150 ease-in-out form-input sm:text-sm sm:leading-5"
                         name="allowedDomains"
                         value={values.allowedDomains}
                         onChange={handleChange}
@@ -128,16 +131,16 @@ export const SettingsSecurity = ({ formId }: { formId: string }) => {
               </div>
             </div>
           </div>
-          <div className="mt-8 border-t border-gray-200 pt-5">
+          <div className="pt-5 mt-8 border-t border-gray-200">
             <div className="flex justify-end">
-              <span className="ml-3 inline-flex rounded-md shadow-sm">
+              <span className="inline-flex ml-3 rounded-md shadow-sm">
                 <button
                   onClick={e => {
                     e.preventDefault();
 
                     handleSubmit();
                   }}
-                  className="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out"
+                  className="inline-flex justify-center px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700"
                 >
                   Save
                 </button>

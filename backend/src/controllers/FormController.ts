@@ -76,7 +76,7 @@ export class FormController {
   @Patch('/:formId')
   @UseBefore(RequireAuth, RequireFormAccess)
   async patch(@Req() req: Request, @Locals('form') form: Form, @BodyParams() data: EditFormModel) {
-    return await db.form.update({ where: { id: form.id }, data });
+    return await db.form.update({ where: { id: form.id }, data, include: { owner: true } });
   }
 
   @Get('/:formId/counts')

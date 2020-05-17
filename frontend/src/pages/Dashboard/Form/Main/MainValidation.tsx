@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Confirmed from '../../../../assets/confirmed.svg';
 import { Validation, RuleMeta } from '../../../../util/interfaces';
 import { CreateRuleModal } from '../../../../components/CreateRuleModal';
@@ -7,8 +7,11 @@ import { DeleteModal } from '../../../../components/DeleteModal';
 import { API_URL } from '../../../../util/api';
 
 import classNames from 'classnames';
+import { FormContext } from '../../../../store/FormContext';
 
-export const MainValidation = ({ formId }: { formId: string }) => {
+export const MainValidation = () => {
+  const { form } = useContext(FormContext);
+
   const [validation, setValidation] = useState<Validation>();
   const [rules, setRules] = useState<{ [key: string]: RuleMeta }>();
   const [noValidation, setNoValidation] = useState(false);
@@ -22,7 +25,7 @@ export const MainValidation = ({ formId }: { formId: string }) => {
 
   useEffect(() => {
     async function fetchValidation() {
-      const res = await fetch(`${API_URL}/validation/${formId}`, { credentials: 'include' });
+      const res = await fetch(`${API_URL}/validation/${form.id}`, { credentials: 'include' });
 
       setLoading(false);
 
@@ -44,7 +47,7 @@ export const MainValidation = ({ formId }: { formId: string }) => {
   }, []);
 
   async function createValidation() {
-    const data = await fetch(`${API_URL}/validation/${formId}`, { credentials: 'include', method: 'POST' }).then(res => res.json());
+    const data = await fetch(`${API_URL}/validation/${form.id}`, { credentials: 'include', method: 'POST' }).then(res => res.json());
 
     setValidation(data);
     setNoValidation(false);
@@ -52,20 +55,20 @@ export const MainValidation = ({ formId }: { formId: string }) => {
 
   async function deleteValidation() {
     setLoading(true);
-    await fetch(`${API_URL}/validation/${formId}`, { credentials: 'include', method: 'DELETE' });
+    await fetch(`${API_URL}/validation/${form.id}`, { credentials: 'include', method: 'DELETE' });
 
     setLoading(false);
     return setNoValidation(true);
   }
 
   async function removeRule(ruleId: number) {
-    const res = await fetch(`${API_URL}/validation/${formId}/${ruleId}`, { credentials: 'include', method: 'DELETE' });
+    const res = await fetch(`${API_URL}/validation/${form.id}/${ruleId}`, { credentials: 'include', method: 'DELETE' });
 
     setValidation({ ...validation!, rules: validation!.rules.filter(r => r.id !== ruleId) });
   }
 
   async function save() {
-    await fetch(`${API_URL}/validation/${formId}`, {
+    await fetch(`${API_URL}/validation/${form.id}`, {
       credentials: 'include',
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -84,15 +87,15 @@ export const MainValidation = ({ formId }: { formId: string }) => {
 
       {noValidation && (
         <div>
-          <img src={Confirmed} className="w-1/4 h-1/4 mt-2 mx-auto"></img>
-          <h2 className="text-center text-xl mt-3">No validation has been setup for this form yet</h2>
+          <img src={Confirmed} className="w-1/4 mx-auto mt-2 h-1/4"></img>
+          <h2 className="mt-3 text-xl text-center">No validation has been setup for this form yet</h2>
 
-          <div className="w-full flex flex-row justify-around mt-2 mb-4">
+          <div className="flex flex-row justify-around w-full mt-2 mb-4">
             <span className="inline-flex rounded-md shadow-sm">
               <button
                 type="button"
                 onClick={() => createValidation()}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700"
               >
                 Set up validation
               </button>
@@ -116,7 +119,6 @@ export const MainValidation = ({ formId }: { formId: string }) => {
         <div>
           <CreateRuleModal
             rules={rules}
-            formId={formId}
             onClose={() => setModalOpen(false)}
             onCreate={rule => {
               setValidation({ ...validation, rules: [...validation.rules, rule] });
@@ -126,19 +128,19 @@ export const MainValidation = ({ formId }: { formId: string }) => {
           />
 
           <div className="flex flex-row justify-between -mt-3">
-            <h2 className="text-xl my-auto flex flex-col sm:flex-row">
+            <h2 className="flex flex-col my-auto text-xl sm:flex-row">
               <div>
                 <span className="font-semibold">{validation.rules.length}</span> rule{validation.rules.length == 1 ? '' : 's'} currently active
               </div>
               <div className="flex flex-row">
-                <h3 className="text-base leading-6 text-gray-900 sm:ml-2 my-auto">
-                  Strict <a className="text-blue-600 text-sm cursor-pointer">(Read more)</a>
+                <h3 className="my-auto text-base leading-6 text-gray-900 sm:ml-2">
+                  Strict <a className="text-sm text-blue-600 cursor-pointer">(Read more)</a>
                 </h3>
 
                 <span
                   role="checkbox"
                   tabIndex={0}
-                  className="group relative inline-flex items-center justify-center flex-shrink-0 h-5 w-10 cursor-pointer focus:outline-none my-auto ml-2"
+                  className="relative inline-flex items-center justify-center flex-shrink-0 w-10 h-5 my-auto ml-2 cursor-pointer group focus:outline-none"
                   onClick={() => {
                     setStrict(!strict);
                     save();
@@ -166,9 +168,9 @@ export const MainValidation = ({ formId }: { formId: string }) => {
               <button
                 type="button"
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-green active:bg-blue-700 transition ease-in-out duration-150"
+                className="inline-flex items-center px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-green active:bg-blue-700"
               >
-                <svg className="-ml-1 mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 mr-3 -ml-1" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fill-rule="evenodd"
                     d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
@@ -186,11 +188,11 @@ export const MainValidation = ({ formId }: { formId: string }) => {
             ))}
           </ul>
 
-          <span className="inline-flex rounded-md shadow-sm mt-20">
+          <span className="inline-flex mt-20 rounded-md shadow-sm">
             <button
               type="button"
               onClick={() => setDeleteModalOpen(true)}
-              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-500 hover:bg-red-400 focus:outline-none focus:border-red-600 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150"
+              className="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-white transition duration-150 ease-in-out bg-red-500 border border-transparent rounded-md hover:bg-red-400 focus:outline-none focus:border-red-600 focus:shadow-outline-red active:bg-red-600"
             >
               <svg className="-ml-0.5 mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                 <path

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { User } from '../../../../../util/interfaces';
 
 import Team from '../../../../../assets/team.svg';
@@ -6,8 +6,11 @@ import Denied from '../../../../../assets/denied.svg';
 
 import { API_URL } from '../../../../../util/api';
 import { AddCollaboratorModal } from '../../../../../components/AddCollaboratorModal';
+import { FormContext } from '../../../../../store/FormContext';
 
-export const SettingsCollaborators = ({ formId }: { formId: string }) => {
+export const SettingsCollaborators = () => {
+  const { form } = useContext(FormContext);
+
   const [collaborators, setCollaborators] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +20,7 @@ export const SettingsCollaborators = ({ formId }: { formId: string }) => {
 
   useEffect(() => {
     async function fetchCollaborators() {
-      const res = await fetch(`${API_URL}/collaborator/${formId}`, { credentials: 'include' });
+      const res = await fetch(`${API_URL}/collaborator/${form.id}`, { credentials: 'include' });
 
       if (res.status == 400) {
         setUnauthorized(true);
@@ -34,7 +37,7 @@ export const SettingsCollaborators = ({ formId }: { formId: string }) => {
   }, []);
 
   async function removeCollaborator(email: string) {
-    await fetch(`${API_URL}/collaborator/${formId}`, {
+    await fetch(`${API_URL}/collaborator/${form.id}`, {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
       method: 'DELETE',
@@ -52,9 +55,9 @@ export const SettingsCollaborators = ({ formId }: { formId: string }) => {
             <button
               type="button"
               onClick={() => setModalOpen(true)}
-              className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-green active:bg-blue-700 transition ease-in-out duration-150"
+              className="inline-flex items-center px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-green active:bg-blue-700"
             >
-              <svg className="-ml-1 mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 mr-3 -ml-1" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
               </svg>
               Add Collaborator
@@ -66,8 +69,8 @@ export const SettingsCollaborators = ({ formId }: { formId: string }) => {
       {!loading && unauthorized && (
         <div>
           <div className="mt-2">
-            <img src={Denied} className="w-1/5 h-1/5 mt-2 mx-auto"></img>
-            <h2 className="text-center text-xl mt-3">You must be the owner of this form to manage collaborators</h2>
+            <img src={Denied} className="w-1/5 mx-auto mt-2 h-1/5"></img>
+            <h2 className="mt-3 text-xl text-center">You must be the owner of this form to manage collaborators</h2>
           </div>
         </div>
       )}
@@ -78,7 +81,6 @@ export const SettingsCollaborators = ({ formId }: { formId: string }) => {
           setCollaborators([...collaborators, user]);
           setModalOpen(false);
         }}
-        formId={formId}
         open={modalOpen}
       />
 
@@ -91,15 +93,15 @@ export const SettingsCollaborators = ({ formId }: { formId: string }) => {
 
       {!loading && collaborators.length == 0 && !unauthorized && (
         <div className="mt-2 mb-5">
-          <img src={Team} className="w-1/4 h-1/4 mt-2 mx-auto"></img>
-          <h2 className="text-center text-xl mt-3">No collaborators added</h2>
+          <img src={Team} className="w-1/4 mx-auto mt-2 h-1/4"></img>
+          <h2 className="mt-3 text-xl text-center">No collaborators added</h2>
 
           <div className="flex flex-row justify-center mt-2">
             <span className="inline-flex rounded-md shadow-sm">
               <button
                 type="button"
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150"
+                className="inline-flex items-center px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700"
               >
                 Add your first collaborator
               </button>
@@ -121,13 +123,13 @@ export const SettingsCollaborators = ({ formId }: { formId: string }) => {
                     stroke-linejoin="round"
                     stroke-width="2.5"
                     viewBox="0 0 24 24"
-                    className="w-5 h-5 text-blue-500 my-auto mr-1"
+                    className="w-5 h-5 my-auto mr-1 text-blue-500"
                   >
                     <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                   </svg>
                   <span className="px-2 py-1 focus:outline-none">{collaborator.email}</span>
                 </div>
-                <span className="inline-flex rounded-md shadow-sm my-auto ml-2">
+                <span className="inline-flex my-auto ml-2 rounded-md shadow-sm">
                   <button
                     type="button"
                     onClick={() => removeCollaborator(collaborator.email)}

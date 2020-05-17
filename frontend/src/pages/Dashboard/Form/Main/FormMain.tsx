@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { useRouter } from '../../../../util/hooks';
 import { MainSubmissions } from './MainSubmissions';
@@ -8,13 +8,16 @@ import { MainValidation } from './MainValidation';
 import { MainNotifications } from './MainNotifications';
 import { Form } from '../../../../util/interfaces';
 import { MainConfirmation } from './MainConfirmation';
+import { FormContext } from '../../../../store/FormContext';
 
-export const FormMain = ({ formId }: { formId: string }) => {
+export const FormMain = () => {
   const {
     match: { params },
     location,
     push,
   } = useRouter();
+
+  const { form } = useContext(FormContext);
 
   const SELETCED_STYLE =
     '"ml-8 group inline-flex items-center py-4 px-1 border-b-2 border-blue-500 font-medium text-sm leading-5 text-blue-600 focus:outline-none focus:text-blue-800 focus:border-blue-700 mr-5 cursor-pointer';
@@ -27,13 +30,13 @@ export const FormMain = ({ formId }: { formId: string }) => {
 
   return (
     <main className="sm:mt-64 mt-70">
-      <div className="max-w-7xl mx-auto px-4 pb-12 sm:px-6 lg:px-8">
-        <div className="bg-white shadow overflow-hidden rounded-md">
-          <div className="bg-white pt-1 md:px-6 sm:border-b sm:border-gray-200">
+      <div className="px-4 pb-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div className="overflow-hidden bg-white rounded-md shadow">
+          <div className="pt-1 bg-white md:px-6 sm:border-b sm:border-gray-200">
             <div className="pb-4 sm:p-0">
               <div className="md:hidden">
                 <select
-                  className="form-select block w-full my-auto -mt-1 border-0 focus:outline-none"
+                  className="block w-full my-auto -mt-1 border-0 form-select focus:outline-none"
                   onChange={e => {
                     setSelected(e.target.value);
                   }}
@@ -49,7 +52,7 @@ export const FormMain = ({ formId }: { formId: string }) => {
               <hr className="text-gray-100 mt-0.5 block md:hidden" />
               <div className="hidden md:block">
                 <div>
-                  <nav className="-mb-px flex">
+                  <nav className="flex -mb-px">
                     <a onClick={() => setSelected('Submissions')} className={selected == 'Submissions' ? SELETCED_STYLE : UNSELECTED_STYLE}>
                       <svg fill="currentColor" viewBox="0 0 20 20" className={selected == 'Submissions' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
                         <path
@@ -110,12 +113,12 @@ export const FormMain = ({ formId }: { formId: string }) => {
           </div>
 
           <div className="px-4 pt-5 pb-3 sm:px-6">
-            {selected == 'Submissions' && <MainSubmissions formId={formId} />}
-            {selected == 'Setup' && <MainSetup formId={formId} />}
-            {selected == 'Validation' && <MainValidation formId={formId} />}
-            {selected == 'Notifications' && <MainNotifications formId={formId} />}
-            {selected == 'Confirmation' && <MainConfirmation formId={formId} />}
-            {selected == 'Settings' && <MainSettings formId={formId} />}
+            {selected == 'Submissions' && <MainSubmissions />}
+            {selected == 'Setup' && <MainSetup />}
+            {selected == 'Validation' && <MainValidation />}
+            {selected == 'Notifications' && <MainNotifications />}
+            {selected == 'Confirmation' && <MainConfirmation />}
+            {selected == 'Settings' && <MainSettings />}
           </div>
         </div>
       </div>

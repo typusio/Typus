@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { SettingsAppearance } from './SettingsAppearance/SettingsAppearance';
 
 import classNames from 'classnames';
 import { SettingsCollaborators } from './SettingsCollaborators';
 import { SettingsGeneral } from './SettingsGeneral';
 import { SettingsSecurity } from './SettingsSecurity';
+import { FormContext } from '../../../../../store/FormContext';
 
-export const MainSettings = ({ formId }: { formId: string }) => {
+export const MainSettings = () => {
+  const { form } = useContext(FormContext);
+
   const [selected, setSelected] = useState('General');
 
   const SELECTED_STYLE =
@@ -76,10 +79,10 @@ export const MainSettings = ({ formId }: { formId: string }) => {
         </a>
       </nav>
       <div className="sm:ml-5 md:w-4/5 sm:3/4">
-        {selected == 'General' && <SettingsGeneral formId={formId} />}
-        {selected == 'Appearance' && <SettingsAppearance formId={formId} />}
-        {selected == 'Collaborators' && <SettingsCollaborators formId={formId} />}
-        {selected == 'Security' && <SettingsSecurity formId={formId} />}
+        {selected == 'General' && <SettingsGeneral />}
+        {selected == 'Appearance' && <SettingsAppearance />}
+        {selected == 'Collaborators' && <SettingsCollaborators />}
+        {selected == 'Security' && <SettingsSecurity />}
       </div>
     </div>
   );

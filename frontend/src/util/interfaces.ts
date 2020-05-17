@@ -8,6 +8,8 @@ export interface Form {
   id: string;
   name: string;
   owner: User;
+  hiddenFields: string;
+  mappedFields: string;
 }
 
 export interface FormCounts {

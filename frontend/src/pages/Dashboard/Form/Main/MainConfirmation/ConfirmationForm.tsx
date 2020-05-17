@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { Confirmation } from '../../../../../util/interfaces';
 import { useFormik } from 'formik';
@@ -6,8 +6,11 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import classNames from 'classnames';
 import { API_URL } from '../../../../../util/api';
+import { FormContext } from '../../../../../store/FormContext';
 
-export const ConfirmationForm = ({ confirmation, formId, onDelete }: { confirmation: Confirmation; formId: string; onDelete: () => void }) => {
+export const ConfirmationForm = ({ confirmation, onDelete }: { confirmation: Confirmation; onDelete: () => void }) => {
+  const { form } = useContext(FormContext);
+
   const { values, handleChange, handleSubmit, errors } = useFormik({
     initialValues: {
       field: confirmation.field,
@@ -24,7 +27,7 @@ export const ConfirmationForm = ({ confirmation, formId, onDelete }: { confirmat
       fromAddress: yup.string().email('From address must be a valid email'),
     }),
     async onSubmit() {
-      const res = await fetch(`${API_URL}/confirmation/${formId}`, {
+      const res = await fetch(`${API_URL}/confirmation/${form.id}`, {
         credentials: 'include',
         method: 'PATCH',
         headers: {
@@ -44,7 +47,7 @@ export const ConfirmationForm = ({ confirmation, formId, onDelete }: { confirmat
             <div className="grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
               <div className="sm:col-span-6">
                 <label className="block text-sm font-medium leading-5 text-gray-700">Field</label>
-                <div className="mt-1 flex rounded-md shadow-sm  sm:w-2/5 w-full">
+                <div className="flex w-full mt-1 rounded-md shadow-sm sm:w-2/5">
                   <input
                     className={classNames('form-input w-full rounded-none rounded-md transition duration-150 ease-in-out sm:text-sm sm:leading-5', {
                       'shadow-outline-red border-red-300': errors.field,
@@ -98,7 +101,7 @@ export const ConfirmationForm = ({ confirmation, formId, onDelete }: { confirmat
                 <label htmlFor="about" className="block text-sm font-medium leading-5 text-gray-700">
                   Subject
                 </label>
-                <div className="mt-1 flex rounded-md shadow-sm">
+                <div className="flex mt-1 rounded-md shadow-sm">
                   <input
                     className={classNames('flex-1 form-input w-2/3 rounded-none rounded-md transition duration-150 ease-in-out sm:text-sm sm:leading-5', {
                       'shadow-outline-red border-red-300': errors.subject,
@@ -132,14 +135,14 @@ export const ConfirmationForm = ({ confirmation, formId, onDelete }: { confirmat
             </div>
           </div>
         </div>
-        <div className="pt-5 mt-8 border-t border-gray-200 px-0 md:absolute md:top-0 md:right-1 md:pt-0 md:mt-0 md:border-none flex flex-row">
-          <span className="inline-flex rounded-md shadow-sm mr-2">
+        <div className="flex flex-row px-0 pt-5 mt-8 border-t border-gray-200 md:absolute md:top-0 md:right-1 md:pt-0 md:mt-0 md:border-none">
+          <span className="inline-flex mr-2 rounded-md shadow-sm">
             <button
               type="button"
               onClick={() => handleSubmit()}
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150"
+              className="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700"
             >
-              <svg className="-ml-1 mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
                 <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path>
               </svg>
@@ -151,7 +154,7 @@ export const ConfirmationForm = ({ confirmation, formId, onDelete }: { confirmat
             <button
               type="button"
               onClick={() => onDelete()}
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-6 font-medium rounded-md text-white text-white bg-red-500 hover:bg-red-400 focus:shadow-outline-red focus:border-red-600 transition ease-in-out duration-150"
+              className="inline-flex items-center px-4 py-2 text-sm font-medium leading-6 text-white transition duration-150 ease-in-out bg-red-500 border border-transparent rounded-md hover:bg-red-400 focus:shadow-outline-red focus:border-red-600"
             >
               Delete
             </button>

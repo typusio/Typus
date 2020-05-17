@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import classNames from 'classnames';
 import { useApiForm } from '../../../../util/hooks';
+import { FormContext } from '../../../../store/FormContext';
 
-export const MainNotifications = ({ formId }: { formId: string }) => {
-  const { loading, handleSubmit, handleChange, values, setValues } = useApiForm(`/notifications/${formId}`, {
+export const MainNotifications = () => {
+  const { form } = useContext(FormContext);
+
+  const { loading, handleSubmit, handleChange, values, setValues } = useApiForm(`/notifications/${form.id}`, {
     initialValues: { emailsEnabled: false, emails: '', webhooksEnabled: false, webhooks: '' },
     ignoredValues: ['formId', 'id'],
   });
@@ -24,8 +27,8 @@ export const MainNotifications = ({ formId }: { formId: string }) => {
             <div>
               <div>
                 <div>
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">Emails</h3>
-                  <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">We'll only use these addresses for notifications (we promise).</p>
+                  <h3 className="text-lg font-medium leading-6 text-gray-900">Emails</h3>
+                  <p className="max-w-2xl mt-1 text-sm leading-5 text-gray-500">We'll only use these addresses for notifications (we promise).</p>
                 </div>
                 <div className="mt-6 sm:mt-5">
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -59,9 +62,9 @@ export const MainNotifications = ({ formId }: { formId: string }) => {
                       Addresses
                     </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                      <div className="max-w-lg flex rounded-md shadow-sm">
+                      <div className="flex max-w-lg rounded-md shadow-sm">
                         <input
-                          className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                          className="block w-full transition duration-150 ease-in-out form-input sm:text-sm sm:leading-5"
                           name="emails"
                           value={values.email}
                           onChange={handleChange}
@@ -75,8 +78,8 @@ export const MainNotifications = ({ formId }: { formId: string }) => {
 
               <div className="mt-8">
                 <div>
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">Webhooks</h3>
-                  <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+                  <h3 className="text-lg font-medium leading-6 text-gray-900">Webhooks</h3>
+                  <p className="max-w-2xl mt-1 text-sm leading-5 text-gray-500">
                     Easily connect your form to Zapier, IFTTT and thousands of other services. <span className="text-blue-600">Read more</span>
                   </p>
                 </div>
@@ -112,9 +115,9 @@ export const MainNotifications = ({ formId }: { formId: string }) => {
                       URLs
                     </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                      <div className="max-w-lg flex rounded-md shadow-sm">
+                      <div className="flex max-w-lg rounded-md shadow-sm">
                         <input
-                          className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                          className="block w-full transition duration-150 ease-in-out form-input sm:text-sm sm:leading-5"
                           name="webhooks"
                           value={values.webhooks}
                           onChange={handleChange}
@@ -128,14 +131,14 @@ export const MainNotifications = ({ formId }: { formId: string }) => {
             </div>
           </form>
 
-          <div className="pt-5 mt-8 border-t border-gray-200 px-0 md:absolute md:top-0 md:right-1 md:pt-0 md:mt-0 md:border-none flex flex-row">
-            <span className="inline-flex rounded-md shadow-sm mr-2">
+          <div className="flex flex-row px-0 pt-5 mt-8 border-t border-gray-200 md:absolute md:top-0 md:right-1 md:pt-0 md:mt-0 md:border-none">
+            <span className="inline-flex mr-2 rounded-md shadow-sm">
               <button
                 type="button"
                 onClick={() => handleSubmit()}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700"
               >
-                <svg className="-ml-1 mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
                   <path
                     fill-rule="evenodd"

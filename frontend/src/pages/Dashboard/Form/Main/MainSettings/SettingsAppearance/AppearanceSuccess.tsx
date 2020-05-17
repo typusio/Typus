@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SketchPicker } from 'react-color';
 import classNames from 'classnames';
 import { API_URL } from '../../../../../../util/api';
+import { FormContext } from '../../../../../../store/FormContext';
 
 // TODO: Refactor to not use any
 interface Props {
   values: { [key: string]: any };
   setValues: (values: any) => any;
   handleChange: (eventOrPath: string | React.ChangeEvent<any>) => void | ((eventOrTextValue: string | React.ChangeEvent<any>) => void);
-  formId: string;
 }
 
-export const AppearanceSuccess = ({ values, setValues, handleChange, formId }: Props) => {
+export const AppearanceSuccess = ({ values, setValues, handleChange }: Props) => {
+  const { form } = useContext(FormContext);
+
   const SELECTED_STYLE =
     'cursor-pointer px-3 py-2 font-medium text-sm leading-5 rounded-md text-blue-700 bg-blue-100 focus:outline-none focus:text-blue-800 focus:bg-blue-200';
   const UNSELECTED_STYLE =
@@ -21,9 +23,9 @@ export const AppearanceSuccess = ({ values, setValues, handleChange, formId }: P
     <div className="w-full mt-4">
       <div className="w-full">
         <div className="flex flex-row">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">Success Page</h3>
+          <h3 className="text-lg font-medium leading-6 text-gray-900">Success Page</h3>
           <div className="flex flex-col justify-end">
-            <span className="text-blue-600 text-sm ml-2 cursor-pointer" onClick={() => window.open(`${API_URL}/appearance/${formId}/preview/success`)}>
+            <span className="ml-2 text-sm text-blue-600 cursor-pointer" onClick={() => window.open(`${API_URL}/appearance/${form.id}/preview/success`)}>
               (Preview)
             </span>
           </div>
@@ -43,12 +45,12 @@ export const AppearanceSuccess = ({ values, setValues, handleChange, formId }: P
         </div>
 
         {values.successMode == 'Custom' && (
-          <div className="mt-6 sm:mt-5 sm:border-t sm:border-gray-200 sm:pt-5 max-w-full">
+          <div className="max-w-full mt-6 sm:mt-5 sm:border-t sm:border-gray-200 sm:pt-5">
             <div>
               <label className="block text-sm font-medium leading-5 text-gray-700">Custom Page URL</label>
-              <div className="mt-1 rounded-md shadow-sm max-w-full">
+              <div className="max-w-full mt-1 rounded-md shadow-sm">
                 <input
-                  className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  className="block w-full transition duration-150 ease-in-out form-input sm:text-sm sm:leading-5"
                   value={values.successCustomRedirect}
                   name="successCustomRedirect"
                   onChange={handleChange}
@@ -63,10 +65,10 @@ export const AppearanceSuccess = ({ values, setValues, handleChange, formId }: P
             <div className="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
               <label className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">Text</label>
               <div className="mt-1 sm:mt-0 sm:col-span-2">
-                <div className="max-w-lg flex rounded-md shadow-sm">
+                <div className="flex max-w-lg rounded-md shadow-sm">
                   <textarea
                     rows={2}
-                    className="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                    className="block w-full transition duration-150 ease-in-out form-textarea sm:text-sm sm:leading-5"
                     value={values.successText}
                     onChange={handleChange}
                     name="successText"
@@ -74,7 +76,7 @@ export const AppearanceSuccess = ({ values, setValues, handleChange, formId }: P
                 </div>
               </div>
 
-              <label htmlFor="about" className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2 mb-1 mt-2 sm:mb-0 sm:mt-0">
+              <label htmlFor="about" className="block mt-2 mb-1 text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2 sm:mb-0 sm:mt-0">
                 Show dots
               </label>
               <span
@@ -98,7 +100,7 @@ export const AppearanceSuccess = ({ values, setValues, handleChange, formId }: P
               </span>
             </div>
 
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mx-auto mt-4">
+            <div className="grid grid-cols-1 mx-auto mt-4 lg:grid-cols-3 md:grid-cols-2">
               <div className="mb-6">
                 <label className="block text-sm font-medium leading-5 text-gray-700">Tick background color</label>
 
