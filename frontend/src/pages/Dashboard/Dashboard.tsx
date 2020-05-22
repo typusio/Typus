@@ -5,7 +5,6 @@ import { DashboardForm } from './Form/DashboardForm';
 import { useRouter } from '../../util/hooks';
 import { DashboardHome } from './Home/DashboardHome';
 import { DashboardNew } from './New/DashboardNew';
-import { AuthLoader } from '../../components/AuthLoader';
 import { RequireAuth } from '../../components/RequireAuth';
 
 export const DashboardPage = () => {
@@ -16,15 +15,15 @@ export const DashboardPage = () => {
       <RequireAuth>
         <DashboardNavBar />
         <Switch>
-          <Route path={match.url + '/form/:id'}>
+          <Route path={`${match.url}/form/:id`}>
             <DashboardForm />
           </Route>
 
-          <Route path={match.url + '/new'}>
+          <Route path={`${match.url}/new`}>
             <DashboardNew />
           </Route>
 
-          <Route path={match.url + '/'}>
+          <Route path={`${match.url}/`}>
             <DashboardHome />
           </Route>
         </Switch>

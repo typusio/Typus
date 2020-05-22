@@ -13,7 +13,7 @@ export const PopupNote = ({ submission }: { submission: Submission }) => {
 
   useEffect(() => {
     async function saveNote() {
-      const res = await fetch(`${API_URL}/${submission.form.id}/${submission.id}/note`, {
+      await fetch(`${API_URL}/${submission.form.id}/${submission.id}/note`, {
         method: 'PATCH',
         credentials: 'include',
         body: JSON.stringify({ note: value }),
@@ -21,6 +21,10 @@ export const PopupNote = ({ submission }: { submission: Submission }) => {
           'Content-Type': 'application/json',
         },
       });
+
+      if (value !== submission.note) {
+        addToast('Saved note', { appearance: 'success', autoDismiss: true });
+      }
     }
 
     saveNote();
@@ -36,12 +40,12 @@ export const PopupNote = ({ submission }: { submission: Submission }) => {
           ></path>
         </svg>
 
-        <h3 className="text-lg leading-6 font-medium text-gray-900 ml-2">Notes</h3>
+        <h3 className="ml-2 text-lg font-medium leading-6 text-gray-900">Notes</h3>
       </div>
       <div className="sm:ml-7">
-        <div className="w-full flex rounded-md shadow-sm mt-2">
+        <div className="flex w-full mt-2 rounded-md shadow-sm">
           <textarea
-            className="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+            className="block w-full transition duration-150 ease-in-out form-textarea sm:text-sm sm:leading-5"
             value={value}
             onChange={e => setValue(e.target.value)}
           ></textarea>

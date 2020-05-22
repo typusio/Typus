@@ -3,6 +3,7 @@ import { gradients } from '../../../util/gradients';
 import { Form } from '../../../util/interfaces';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../../../util/api';
+import { Spinner } from '../../../components/Spinner';
 
 export const DashboardHome = () => {
   const [forms, setForms] = useState<{ form: Form; submissions: number }[]>([]);
@@ -30,16 +31,16 @@ export const DashboardHome = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-5">
+    <div className="px-4 mx-auto mt-5 max-w-7xl sm:px-6 lg:px-8">
       <div className="flex flex-row justify-between">
-        <h2 className="text-2xl my-auto">My Forms</h2>
+        <h2 className="my-auto text-2xl">My Forms</h2>
         <span className="inline-flex rounded-md shadow-sm">
           <Link
             type="button"
             to={'/dashboard/new'}
-            className="inline-flex items-center px-6 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150"
+            className="inline-flex items-center px-6 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700"
           >
-            <svg className="-ml-1 mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+            <svg className="w-5 h-5 mr-3 -ml-1" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
@@ -51,18 +52,13 @@ export const DashboardHome = () => {
         </span>
       </div>
 
-      {loading && (
-        <div className="spinner">
-          <div className="double-bounce1"></div>
-          <div className="double-bounce2"></div>
-        </div>
-      )}
+      {loading && <Spinner />}
 
       {!loading && (
-        <main className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 mt-4 mx-auto gap-4">
-          <Link to={`/dashboard/new`} className="rounded-md sm:w-48 w-full h-64 font-semibold text-lg mr-5 mt-1 bg-gray-800">
+        <main className="grid grid-cols-1 gap-4 mx-auto mt-4 sm:grid-cols-3 lg:grid-cols-5">
+          <Link to={`/dashboard/new`} className="w-full h-64 mt-1 mr-5 text-lg font-semibold bg-gray-800 rounded-md sm:w-48">
             <div className="flex flex-col h-full">
-              <svg fill="currentColor" viewBox="0 0 20 20" className="w-10 h-10 my-auto text-center text-white mx-auto">
+              <svg fill="currentColor" viewBox="0 0 20 20" className="w-10 h-10 mx-auto my-auto text-center text-white">
                 <path
                   fill-rule="evenodd"
                   d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
@@ -76,11 +72,11 @@ export const DashboardHome = () => {
             <Link
               to={`/dashboard/form/${form.form.id}`}
               style={{ backgroundImage: `linear-gradient(to right, ${generateGradient(form.form.id)[0]}, ${generateGradient(form.form.id)[1]})` }}
-              className="rounded-md sm:w-48 w-full h-64 font-semibold text-lg mr-5 mt-1"
+              className="w-full h-64 mt-1 mr-5 text-lg font-semibold rounded-md sm:w-48"
             >
               <div className="flex flex-col h-full">
-                <div className="my-auto text-center text-white px-5 sm:text-base text-xl">{form.form.name}</div>
-                <div className="my-auto text-center text-white px-5 font-normal sm:text-sm">
+                <div className="px-5 my-auto text-xl text-center text-white sm:text-base">{form.form.name}</div>
+                <div className="px-5 my-auto font-normal text-center text-white sm:text-sm">
                   {form.submissions} submission{form.submissions == 1 ? '' : 's'}
                 </div>
               </div>

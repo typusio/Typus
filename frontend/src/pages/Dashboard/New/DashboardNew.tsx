@@ -42,13 +42,13 @@ export const DashboardNew = () => {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-      <div className="flex sm:flex-row flex-col justify-between">
+    <div className="px-4 mx-auto mt-12 max-w-7xl sm:px-6 lg:px-8">
+      <form className="flex flex-col justify-between sm:flex-row">
         <div className="md:w-1/4">
           <div className="text-2xl">Create a form</div>
           <div className="mt-3">
             <label className="block text-sm font-medium leading-5 text-gray-700">What should we call your form?</label>
-            <div className="mt-1 relative rounded-md shadow-sm max-w-2xl">
+            <div className="relative max-w-2xl mt-1 rounded-md shadow-sm">
               <input
                 className={classNames('form-input block w-full sm:text-sm sm:leading-5', { 'shadow-outline-red border-red-300': errors.name })}
                 placeholder="Charity volunteer applications"
@@ -61,21 +61,24 @@ export const DashboardNew = () => {
             <p className="mt-0.5 text-sm text-gray-500">You will be able to change this later</p>
           </div>
           <div className="mt-3">
-            <span className="inline-flex rounded-md shadow-sm mt-2">
+            <span className="inline-flex mt-2 rounded-md shadow-sm">
               <button
-                type="button"
-                onClick={() => handleSubmit()}
-                className="inline-flex items-center px-12 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition ease-in-out duration-150"
+                type="submit"
+                onClick={e => {
+                  e.preventDefault();
+                  handleSubmit();
+                }}
+                className="inline-flex items-center px-12 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700"
               >
                 Create form
               </button>
             </span>
 
-            <span className="inline-flex rounded-md shadow-sm mt-2">
+            <span className="inline-flex mt-2 rounded-md shadow-sm">
               <Link
                 type="button"
                 to={'/dashboard'}
-                className="ml-2 inline-flex items-center px-5 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
+                className="inline-flex items-center px-5 py-2 ml-2 text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50"
               >
                 Cancel
               </Link>
@@ -83,9 +86,9 @@ export const DashboardNew = () => {
           </div>
         </div>
         <div className="w-full sm:w-auto">
-          <img src={BlankCanvas} className="w-64 mt-8 text-center mx-auto sm:mx-0" />
+          <img src={BlankCanvas} className="w-64 mx-auto mt-8 text-center sm:mx-0" />
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -19,7 +19,7 @@ export class ElasticService {
     await elastic.deleteByQuery({ index: 'submissions', body: { query: { match: { formId } } } });
   }
 
-  async deleteSubmission(submissionId: number) {
+  async deleteSubmissionIndex(submissionId: number) {
     await elastic.deleteByQuery({ index: 'submissions', body: { query: { match: { id: submissionId } } } });
   }
 }

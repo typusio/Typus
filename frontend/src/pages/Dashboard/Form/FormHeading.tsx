@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { FormContext } from '../../../store/FormContext';
-import { ExportButton } from '../../../components/ExportButton';
-import { FormRedButton } from '../../../components/FormRedButton';
+import { ExportButton } from './FormExportButton';
+import { FormRedButton } from './FormRedButton';
 import { FormCounts } from '../../../util/interfaces';
 import { API_URL } from '../../../util/api';
 import { useObserver } from 'mobx-react-lite';
@@ -10,8 +10,6 @@ export const FormHeading = () => {
   const formContext = useContext(FormContext);
 
   const [counts, setCounts] = useState<FormCounts>();
-
-  console.log('hi');
 
   useEffect(() => {
     async function fetchCounts() {

@@ -43,6 +43,16 @@ export class FormController {
   @UseBefore(RequireAuth, RequireFormAccess)
   async delete(@PathParams('formId') formId: string, @Req() req: Request, @Locals('form') form: Form) {
     await this.elasticService.deleteFormIndexes(formId);
+
+    const relationOptions = { where: { formId } };
+
+    // TODO: refactor to use transactions in the future when prisma supports them.
+    await db.validation.deleteMany(relationOptions);
+    await db.confirmation.deleteMany(relationOptions);
+    await db.appearance.deleteMany(relationOptions);
+    await db.security.deleteMany(relationOptions);
+    await db.notifications.deleteMany(relationOptions);
+    await db.submission.deleteMany(relationOptions);
     await db.form.delete({ where: { id: formId } });
 
     return 'Form deleted';

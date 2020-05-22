@@ -54,6 +54,9 @@ export interface RuleMeta {
   detailSubtext: string;
   defaultError: string;
   middleText: string;
+  strictOnly?: boolean;
+  nonStrictOnly?: boolean;
+  required?: boolean;
 }
 
 export interface Confirmation {

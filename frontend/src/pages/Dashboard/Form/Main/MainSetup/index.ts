@@ -1,1 +1,0 @@
-export { MainSetup } from './MainSetup';

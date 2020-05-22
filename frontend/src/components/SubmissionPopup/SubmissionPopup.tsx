@@ -1,4 +1,4 @@
-import React, { useRef, MutableRefObject, useState, useEffect, useContext } from 'react';
+import React, { useRef, MutableRefObject, useState, useEffect, useContext, useMemo } from 'react';
 import { Submission } from '../../util/interfaces';
 import { useOutsideClick } from '../../util/hooks';
 import { PopupNote } from './PopupNote';
@@ -23,6 +23,8 @@ export const SubmissionPopup = ({ submissionId, onClose, onRemove, open }: Props
   };
 
   const [submission, setSubmission] = useState<Submission>();
+
+  const parsed = useMemo(() => JSON.parse(submission ? submission.data : '{}'), [submission]);
 
   useEffect(() => {
     async function fetchSubmission() {
@@ -62,19 +64,6 @@ export const SubmissionPopup = ({ submissionId, onClose, onRemove, open }: Props
   return (
     <Transition show={open}>
       <div className="fixed inset-x-0 top-0 z-50 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center" style={{ height: '90vh' }}>
-        <Transition
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 transition-opacity">
-            <div className="absolute inset-0 bg-gray-700 opacity-50"></div>
-          </div>
-        </Transition>
-
         {submission && (
           <Transition
             enter="ease-out duration-200"
@@ -84,129 +73,78 @@ export const SubmissionPopup = ({ submissionId, onClose, onRemove, open }: Props
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div
-              className="relative w-full h-full px-8 pt-5 pb-4 mt-2 overflow-hidden overflow-y-auto transition-all transform bg-white rounded-lg shadow-2xl md:mt-14 lg:w-2/5"
-              ref={popupRef as any}
-            >
-              <div className="flex flex-row">
-                <svg fill="currentColor" viewBox="0 0 20 20" className="text-gray-700 w-7 h-7">
-                  <path
-                    fillRule="evenodd"
-                    d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-
-                <h3 className="my-auto ml-2 text-lg font-medium font-semibold leading-6 text-gray-900">
-                  View Submission <span className="my-auto text-xs">Id #{submission.id}</span>
-                </h3>
-                {submission.spam && (
-                  <span className="flex flex-row my-auto ml-2 text-red-500">
-                    <svg fill="currentColor" viewBox="0 0 20 20" className="flex-shrink-0 w-4 h-4 my-auto">
-                      <path
-                        fillRule="evenodd"
-                        d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
-                    <span className="my-auto text-sm align-middle"> Marked as spam</span>
-                  </span>
-                )}
-                <button
-                  type="button"
-                  className="absolute text-gray-400 transition duration-150 ease-in-out hover:text-gray-500 focus:outline-none focus:text-gray-500 top-2 right-2"
-                  onClick={() => onClose()}
-                >
-                  <svg className="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+            <div className="z-50 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl" ref={popupRef as any}>
+              <div className="px-4 py-5 border-b border-gray-200 sm:px-6">
+                <h3 className="text-lg font-medium leading-6 text-gray-900">Submission Information</h3>
+                <p className="max-w-2xl mt-1 text-sm leading-5 text-gray-500">id #{submission.id}</p>
               </div>
-              <div className="flex flex-col sm:flex-row sm:justify-between">
-                <div className="w-full sm:w-2/3">
-                  <div className="flex flex-row mt-5">
-                    <svg fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5 text-gray-700">
-                      <path
-                        fillRule="evenodd"
-                        d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
-
-                    <h3 className="ml-2 text-lg font-medium leading-6 text-gray-900">Data</h3>
+              <div>
+                <dl>
+                  <div className="px-4 py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium leading-5 text-gray-500">Full name</dt>
+                    <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">Margot Foster</dd>
                   </div>
-
-                  <div className="sm:ml-7">
-                    <table className="w-full mt-1 rounded-md">
-                      <tbody className="rounded-md">
-                        {Object.keys(JSON.parse(submission.data)).map(key => (
-                          <tr>
-                            <td className="py-3 pr-3 pr-5 text-gray-600 ">{capitalize(key)} </td>
-                            <td className="px-3 break-all">{JSON.parse(submission.data)[key]}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium leading-5 text-gray-500">Application for</dt>
+                    <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">Backend Developer</dd>
                   </div>
-
-                  <PopupUser submission={submission} />
-                  <PopupNote submission={submission} />
-                  <PopupInfo submission={submission} />
-                </div>
-                <div className="w-full mt-5 sm:w-3/10 sm:mt-0">
-                  <div className="flex flex-col">
-                    <span className="rounded-md shadow-sm sm:ml-3">
-                      <button
-                        type="button"
-                        onClick={() => markAsSpam()}
-                        className="inline-flex items-center w-full px-4 py-2 mb-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-gray-600 border border-transparent rounded-md hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700"
-                      >
-                        <svg fill="currentColor" viewBox="0 0 20 20" className="flex-shrink-0 w-5 h-5 mr-1 -ml-1">
-                          <path
-                            fillRule="evenodd"
-                            d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg>
-                        {submission.spam ? 'Unmark as spam' : 'Mark as spam'}
-                      </button>
-                    </span>
-
-                    <span className="rounded-md shadow-sm sm:ml-3">
-                      <button
-                        type="button"
-                        className="inline-flex items-center w-full px-4 py-2 mb-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-gray-600 border border-transparent rounded-md hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-700"
-                      >
-                        <svg fill="currentColor" viewBox="0 0 20 20" className="flex-shrink-0 w-5 h-5 mr-2 -ml-1">
-                          <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"></path>
-                          <path
-                            fillRule="evenodd"
-                            d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg>
-                        Archive
-                      </button>
-                    </span>
-
-                    <span className="rounded-md shadow-sm sm:ml-3">
-                      <button
-                        type="button"
-                        onClick={() => deleteSubmission()}
-                        className="inline-flex items-center w-full px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-red-500 border border-transparent rounded-md hover:bg-red-400 focus:outline-none focus:shadow-outline-red focus:border-red-600"
-                      >
-                        <svg fill="currentColor" viewBox="0 0 20 20" className="flex-shrink-0 w-5 h-5 mr-2 -ml-1">
-                          <path
-                            fillRule="evenodd"
-                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg>
-                        Delete
-                      </button>
-                    </span>
+                  <div className="px-4 py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium leading-5 text-gray-500">Email address</dt>
+                    <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">margotfoster@example.com</dd>
                   </div>
-                </div>
+                  <div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium leading-5 text-gray-500">Salary expectation</dt>
+                    <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">$120,000</dd>
+                  </div>
+                  <div className="px-4 py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium leading-5 text-gray-500">About</dt>
+                    <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                      Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint.
+                      Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.
+                    </dd>
+                  </div>
+                  <div className="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium leading-5 text-gray-500">Attachments</dt>
+                    <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                      <ul className="border border-gray-200 rounded-md">
+                        <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm leading-5">
+                          <div className="flex items-center flex-1 w-0">
+                            <svg className="flex-shrink-0 w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                              <path
+                                fillRule="evenodd"
+                                d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            <span className="flex-1 w-0 ml-2 truncate">resume_back_end_developer.pdf</span>
+                          </div>
+                          <div className="flex-shrink-0 ml-4">
+                            <a href="/" className="font-medium text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500">
+                              Download
+                            </a>
+                          </div>
+                        </li>
+                        <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm leading-5 border-t border-gray-200">
+                          <div className="flex items-center flex-1 w-0">
+                            <svg className="flex-shrink-0 w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                              <path
+                                fillRule="evenodd"
+                                d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            <span className="flex-1 w-0 ml-2 truncate">coverletter_back_end_developer.pdf</span>
+                          </div>
+                          <div className="flex-shrink-0 ml-4">
+                            <a href="/" className="font-medium text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500">
+                              Download
+                            </a>
+                          </div>
+                        </li>
+                      </ul>
+                    </dd>
+                  </div>
+                </dl>
               </div>
             </div>
           </Transition>

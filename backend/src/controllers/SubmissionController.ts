@@ -145,7 +145,7 @@ export class SubmissionController {
 
       if (dbSubmission) {
         await db.submission.delete({ where: { id: submission } });
-        await this.elasticService.deleteSubmission(submission);
+        await this.elasticService.deleteSubmissionIndex(submission);
       }
     }
   }

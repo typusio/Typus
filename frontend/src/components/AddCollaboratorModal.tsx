@@ -74,7 +74,7 @@ export const AddCollaboratorModal = ({ onClose, onAdd, open }: Props) => {
           leaveFrom="opacity-100 translate-y-0 sm:scale-100"
           leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
-          <div className="overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:max-w-lg sm:w-full" ref={modalRef as any}>
+          <form className="overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:max-w-lg sm:w-full" ref={modalRef as any}>
             <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
                 <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-blue-100 rounded-full sm:mx-0 sm:h-10 sm:w-10">
@@ -115,8 +115,11 @@ export const AddCollaboratorModal = ({ onClose, onAdd, open }: Props) => {
             <div className="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
               <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                 <button
-                  type="button"
-                  onClick={() => handleSubmit()}
+                  type="submit"
+                  onClick={e => {
+                    e.preventDefault();
+                    handleSubmit();
+                  }}
                   className="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue sm:text-sm sm:leading-5"
                 >
                   Add
@@ -132,7 +135,7 @@ export const AddCollaboratorModal = ({ onClose, onAdd, open }: Props) => {
                 </button>
               </span>
             </div>
-          </div>
+          </form>
         </Transition>
       </div>
     </Transition>

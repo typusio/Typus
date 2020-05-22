@@ -1,1 +1,0 @@
-export { SettingsAppearance } from './SettingsAppearance';

@@ -46,21 +46,21 @@ export const LoginPage = () => {
   });
 
   return (
-    <div className="bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 mt-12">
+    <div className="flex flex-col justify-center py-12 mt-12 bg-gray-50 sm:px-6 lg:px-8">
       <img src={Logo} alt="" className="w-16 h-16 mx-auto mb-5 cursor-pointer" onClick={() => push('/')} />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="text-center text-3xl leading-9 font-extrabold text-gray-900">Sign in to your account</h2>
-        <p className="mt-2 text-center text-sm leading-5 text-gray-600 max-w">
+        <h2 className="text-3xl font-extrabold leading-9 text-center text-gray-900">Sign in to your account</h2>
+        <p className="mt-2 text-sm leading-5 text-center text-gray-600 max-w">
           Don't have an account?{' '}
-          <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+          <Link to="/register" className="font-medium text-blue-600 transition duration-150 ease-in-out hover:text-blue-500 focus:outline-none focus:underline">
             Register
           </Link>
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md mx-3 sm:mx-0">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div className="mx-3 mt-8 sm:mx-auto sm:w-full sm:max-w-md sm:mx-0">
+        <form className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
           <div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-5 text-gray-700">
@@ -102,9 +102,9 @@ export const LoginPage = () => {
               <p className="text-red-500 transition text-sm pt-0.5">{errors.password}</p>
             </div>
 
-            <div className="mt-6 flex items-center">
-              <div className="text-sm leading-5 float-right">
-                <a href="/" className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+            <div className="flex items-center mt-6">
+              <div className="float-right text-sm leading-5">
+                <a href="/" className="font-medium text-blue-600 transition duration-150 ease-in-out hover:text-blue-500 focus:outline-none focus:underline">
                   Forgot your password?
                 </a>
               </div>
@@ -113,17 +113,20 @@ export const LoginPage = () => {
             <div className="mt-6">
               <span className="block w-full rounded-md shadow-sm">
                 <button
-                  onClick={() => handleSubmit()}
+                  onClick={e => {
+                    e.preventDefault();
+                    handleSubmit();
+                  }}
                   type="submit"
                   disabled={isSubmitting}
-                  className="disabled:opacity-50 w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out"
+                  className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md disabled:opacity-50 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700"
                 >
                   Sign in
                 </button>
               </span>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

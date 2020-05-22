@@ -1,38 +1,33 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import { useRouter } from '../../../util/hooks';
-import { FormMain } from './Main/FormMain';
-import { Form, FormCounts } from '../../../util/interfaces';
+import { FormContainer } from './FormContainer';
+import { Form, FormCounts, Submission } from '../../../util/interfaces';
 
 import NoData from '../../../assets/no-data.svg';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Route } from 'react-router-dom';
 import { API_URL } from '../../../util/api';
-import { FormRedButton } from '../../../components/FormRedButton';
-import { ExportButton } from '../../../components/ExportButton';
 import { OnboardingModal } from '../../../components/OnboardingModal';
 import { FormContext } from '../../../store/FormContext';
-import { useObserver } from 'mobx-react-lite';
 import { FormHeading } from './FormHeading';
+import { DashboardSubmission } from '../Submission/DashboardSubmission';
 
 export const DashboardForm = () => {
-  const {
-    match: { params },
-  } = useRouter();
-
-  const formContext = useContext(FormContext);
+  const { match } = useRouter();
 
   const [form, setForm] = useState<Form>();
   const [notFound, setNotFound] = useState(false);
-
   const [loading, setLoading] = useState(true);
 
   const [onboardingShown, setOnboardingShown] = useState(false);
+
+  const [currentSubmission, setCurrentSubmission] = useState<Submission>();
 
   useEffect(() => {
     if (!localStorage.getItem('onboardingShown')) setOnboardingShown(true);
   }, []);
 
-  const id = (params as any).id;
+  const id = (match.params as any).id;
 
   useEffect(() => {
     async function fetchForm() {
@@ -74,13 +69,21 @@ export const DashboardForm = () => {
       )}
 
       {form && (
-        <FormContext.Provider value={{ form }}>
-          <div>
-            <div className="pb-64 bg-gray-800"></div>
-            <FormHeading />
+        <FormContext.Provider value={{ form, currentSubmission, setCurrentSubmission }}>
+          <Switch>
+            <Route path={`${match.url}/:submissionId`}>
+              <DashboardSubmission />
+            </Route>
 
-            <FormMain />
-          </div>
+            <Route path={match.url + '/'}>
+              <div>
+                <div className="pb-64 bg-gray-800"></div>
+                <FormHeading />
+
+                <FormContainer />
+              </div>
+            </Route>
+          </Switch>
         </FormContext.Provider>
       )}
     </div>
