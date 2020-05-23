@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Confirmation } from '../../../../util/interfaces';
 
-import { API_URL } from '../../../../util/api';
+import { API_URL } from '../../../../api/api';
 import { useFormik } from 'formik';
 import { ConfirmationForm } from './ConfirmationForm';
 import { DeleteModal } from '../../../../components/DeleteModal';

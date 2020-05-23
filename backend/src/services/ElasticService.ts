@@ -4,12 +4,12 @@ import { Service } from '@tsed/di';
 
 @Service()
 export class ElasticService {
-  async indexSubmission(submission: Submission, form: Form) {
+  async indexSubmission(submission: Submission, formId: string) {
     await elastic.index({
       index: 'submissions',
       body: {
         id: submission.id,
-        formId: form.id,
+        formId: formId,
         data: JSON.parse(submission.data),
       },
     });

@@ -1,15 +1,13 @@
 import React, { useRef, useContext } from 'react';
 import { User } from '../util/interfaces';
-
 import classNames from 'classnames';
 import { useFormik } from 'formik';
-import { useOutsideClick } from '../util/hooks';
-
 import * as yup from 'yup';
-import { API_URL } from '../util/api';
-import { useToasts } from 'react-toast-notifications';
+import { API_URL } from '../api/api';
 import { Transition } from './Transition';
 import { FormContext } from '../store/FormContext';
+import { useToasts } from '../store/ToastContext';
+import { useClickAway } from 'react-use';
 
 interface Props {
   onClose: () => void;
@@ -22,8 +20,8 @@ export const AddCollaboratorModal = ({ onClose, onAdd, open }: Props) => {
 
   const { addToast } = useToasts();
 
-  const modalRef = useRef();
-  useOutsideClick(modalRef, () => onClose());
+  const modalRef = useRef(null);
+  useClickAway(modalRef, () => onClose());
 
   const { values, handleChange, errors, handleSubmit } = useFormik({
     initialValues: {
@@ -40,10 +38,10 @@ export const AddCollaboratorModal = ({ onClose, onAdd, open }: Props) => {
         credentials: 'include',
       });
 
-      if (res.status == 400) return addToast('This user is already a collaborator', { appearance: 'error', autoDismiss: true });
-      if (res.status == 404) return addToast('No user could be found with this email', { appearance: 'error', autoDismiss: true });
+      if (res.status == 400) return addToast('This user is already a collaborator', { type: 'error' });
+      if (res.status == 404) return addToast('No user could be found with this email', { type: 'error' });
 
-      addToast('User successfully added', { appearance: 'success', autoDismiss: true });
+      addToast('User successfully added', { type: 'success' });
 
       return onAdd(await res.json());
     },
@@ -74,7 +72,7 @@ export const AddCollaboratorModal = ({ onClose, onAdd, open }: Props) => {
           leaveFrom="opacity-100 translate-y-0 sm:scale-100"
           leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
-          <form className="overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:max-w-lg sm:w-full" ref={modalRef as any}>
+          <form className="overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:max-w-lg sm:w-full" ref={modalRef}>
             <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
                 <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-blue-100 rounded-full sm:mx-0 sm:h-10 sm:w-10">

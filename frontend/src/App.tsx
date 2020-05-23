@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { Router } from './components/Router';
 import { AuthContextProvider, AuthContext } from './store/AuthContext';
-import { ToastProvider } from 'react-toast-notifications';
-
 import { useObserver } from 'mobx-react-lite';
 import { AuthLoader } from './components/AuthLoader';
+import { ToastProvider } from './components/Toasts/ToastProvider';
 
 function App() {
   return useObserver(() => (

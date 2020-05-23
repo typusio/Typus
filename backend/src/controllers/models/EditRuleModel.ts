@@ -1,7 +1,7 @@
 import { Required, Allow } from '@tsed/common';
 
 export class EditRuleModel {
-  @Required()
+  @Allow()
   field: string;
 
   @Allow()

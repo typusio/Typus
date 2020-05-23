@@ -2,14 +2,12 @@ import React, { useState, useRef, useContext, useEffect } from 'react';
 import { RuleMeta, Rule } from '../util/interfaces';
 import { Transition } from '../components/Transition';
 import { useFormik } from 'formik';
-
 import classNames from 'classnames';
-
 import * as yup from 'yup';
-import { useToasts } from 'react-toast-notifications';
-import { useOutsideClick } from '../util/hooks';
-import { API_URL } from '../util/api';
+import { API_URL } from '../api/api';
 import { FormContext } from '../store/FormContext';
+import { useToasts } from '../store/ToastContext';
+import { useClickAway } from 'react-use';
 
 interface Props {
   rules: { [key: string]: RuleMeta };
@@ -35,8 +33,8 @@ export const CreateRuleModal = ({ rules, onCreate, onClose, open, strict }: Prop
     return defaultRule;
   };
 
-  const modalRef = useRef();
-  useOutsideClick(modalRef, () => onClose());
+  const modalRef = useRef(null);
+  useClickAway(modalRef, () => onClose());
 
   const { values, setFieldError, handleSubmit, handleChange, errors } = useFormik({
     initialValues: {
@@ -60,7 +58,7 @@ export const CreateRuleModal = ({ rules, onCreate, onClose, open, strict }: Prop
       });
 
       if (res.status == 400) {
-        return addToast(await res.text(), { appearance: 'error', autoDismiss: true });
+        return addToast(await res.text(), { type: 'error' });
       }
 
       onCreate(await res.json());
@@ -106,7 +104,7 @@ export const CreateRuleModal = ({ rules, onCreate, onClose, open, strict }: Prop
           leaveFrom="opacity-100 translate-y-0 sm:scale-100"
           leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
-          <form className="overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:max-w-lg sm:w-full" ref={modalRef as any}>
+          <form className="overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:max-w-lg sm:w-full" ref={modalRef}>
             <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
                 <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-green-100 rounded-full sm:mx-0 sm:h-10 sm:w-10">

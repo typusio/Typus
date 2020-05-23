@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import classNames from 'classnames';
 import { useRouter } from '../../../util/hooks';
 import { Form } from '../../../util/interfaces';
-import { API_URL } from '../../../util/api';
+import { API_URL } from '../../../api/api';
 
 export const DashboardNew = () => {
   const { push } = useRouter();

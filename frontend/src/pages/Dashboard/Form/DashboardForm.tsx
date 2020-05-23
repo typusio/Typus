@@ -6,7 +6,7 @@ import { Form, FormCounts, Submission } from '../../../util/interfaces';
 
 import NoData from '../../../assets/no-data.svg';
 import { Link, Switch, Route } from 'react-router-dom';
-import { API_URL } from '../../../util/api';
+import { API_URL } from '../../../api/api';
 import { OnboardingModal } from '../../../components/OnboardingModal';
 import { FormContext } from '../../../store/FormContext';
 import { FormHeading } from './FormHeading';

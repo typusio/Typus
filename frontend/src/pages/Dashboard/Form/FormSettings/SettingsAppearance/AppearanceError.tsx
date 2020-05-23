@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { SketchPicker } from 'react-color';
 import classNames from 'classnames';
-import { API_URL } from '../../../../../util/api';
+import { API_URL } from '../../../../../api/api';
 import { FormContext } from '../../../../../store/FormContext';
 
 // TODO: Refactor to not use any

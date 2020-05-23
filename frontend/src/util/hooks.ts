@@ -3,7 +3,7 @@ import { useParams, useLocation, useHistory, useRouteMatch } from 'react-router-
 
 import queryString from 'query-string';
 import { useFormik, FormikValues } from 'formik';
-import { API_URL } from './api';
+import { API_URL } from '../api/api';
 
 export function useRouter() {
   const params = useParams();
@@ -34,22 +34,6 @@ export function useRouter() {
     };
   }, [params, match, location, history]);
 }
-
-export const useOutsideClick = (ref: MutableRefObject<any>, callback: () => void) => {
-  const handleClick = (e: any) => {
-    if (ref.current && !ref.current.contains(e.target)) {
-      callback();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('click', handleClick);
-
-    return () => {
-      document.removeEventListener('click', handleClick);
-    };
-  });
-};
 
 export function useDebounce<T>(value: T, delay: number) {
   const [debouncedValue, setDebouncedValue] = useState(value);

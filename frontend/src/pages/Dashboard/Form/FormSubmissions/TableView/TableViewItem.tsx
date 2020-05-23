@@ -10,7 +10,7 @@ export const TableViewItem = ({ submission, index, columns }: { submission: Subm
 
   const formContext = useContext(FormContext);
 
-  const { selected, setSelected, setPopup } = useContext(FormViewContext);
+  const { selected, setSelected } = useContext(FormViewContext);
   const parsed = useMemo(() => JSON.parse(submission.data), [submission]);
 
   return (

@@ -1,11 +1,9 @@
-import { Controller, Get, Post, Res, Req, PathParams, MergeParams, QueryParams, Delete, BodyParams, UseBefore, Patch, Put, Locals } from '@tsed/common';
+import { Controller, Get, Post, Res, Req, PathParams, MergeParams, QueryParams, Delete, UseBefore, Patch, Put, Locals, BodyParams } from '@tsed/common';
 import { Request, Response } from 'express';
 import { db } from '../Prisma';
 import { IpService } from '../services/IpService';
 import { NotFound, BadRequest } from 'ts-httpexceptions';
 import { RequireAuth } from '../middleware/RequireAuth';
-import { EditNoteModel } from './models/EditNoteModel';
-
 import * as crypto from 'crypto';
 import { ValidationService } from '../services/ValidationService';
 import { UploadedFile } from 'express-fileupload';
@@ -18,6 +16,8 @@ import { NotificationsService } from '../services/NotificationsService';
 import { Submission, Form } from '@prisma/client';
 import { ElasticService } from '../services/ElasticService';
 import { elastic } from '../Elastic';
+import { RequireSubmissionAccess } from '../middleware/RequireSubmissionAccess';
+import { EditSubmissionModel } from './models/EditSubmissionModel';
 
 @Controller('/:formId')
 @MergeParams()
@@ -111,7 +111,7 @@ export class SubmissionController {
 
     await this.handleSuccess(req, res, form.id, submission);
 
-    await this.elasticService.indexSubmission(submission, form);
+    await this.elasticService.indexSubmission(submission, form.id);
 
     this.confirmationService.handleSubmission(form, submission);
     this.notificationsService.handleSubmission(form, submission);
@@ -150,49 +150,33 @@ export class SubmissionController {
     }
   }
 
-  @Patch('/:submissionId/note')
-  @UseBefore(RequireAuth)
-  async editNote(@BodyParams() { note }: EditNoteModel, @Req() req: Request, @PathParams('submissionId') submissionId: number) {
-    const dbSubmission = await db.submission.findOne({ where: { id: submissionId }, include: { form: true } });
-
-    if (!(await hasFormAccess(dbSubmission!.form.id, req.session!.user))) {
-      throw new BadRequest('You must be the owner of this submission to do this');
-    }
-
-    const submission = await db.submission.update({ where: { id: submissionId }, data: { note } });
-
-    return submission;
-  }
-
   @Get('/:submissionId')
-  @UseBefore(RequireAuth)
-  async getSingular(@PathParams('submissionId') submissionId: number, @Req() req: Request) {
-    const submission = await db.submission.findOne({ where: { id: submissionId }, include: { form: true, ip: true } });
-
-    if (!submission) throw new NotFound('Form not found');
-
-    if (!(await hasFormAccess(submission.form.id, req.session!.user))) {
-      throw new BadRequest('You must be the owner of this submission to do this');
-    }
-
+  @UseBefore(RequireAuth, RequireSubmissionAccess)
+  async getSingular(@Locals('submission') submission: Submission) {
     return submission;
   }
 
-  @Put('/:submissionId/spam')
-  @UseBefore(RequireAuth)
-  async markAsSpam(@PathParams('submissionId') submissionId: number, @Req() req: Request) {
-    const submission = await db.submission.findOne({ where: { id: submissionId }, include: { form: true, ip: true } });
-    if (!submission) throw new NotFound('Form not found');
-    if (!hasFormAccess(submission.form.id, req.session!.user)) throw new BadRequest('You must be the owner of this submission to do this');
-    if (submission.spam) {
-      await db.submission.update({ where: { id: submissionId }, data: { spam: false } });
+  @Patch('/:submissionId')
+  @UseBefore(RequireAuth, RequireSubmissionAccess)
+  async edit(@Locals('submission') submission: Submission, @BodyParams() data: EditSubmissionModel) {
+    const dataModified = data.data !== submission.data;
 
-      return 'spam_removed';
+    if (dataModified) {
+      try {
+        JSON.parse(data.data);
+      } catch (e) {
+        throw new BadRequest('Provided data must be valid JSON.');
+      }
     }
 
-    await db.submission.update({ where: { id: submissionId }, data: { spam: true } });
+    submission = await db.submission.update({ where: { id: submission.id }, data });
 
-    return 'spam_added';
+    if (dataModified) {
+      await this.elasticService.deleteSubmissionIndex(submission.id);
+      await this.elasticService.indexSubmission(submission, submission.formId);
+    }
+
+    return submission;
   }
 
   @Get('/search/:query')

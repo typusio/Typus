@@ -1,16 +1,16 @@
 import React, { useState, useRef, useContext } from 'react';
 import { Transition } from '../../../components/Transition';
-import { useOutsideClick } from '../../../util/hooks';
-import { API_URL } from '../../../util/api';
+import { API_URL } from '../../../api/api';
 import { FormContext } from '../../../store/FormContext';
+import { useClickAway } from 'react-use';
 
 export const ExportButton = () => {
   const { form } = useContext(FormContext);
 
   const [open, setOpen] = useState(false);
-  const menuRef = useRef();
+  const menuRef = useRef(null);
 
-  useOutsideClick(menuRef, () => setOpen(false));
+  useClickAway(menuRef, () => setOpen(false));
 
   return (
     <span className="relative rounded-md shadow-sm">
@@ -38,7 +38,7 @@ export const ExportButton = () => {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <div className="absolute left-0 z-50 w-56 mt-2 origin-top-left rounded-md shadow-lg" ref={menuRef as any}>
+        <div className="absolute left-0 z-50 w-56 mt-2 origin-top-left rounded-md shadow-lg" ref={menuRef}>
           <div className="bg-white rounded-md shadow-xs">
             <div className="py-1">
               <a

@@ -2,18 +2,13 @@ import React, { createContext } from 'react';
 import { observable, action } from 'mobx';
 import { User } from '../util/interfaces';
 
-class AuthContextStore {
-  @observable
-  loggedIn: boolean = false;
-
-  @observable
-  user: User | null = null;
+interface AuthStore {
+  loggedIn: boolean;
+  user: User | null;
 }
 
-const store = new AuthContextStore();
-
-export const AuthContext = createContext(store);
+export const AuthContext = createContext<AuthStore>({} as AuthStore);
 
 export const AuthContextProvider: React.FC = ({ children }) => {
-  return <AuthContext.Provider value={store}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ loggedIn: false, user: null }}>{children}</AuthContext.Provider>;
 };

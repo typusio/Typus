@@ -3,9 +3,9 @@ import { Rule, RuleMeta } from '../../../../util/interfaces';
 
 import classNames from 'classnames';
 import { useFormik, ErrorMessage } from 'formik';
-import { API_URL } from '../../../../util/api';
+import { API_URL } from '../../../../api/api';
 import { FormContext } from '../../../../store/FormContext';
-import { useToasts } from 'react-toast-notifications';
+import { useToasts } from '../../../../store/ToastContext';
 
 interface Props {
   rule: Rule;
@@ -44,7 +44,7 @@ export const RuleCard = ({ rule, meta, onRemove }: Props) => {
 
       rule = { ...rule, ...values };
 
-      addToast('Saved rule', { appearance: 'success', autoDismiss: true });
+      addToast('Saved rule', { type: 'success' });
     },
   });
 

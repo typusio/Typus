@@ -3,9 +3,13 @@ import { Submission } from '../../../../../util/interfaces';
 import classNames from 'classnames';
 import { FormViewContext } from '../../../../../store/FormViewContext';
 import moment from 'moment';
+import { FormContext } from '../../../../../store/FormContext';
+import { useRouter } from '../../../../../util/hooks';
 
 export const ListViewItem = ({ submission, index }: { submission: Submission; index: number }) => {
-  const { setPopup, setSelected, selected } = useContext(FormViewContext);
+  const { setSelected, selected } = useContext(FormViewContext);
+  const formContext = useContext(FormContext);
+  const { push } = useRouter();
 
   const parsed = useMemo(() => JSON.parse(submission.data), [submission]);
 
@@ -18,7 +22,9 @@ export const ListViewItem = ({ submission, index }: { submission: Submission; in
         onClick={e => {
           if ((e.target as any).value != undefined) return;
 
-          setPopup(submission.id);
+          formContext.setCurrentSubmission(submission);
+
+          push(`/dashboard/form/${formContext.form.id}/${submission.id}`);
         }}
       >
         <div className="relative flex items-center px-4 py-4 sm:px-6">

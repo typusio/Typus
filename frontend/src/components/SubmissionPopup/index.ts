@@ -1,1 +1,0 @@
-export { SubmissionPopup } from './SubmissionPopup';

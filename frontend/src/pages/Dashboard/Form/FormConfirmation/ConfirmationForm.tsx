@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 
 import * as yup from 'yup';
 import classNames from 'classnames';
-import { API_URL } from '../../../../util/api';
+import { API_URL } from '../../../../api/api';
 import { FormContext } from '../../../../store/FormContext';
 
 export const ConfirmationForm = ({ confirmation, onDelete }: { confirmation: Confirmation; onDelete: () => void }) => {

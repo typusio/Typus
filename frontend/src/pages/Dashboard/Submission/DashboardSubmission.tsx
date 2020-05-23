@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { SubmissionHeader } from './SubmissionHeader';
 import { FormContext } from '../../../store/FormContext';
 import { useRouter } from '../../../util/hooks';
-import { API_URL } from '../../../util/api';
+import { API_URL } from '../../../api/api';
 import { SubmissionContainer } from './SubmissionContainer';
 
 export const DashboardSubmission = () => {

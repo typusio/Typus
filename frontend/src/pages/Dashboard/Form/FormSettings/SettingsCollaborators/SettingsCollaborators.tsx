@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { User } from '../../../../../util/interfaces';
 
-import { API_URL } from '../../../../../util/api';
+import { API_URL } from '../../../../../api/api';
 import { AddCollaboratorModal } from '../../../../../components/AddCollaboratorModal';
 import { FormContext } from '../../../../../store/FormContext';
 import { Spinner } from '../../../../../components/Spinner';

@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../../../store/AuthContext';
 import { DeleteModal } from '../../../components/DeleteModal';
-import { API_URL } from '../../../util/api';
+import { API_URL } from '../../../api/api';
 import { useRouter } from '../../../util/hooks';
-import { useToasts } from 'react-toast-notifications';
 import { FormContext } from '../../../store/FormContext';
+import { useToasts } from '../../../store/ToastContext';
 
 const DeleteButton = () => {
   const { form } = useContext(FormContext);
@@ -16,7 +16,7 @@ const DeleteButton = () => {
   async function deleteForm() {
     await fetch(`${API_URL}/form/${form.id}`, { method: 'DELETE', credentials: 'include' });
 
-    addToast('Form successfully deleted', { appearance: 'success', autoDismiss: true });
+    addToast('Form successfully deleted', { type: 'success' });
     return push('/dashboard');
   }
 
@@ -60,7 +60,7 @@ const LeaveButton = () => {
   async function leaveForm() {
     await fetch(`${API_URL}/collaborator/${form.id}/leave`, { method: 'DELETE', credentials: 'include' });
 
-    addToast('Successfully left form', { appearance: 'success', autoDismiss: true });
+    addToast('Successfully left form', { type: 'success' });
 
     return push('/dashboard');
   }

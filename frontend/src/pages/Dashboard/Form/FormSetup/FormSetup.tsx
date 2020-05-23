@@ -1,5 +1,5 @@
 import React, { useRef, useContext } from 'react';
-import { API_URL, DOCS_URL } from '../../../../util/api';
+import { API_URL, DOCS_URL } from '../../../../api/api';
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { monoBlue } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -8,7 +8,6 @@ import { FormContext } from '../../../../store/FormContext';
 
 export const FormSetup = () => {
   const { form } = useContext(FormContext);
-  const inputRef = useRef(null);
 
   return (
     <div className="-mt-2">
@@ -21,7 +20,6 @@ export const FormSetup = () => {
           value={`${API_URL}/${form.id}`}
           className="flex-grow w-full px-2 py-2 mr-2 text-center bg-gray-200 rounded sm:w-10/12"
           data-target="clipboard.source"
-          ref={inputRef as any}
         />
 
         <span className="inline-flex w-full rounded-md shadow-sm sm:w-1/12">

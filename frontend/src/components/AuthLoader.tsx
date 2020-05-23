@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../store/AuthContext';
-import { API_URL } from '../util/api';
+import { API_URL } from '../api/api';
 
 import Logo from '../assets/logo.svg';
 

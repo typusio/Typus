@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { useFormik } from 'formik';
-import { useToasts } from 'react-toast-notifications';
 
 import * as yup from 'yup';
 import classNames from 'classnames';
 import { AuthContext } from '../store/AuthContext';
 import { useRouter } from '../util/hooks';
-import { API_URL } from '../util/api';
+import { API_URL } from '../api/api';
 import { Link } from 'react-router-dom';
 
 import Logo from '../assets/logo.svg';
+import { useToasts } from '../store/ToastContext';
 
 export const LoginPage = () => {
   const { addToast } = useToasts();
@@ -34,8 +34,8 @@ export const LoginPage = () => {
         credentials: 'include',
       });
 
-      if (res.status == 400) return addToast('Invalid username/password combination', { appearance: 'error', autoDismiss: true });
-      addToast('Successfully logged in. Redirecting...', { appearance: 'success', autoDismiss: true });
+      if (res.status == 400) return addToast('Invalid username/password combination', { type: 'error' });
+      addToast('Successfully logged in. Redirecting...', { type: 'success' });
 
       authContext.loggedIn = true;
       authContext.user = await res.json();

@@ -11,7 +11,7 @@ export class RequireFormAccess {
 
     if (!form) throw new NotFound('Form not found');
 
-    if (!(await hasFormAccess(form.id, req.session!.user))) throw new BadRequest('You must be the owner of the form to do this');
+    if (!(await hasFormAccess(form.id, req.session!.user))) throw new BadRequest('You must have access to the form to do this');
 
     locals.form = form;
   }

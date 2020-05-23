@@ -2,16 +2,17 @@ import { Required, MaxLength, Email, Allow } from '@tsed/common';
 import { isEmpty } from '@tsed/core';
 
 export class EditConfirmationModel {
-  @Required()
+  @Allow()
   field: string;
 
-  @Required()
+  @Allow()
   subject: string;
 
-  @Required()
+  @Allow()
   body: string;
 
   @MaxLength(60)
+  @Allow()
   fromName: string;
 
   @Allow()
