@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 import { Form, Submission } from '../util/interfaces';
-import { observable } from 'mobx';
 
 interface FormStore {
   form: Form;
+  setForm: React.Dispatch<React.SetStateAction<Form | undefined>>;
 
   currentSubmission?: Submission;
   setCurrentSubmission: React.Dispatch<React.SetStateAction<Submission | undefined>>;

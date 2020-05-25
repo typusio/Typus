@@ -16,5 +16,6 @@
     "jsx": "react",
     "experimentalDecorators": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "references": [{ "path": "../common/tsconfig.json" }]
 }

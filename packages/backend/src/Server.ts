@@ -47,7 +47,7 @@ export class Server extends ServerLoader {
       )
       .use(
         session({
-          store: new RedisStore({ client: redis }),
+          store: new RedisStore({ client: redis as any }),
           name: 'qid',
           secret: process.env.SESSION_SECRET!,
           resave: false,

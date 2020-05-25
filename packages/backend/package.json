@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "@typus/backend",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -40,7 +40,8 @@
     "mailgun-js": "0.22.0",
     "method-override": "3.0.0",
     "node-fetch": "2.6.0",
-    "ts-httpexceptions": "4.1.0"
+    "ts-httpexceptions": "4.1.0",
+    "@typus/common": "1.0.0"
   },
   "devDependencies": {
     "@types/argon2": "0.15.0",

@@ -69,7 +69,7 @@ export const DashboardForm = () => {
       )}
 
       {form && (
-        <FormContext.Provider value={{ form, currentSubmission, setCurrentSubmission }}>
+        <FormContext.Provider value={{ form, setForm, currentSubmission, setCurrentSubmission }}>
           <Switch>
             <Route path={`${match.url}/:submissionId`}>
               <DashboardSubmission />

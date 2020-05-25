@@ -80,7 +80,10 @@ export class FormController {
   @Get('/:formId')
   @UseBefore(RequireAuth, RequireFormAccess)
   async get(@Req() req: Request, @Locals('form') form: Form) {
-    return await db.form.findOne({ where: { id: form.id }, include: { owner: true } });
+    return await db.form.findOne({
+      where: { id: form.id },
+      include: { owner: true, collaborators: true, validation: true, confirmation: true, appearance: true, security: true, notifications: true },
+    });
   }
 
   @Patch('/:formId')
