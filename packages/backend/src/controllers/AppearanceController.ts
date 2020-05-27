@@ -12,12 +12,6 @@ import { RenderService } from '../services/RenderService';
 export class AppearanceController {
   public constructor(private readonly renderService: RenderService) {}
 
-  @Get('/:formId')
-  @UseBefore(RequireAuth, RequireFormAccess)
-  async get(@Locals('form') form: Form) {
-    return await db.form.findOne({ where: { id: form.id } }).appearance();
-  }
-
   @Patch('/:formId')
   @UseBefore(RequireAuth, RequireFormAccess)
   async edit(@BodyParams() body: EditAppearanceModel, @Locals('form') form: Form) {

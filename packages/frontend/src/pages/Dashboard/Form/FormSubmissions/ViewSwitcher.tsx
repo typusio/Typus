@@ -28,7 +28,7 @@ export const ViewSwitcher = ({ view, setView }: { view: 'list' | 'table'; setVie
         type="button"
         className={classNames(
           'relative inline-flex items-center px-2 py-2 text-sm font-medium leading-5 transition duration-150 ease-in-out border rounded-l-md focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue',
-          { [SELECTED_COLORS]: view == 'table', [UNSELECTED_COLORS]: view !== 'table' },
+          { [SELECTED_COLORS]: view === 'table', [UNSELECTED_COLORS]: view !== 'table' },
         )}
         onClick={() => setView('table')}
       >
@@ -40,7 +40,7 @@ export const ViewSwitcher = ({ view, setView }: { view: 'list' | 'table'; setVie
         type="button"
         className={classNames(
           'relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium leading-5 transition duration-150 ease-in-out border rounded-r-md focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue',
-          { [SELECTED_COLORS]: view == 'list', [UNSELECTED_COLORS]: view !== 'list' },
+          { [SELECTED_COLORS]: view === 'list', [UNSELECTED_COLORS]: view !== 'list' },
         )}
         onClick={() => setView('list')}
       >

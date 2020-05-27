@@ -22,7 +22,7 @@ export const FormConfirmation = () => {
     async function fetchConfirmation() {
       const res = await fetch(`${API_URL}/confirmation/${form.id}`, { credentials: 'include' });
 
-      if (res.status == 404) {
+      if (res.status === 404) {
         setNotFound(true);
         return setLoading(false);
       }

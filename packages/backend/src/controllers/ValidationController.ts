@@ -69,8 +69,8 @@ export class ValidationController {
     for (const rule of rules) {
       const meta = this.validationService.meta[rule.validator];
 
-      if (data.strict == true && meta.nonStrictOnly) await db.validationRule.delete({ where: { id: rule.id } });
-      if (data.strict == false && meta.strictOnly) await db.validationRule.delete({ where: { id: rule.id } });
+      if (data.strict === true && meta.nonStrictOnly) await db.validationRule.delete({ where: { id: rule.id } });
+      if (data.strict === false && meta.strictOnly) await db.validationRule.delete({ where: { id: rule.id } });
     }
 
     return await db.validation.update({ where: { id: validation!.id }, data });
@@ -108,10 +108,10 @@ export class ValidationController {
     const form = await db.form.findOne({ where: { id: formId }, include: { validation: { include: { rules: true } } } });
     if (!form) throw new NotFound('Form not found');
 
-    if (meta.required && form.validation!.rules.find(r => this.validationService.meta[r.validator].required && r.field == field))
+    if (meta.required && form.validation!.rules.find(r => this.validationService.meta[r.validator].required && r.field === field))
       throw new BadRequest(`There is a rule that conflicts with this rule. Please remove it and try again.`);
 
-    if (form.validation!.rules.find(r => r.validator == validator && r.field == field))
+    if (form.validation!.rules.find(r => r.validator === validator && r.field === field))
       throw new BadRequest('You already have a rule for this field with the same action');
 
     let rule: ValidationRule;

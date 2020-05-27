@@ -38,8 +38,8 @@ export const AddCollaboratorModal = ({ onClose, onAdd, open }: Props) => {
         credentials: 'include',
       });
 
-      if (res.status == 400) return addToast('This user is already a collaborator', { type: 'error' });
-      if (res.status == 404) return addToast('No user could be found with this email', { type: 'error' });
+      if (res.status === 400) return addToast('This user is already a collaborator', { type: 'error' });
+      if (res.status === 404) return addToast('No user could be found with this email', { type: 'error' });
 
       addToast('User successfully added', { type: 'success' });
 

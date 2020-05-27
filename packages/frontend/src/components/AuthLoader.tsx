@@ -12,7 +12,7 @@ export const AuthLoader: React.FC = ({ children }) => {
     async function fetchMe() {
       const res = await fetch(`${API_URL}/user/me`, { credentials: 'include' });
 
-      if (res.status == 401) {
+      if (res.status === 401) {
         authContext.loggedIn = false;
         return setLoading(false);
       }

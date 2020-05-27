@@ -15,7 +15,7 @@ export const DashboardSubmission = () => {
 
   useEffect(() => {
     const id = (params as any).submissionId;
-    if (currentSubmission?.id == id) {
+    if (currentSubmission?.id === id) {
       return setLoading(false);
     }
 

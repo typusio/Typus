@@ -17,5 +17,5 @@
     "experimentalDecorators": true
   },
   "include": ["src"],
-  "references": [{ "path": "../common/tsconfig.json" }]
+  "references": [{ "path": "../common" }]
 }

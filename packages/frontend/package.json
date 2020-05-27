@@ -25,15 +25,18 @@
     "react-transition-group": "4.4.1",
     "react-use": "^15.1.0",
     "typescript": "3.8.3",
-    "yup": "0.28.4"
+    "yup": "0.28.4",
+    "@typus/common": "1.0.0"
   },
   "scripts": {
-    "start": "npm run css:watch & react-scripts start",
+    "start": "npm run css:watch & node scripts/launch-dev",
     "build": "npm run css:build && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "css:build": "NODE_ENV=production postcss src/assets/tailwind.css -o src/assets/main.css",
-    "css:watch": "postcss src/assets/tailwind.css -o src/assets/main.css --watch"
+    "css:watch": "postcss src/assets/tailwind.css -o src/assets/main.css --watch",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix 'src/**/*.{ts,tsx}'"
   },
   "eslintConfig": {
     "extends": "react-app"

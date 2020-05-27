@@ -34,7 +34,7 @@ export const LoginPage = () => {
         credentials: 'include',
       });
 
-      if (res.status == 400) return addToast('Invalid username/password combination', { type: 'error' });
+      if (res.status === 400) return addToast('Invalid username/password combination', { type: 'error' });
       addToast('Successfully logged in. Redirecting...', { type: 'success' });
 
       authContext.loggedIn = true;

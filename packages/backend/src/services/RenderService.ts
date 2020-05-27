@@ -2,6 +2,7 @@ import { Service } from '@tsed/di';
 import { Request, Response } from 'express';
 import { db } from '../Prisma';
 import { Submission } from '@prisma/client';
+import { Appearance } from '@typus/common';
 
 @Service()
 export class RenderService {
@@ -13,20 +14,20 @@ export class RenderService {
   }
 
   async renderSuccess(res: Response, formId: string, submission?: Submission) {
-    const appearance = await db.form.findOne({ where: { id: formId } }).appearance();
+    const appearance = (await db.form.findOne({ where: { id: formId }, select: { appearance: true } }))!.appearance as Appearance;
 
-    if (appearance!.successMode == 'Custom' && appearance!.successCustomRedirect) {
-      return res.redirect(this.formUrl(appearance!.successCustomRedirect, submission!.data, 'data'));
+    if (appearance.successMode === 'Custom' && appearance.successCustomRedirect) {
+      return res.redirect(this.formUrl(appearance.successCustomRedirect, submission!.data, 'data'));
     }
 
     return res.render('success', { appearance });
   }
 
   async renderError({ title, error }: { title: string; error: string }, res: Response, formId: string) {
-    const appearance = await db.form.findOne({ where: { id: formId } }).appearance();
+    const appearance = (await db.form.findOne({ where: { id: formId }, select: { appearance: true } }))!.appearance as Appearance;
 
-    if (appearance!.errorMode == 'Custom' && appearance!.errorCustomRedirect) {
-      return res.redirect(this.formUrl(appearance!.successCustomRedirect, error, 'error'));
+    if (appearance.errorMode === 'Custom' && appearance.errorCustomRedirect) {
+      return res.redirect(this.formUrl(appearance.successCustomRedirect, error, 'error'));
     }
 
     return res.render('error', { appearance, title, error });

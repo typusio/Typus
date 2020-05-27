@@ -77,7 +77,7 @@ export const DashboardHome = () => {
               <div className="flex flex-col h-full">
                 <div className="px-5 my-auto text-xl text-center text-white sm:text-base">{form.form.name}</div>
                 <div className="px-5 my-auto font-normal text-center text-white sm:text-sm">
-                  {form.submissions} submission{form.submissions == 1 ? '' : 's'}
+                  {form.submissions} submission{form.submissions === 1 ? '' : 's'}
                 </div>
               </div>
             </Link>

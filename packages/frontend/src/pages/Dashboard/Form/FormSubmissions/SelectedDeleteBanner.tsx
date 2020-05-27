@@ -28,7 +28,7 @@ export const SelectedDeleteBanner = ({ onClick, numSelected, show }: { onClick: 
                 </span>
                 <p className="ml-3 font-medium text-white truncate">
                   <span>
-                    <span className="font-bold">{numSelected}</span> submission{numSelected == 1 ? '' : 's'} selected
+                    <span className="font-bold">{numSelected}</span> submission{numSelected === 1 ? '' : 's'} selected
                   </span>
                 </p>
               </div>

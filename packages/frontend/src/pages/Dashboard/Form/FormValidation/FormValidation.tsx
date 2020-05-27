@@ -37,7 +37,7 @@ export const MainValidation = () => {
       setLoading(false);
 
       if ('error' in res) {
-        if (res.error.type == 'NOT_FOUND') setNoValidation(true);
+        if (res.error.type === 'NOT_FOUND') setNoValidation(true);
 
         return;
       }
@@ -96,17 +96,17 @@ export const MainValidation = () => {
     for (const rule of validation!.rules) {
       const meta = rules![rule.validator];
 
-      if (strict == true && meta.strictOnly) count++;
-      if (strict == false && meta.nonStrictOnly) count++;
+      if (strict === true && meta.strictOnly) count++;
+      if (strict === false && meta.nonStrictOnly) count++;
     }
 
     if (count > 0) {
       const res = window.confirm(`Are you sure? ${count} rule${count !== 1 ? 's' : ''} will be deleted. This action cannot be undone.`);
 
-      if (res == true) {
+      if (res === true) {
         setStrict(!strict);
-        if (strict == true) setValidation({ ...validation!, rules: validation!.rules.filter(rule => rules![rule.validator].strictOnly !== true) });
-        if (strict == false) setValidation({ ...validation!, rules: validation!.rules.filter(rule => rules![rule.validator].nonStrictOnly !== true) });
+        if (strict === true) setValidation({ ...validation!, rules: validation!.rules.filter(rule => rules![rule.validator].strictOnly !== true) });
+        if (strict === false) setValidation({ ...validation!, rules: validation!.rules.filter(rule => rules![rule.validator].nonStrictOnly !== true) });
 
         save();
       }
@@ -149,7 +149,7 @@ export const MainValidation = () => {
           <div className="flex flex-row justify-between -mt-3">
             <h2 className="flex flex-col my-auto text-xl sm:flex-row">
               <div>
-                <span className="font-semibold">{validation.rules.length}</span> rule{validation.rules.length == 1 ? '' : 's'} currently active
+                <span className="font-semibold">{validation.rules.length}</span> rule{validation.rules.length === 1 ? '' : 's'} currently active
               </div>
 
               <ValidationStrictToggle value={strict} onClick={() => switchStrictness()} />

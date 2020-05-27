@@ -149,11 +149,11 @@ export class ValidationService {
 
     if (!rules) return true;
 
-    if (validation.strict == true) {
+    if (validation.strict === true) {
       for (const field of Object.keys(req.body)) {
         if (!req.body[field]) continue; // to deal with falsy fields
 
-        if (!rules.find(r => r.field == field)) {
+        if (!rules.find(r => r.field === field)) {
           await this.handleValidationError(req, res, field, `Field ${field} is not recognised.`, form.id);
 
           return false;
@@ -172,7 +172,7 @@ export class ValidationService {
         detail: rule.detail ? rule.detail : '',
       });
 
-      if (result == false) {
+      if (result === false) {
         await this.handleValidationError(
           req,
           res,

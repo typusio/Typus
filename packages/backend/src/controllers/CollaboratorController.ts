@@ -18,7 +18,7 @@ export class CollaboratorController {
     const user = await db.user.findOne({ where: { email } });
 
     if (!user) throw new NotFound('User not found');
-    if (collaborators.some(c => c.id == user.id)) throw new BadRequest('This user is already a collaborator');
+    if (collaborators.some(c => c.id === user.id)) throw new BadRequest('This user is already a collaborator');
 
     await db.form.update({ where: { id: f.id }, data: { collaborators: { connect: { id: user.id } } } });
 
@@ -38,7 +38,7 @@ export class CollaboratorController {
     const user = await db.user.findOne({ where: { email } });
 
     if (!user) throw new NotFound('User not found');
-    if (!collaborators.some(c => c.id == user.id)) throw new BadRequest('This is not a collaborator');
+    if (!collaborators.some(c => c.id === user.id)) throw new BadRequest('This is not a collaborator');
 
     await db.form.update({ where: { id: f.id }, data: { collaborators: { disconnect: { id: user.id } } } });
 

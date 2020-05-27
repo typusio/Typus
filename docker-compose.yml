@@ -1,21 +1,34 @@
 version: '3'
 
 services:
-  app:
+  backend:
     image: node:13
-    depends_on:
-      - postgres
-      - redis
-      - elasticsearch
-    networks:
-      - postgres
-      - redis
-      - elastic
-    environment:
-      NODE_ENV: development
+    command: yarn workspace @typus/backend start
     ports:
       - 4000:4000
-    command: npm run start
+    volumes:
+      - .:/srv/backend:rw
+    working_dir: /srv/backend
+    depends_on:
+      - redis
+      - postgres
+      - elastic
+    networks:
+    - postgres
+    - redis
+    - elastic
+
+  frontend:
+    tty: true
+    image: node:13
+    command: yarn workspace @typus/frontend start
+    ports:
+        - 3000:3000
+    volumes:
+        - .:/srv/frontend:rw
+    working_dir: /srv/frontend
+    depends_on:
+        - backend
 
   postgres:
     image: postgres
@@ -44,7 +57,7 @@ services:
     volumes:
         - 'redis_data:/redis/data'
 
-  elasticsearch:
+  elastic:
     image: blacktop/elasticsearch
     volumes:
       - ./elasticsearch:/usr/share/elasticsearch/data

@@ -32,7 +32,7 @@ export const TableViewItem = ({ submission, index, columns }: { submission: Subm
       </td>
 
       {columns.map((column, index) => (
-        <td className={classNames('px-6 py-4 text-sm leading-5 text-gray-500 truncate max-w-xs', { 'pl-10': index == 0 })}>{parsed[column]}</td>
+        <td className={classNames('px-6 py-4 text-sm leading-5 text-gray-500 truncate max-w-xs', { 'pl-10': index === 0 })}>{parsed[column]}</td>
       ))}
 
       <td className="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap">

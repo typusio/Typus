@@ -27,7 +27,7 @@ import { UserController } from './controllers/UserController';
   },
   exclude: ['**/*.spec.ts'],
   ajv: { errorFormat: (error: any) => `'${error.data}' ${error.message}`, options: { verbose: false } },
-  logger: { level: process.env.NODE_ENV == 'production' ? 'error' : 'info' },
+  logger: { level: process.env.NODE_ENV === 'production' ? 'error' : 'info' },
   componentsScan: [`${rootDir}/services/**/*.ts`, `${rootDir}/middleware/**/*.ts`],
 })
 export class Server extends ServerLoader {
@@ -63,7 +63,7 @@ export class Server extends ServerLoader {
       .set('view engine', 'ejs')
       .use(fileUpload({ path: './uploads', upload: true, createParentPath: true }));
 
-    if (process.env.NODE_ENV == 'production') {
+    if (process.env.NODE_ENV === 'production') {
       this.set('trust proxy', 1);
     }
 

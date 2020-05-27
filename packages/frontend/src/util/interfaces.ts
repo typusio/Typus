@@ -1,5 +1,7 @@
 // Partially written manually, mostly generated with https://app.quicktype.io
 
+import { Appearance } from '@typus/common';
+
 export interface Form {
   id: string;
   ownerId: string;
@@ -13,24 +15,6 @@ export interface Form {
   appearance: Appearance;
   security: Security;
   notifications: Notifications;
-}
-
-export interface Appearance {
-  id: number;
-  formId: string;
-  successMode: string;
-  successCustomRedirect: string;
-  successTickBackground: string;
-  successTickColor: string;
-  successText: string;
-  successBackgroundColor: string;
-  successDots: boolean;
-  errorMode: string;
-  errorCustomRedirect: string;
-  errorIconBackground: string;
-  errorIconColor: string;
-  errorBackgroundColor: string;
-  errorDots: boolean;
 }
 
 export interface Confirmation {

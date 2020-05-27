@@ -41,7 +41,7 @@ export const RegisterPage = () => {
         credentials: 'include',
       });
 
-      if (res.status == 400) return setErrors({ email: 'This email is already in use' });
+      if (res.status === 400) return setErrors({ email: 'This email is already in use' });
 
       authContext.loggedIn = true;
       authContext.user = await res.json();

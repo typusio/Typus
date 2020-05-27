@@ -32,11 +32,11 @@ export const AppearanceError = ({ values, setValues, handleChange }: Props) => {
         </div>
         <div className="mt-2">
           <nav className="flex">
-            <a className={values.errorMode == 'Our' ? SELECTED_STYLE : UNSELECTED_STYLE} onClick={() => setValues({ ...values, errorMode: 'Our' })}>
+            <a className={values.errorMode === 'Our' ? SELECTED_STYLE : UNSELECTED_STYLE} onClick={() => setValues({ ...values, errorMode: 'Our' })}>
               Use our page
             </a>
             <a
-              className={(values.errorMode == 'Custom' ? SELECTED_STYLE : UNSELECTED_STYLE) + ' ml-2'}
+              className={(values.errorMode === 'Custom' ? SELECTED_STYLE : UNSELECTED_STYLE) + ' ml-2'}
               onClick={() => setValues({ ...values, errorMode: 'Custom' })}
             >
               Use a custom page
@@ -44,7 +44,7 @@ export const AppearanceError = ({ values, setValues, handleChange }: Props) => {
           </nav>
         </div>
 
-        {values.errorMode == 'Custom' && (
+        {values.errorMode === 'Custom' && (
           <div className="max-w-full mt-6 sm:mt-5 sm:border-t sm:border-gray-200 sm:pt-5">
             <div>
               <label className="block text-sm font-medium leading-5 text-gray-700">Custom Page URL</label>
@@ -60,7 +60,7 @@ export const AppearanceError = ({ values, setValues, handleChange }: Props) => {
           </div>
         )}
 
-        {values.errorMode == 'Our' && (
+        {values.errorMode === 'Our' && (
           <div>
             <div className="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
               <label htmlFor="about" className="block mt-2 mb-1 text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2 sm:mb-0 sm:mt-0">

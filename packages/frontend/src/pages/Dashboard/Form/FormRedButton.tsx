@@ -95,5 +95,5 @@ export const FormRedButton = () => {
   const { user } = useContext(AuthContext);
   const { form } = useContext(FormContext);
 
-  return <div className="relative ml-2 rounded-md shadow-sm sm:ml-3">{user!.id == form.owner.id ? <DeleteButton /> : <LeaveButton />}</div>;
+  return <div className="relative ml-2 rounded-md shadow-sm sm:ml-3">{user!.id === form.owner.id ? <DeleteButton /> : <LeaveButton />}</div>;
 };

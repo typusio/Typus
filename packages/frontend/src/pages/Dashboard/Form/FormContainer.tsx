@@ -51,8 +51,8 @@ export const FormContainer = () => {
               <div className="hidden md:block">
                 <div>
                   <nav className="flex -mb-px">
-                    <a onClick={() => setSelected('Submissions')} className={selected == 'Submissions' ? SELETCED_STYLE : UNSELECTED_STYLE}>
-                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected == 'Submissions' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
+                    <a onClick={() => setSelected('Submissions')} className={selected === 'Submissions' ? SELETCED_STYLE : UNSELECTED_STYLE}>
+                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected === 'Submissions' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
                         <path
                           fillRule="evenodd"
                           d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z"
@@ -61,8 +61,8 @@ export const FormContainer = () => {
                       </svg>
                       Submissions
                     </a>
-                    <a onClick={() => setSelected('Setup')} className={selected == 'Setup' ? SELETCED_STYLE : UNSELECTED_STYLE}>
-                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected == 'Setup' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
+                    <a onClick={() => setSelected('Setup')} className={selected === 'Setup' ? SELETCED_STYLE : UNSELECTED_STYLE}>
+                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected === 'Setup' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
                         <path
                           fillRule="evenodd"
                           d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
@@ -71,8 +71,8 @@ export const FormContainer = () => {
                       </svg>
                       Setup
                     </a>
-                    <a onClick={() => setSelected('Validation')} className={selected == 'Validation' ? SELETCED_STYLE : UNSELECTED_STYLE}>
-                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected == 'Validation' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
+                    <a onClick={() => setSelected('Validation')} className={selected === 'Validation' ? SELETCED_STYLE : UNSELECTED_STYLE}>
+                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected === 'Validation' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
                         <path
                           fillRule="evenodd"
                           d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -81,21 +81,21 @@ export const FormContainer = () => {
                       </svg>
                       Validation
                     </a>
-                    <a onClick={() => setSelected('Notifications')} className={selected == 'Notifications' ? SELETCED_STYLE : UNSELECTED_STYLE}>
-                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected == 'Notifications' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
+                    <a onClick={() => setSelected('Notifications')} className={selected === 'Notifications' ? SELETCED_STYLE : UNSELECTED_STYLE}>
+                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected === 'Notifications' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
                         <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path>
                       </svg>
                       Notifications
                     </a>
-                    <a onClick={() => setSelected('Confirmation')} className={selected == 'Confirmation' ? SELETCED_STYLE : UNSELECTED_STYLE}>
-                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected == 'Confirmation' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
+                    <a onClick={() => setSelected('Confirmation')} className={selected === 'Confirmation' ? SELETCED_STYLE : UNSELECTED_STYLE}>
+                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected === 'Confirmation' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
                         <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                       </svg>
                       Confirmation
                     </a>
-                    <a onClick={() => setSelected('Settings')} className={selected == 'Settings' ? SELETCED_STYLE : UNSELECTED_STYLE}>
-                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected == 'Settings' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
+                    <a onClick={() => setSelected('Settings')} className={selected === 'Settings' ? SELETCED_STYLE : UNSELECTED_STYLE}>
+                      <svg fill="currentColor" viewBox="0 0 20 20" className={selected === 'Settings' ? SELECTED_ICON_STYLE : UNSELECTED_ICON_STYLE}>
                         <path
                           fillRule="evenodd"
                           d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
@@ -111,12 +111,12 @@ export const FormContainer = () => {
           </div>
 
           <div className="px-4 pt-5 pb-3 sm:px-6">
-            {selected == 'Submissions' && <FormSubmissions />}
-            {selected == 'Setup' && <FormSetup />}
-            {selected == 'Validation' && <MainValidation />}
-            {selected == 'Notifications' && <FormNotifications />}
-            {selected == 'Confirmation' && <FormConfirmation />}
-            {selected == 'Settings' && <FormSettings />}
+            {selected === 'Submissions' && <FormSubmissions />}
+            {selected === 'Setup' && <FormSetup />}
+            {selected === 'Validation' && <MainValidation />}
+            {selected === 'Notifications' && <FormNotifications />}
+            {selected === 'Confirmation' && <FormConfirmation />}
+            {selected === 'Settings' && <FormSettings />}
           </div>
         </div>
       </div>

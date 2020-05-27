@@ -31,11 +31,11 @@ export const AppearanceSuccess = ({ values, setValues, handleChange }: Props) =>
         </div>
         <div className="mt-2">
           <nav className="flex">
-            <a className={values.successMode == 'Our' ? SELECTED_STYLE : UNSELECTED_STYLE} onClick={() => setValues({ ...values, successMode: 'Our' })}>
+            <a className={values.successMode === 'Our' ? SELECTED_STYLE : UNSELECTED_STYLE} onClick={() => setValues({ ...values, successMode: 'Our' })}>
               Use our page
             </a>
             <a
-              className={(values.successMode == 'Custom' ? SELECTED_STYLE : UNSELECTED_STYLE) + ' ml-2'}
+              className={(values.successMode === 'Custom' ? SELECTED_STYLE : UNSELECTED_STYLE) + ' ml-2'}
               onClick={() => setValues({ ...values, successMode: 'Custom' })}
             >
               Use a custom page
@@ -43,7 +43,7 @@ export const AppearanceSuccess = ({ values, setValues, handleChange }: Props) =>
           </nav>
         </div>
 
-        {values.successMode == 'Custom' && (
+        {values.successMode === 'Custom' && (
           <div className="max-w-full mt-6 sm:mt-5 sm:border-t sm:border-gray-200 sm:pt-5">
             <div>
               <label className="block text-sm font-medium leading-5 text-gray-700">Custom Page URL</label>
@@ -59,7 +59,7 @@ export const AppearanceSuccess = ({ values, setValues, handleChange }: Props) =>
           </div>
         )}
 
-        {values.successMode == 'Our' && (
+        {values.successMode === 'Our' && (
           <div>
             <div className="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
               <label className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">Text</label>

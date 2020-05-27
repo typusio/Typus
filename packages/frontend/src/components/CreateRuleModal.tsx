@@ -27,7 +27,7 @@ export const CreateRuleModal = ({ rules, onCreate, onClose, open, strict }: Prop
 
   const findByName = (name: string) => {
     for (const key of Object.keys(rules)) {
-      if (rules[key].name == name) return key;
+      if (rules[key].name === name) return key;
     }
 
     return defaultRule;
@@ -57,7 +57,7 @@ export const CreateRuleModal = ({ rules, onCreate, onClose, open, strict }: Prop
         credentials: 'include',
       });
 
-      if (res.status == 400) {
+      if (res.status === 400) {
         return addToast(await res.text(), { type: 'error' });
       }
 
@@ -78,7 +78,7 @@ export const CreateRuleModal = ({ rules, onCreate, onClose, open, strict }: Prop
 
   useEffect(() => {
     setSelected(rules[findByName(defaultRule)]);
-  }, [open]);
+  }, [defaultRule, findByName, open, rules]);
 
   return (
     <Transition show={open}>

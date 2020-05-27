@@ -35,7 +35,7 @@ export const DashboardForm = () => {
 
       setLoading(false);
 
-      if (res.status == 404) return setNotFound(true);
+      if (res.status === 404) return setNotFound(true);
       const data = await res.json();
 
       setForm(data);

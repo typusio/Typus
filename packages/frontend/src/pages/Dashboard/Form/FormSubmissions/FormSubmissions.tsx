@@ -88,13 +88,13 @@ export const FormSubmissions = () => {
 
     const maxPage = Math.ceil((total - selected.length) / perPage) - 1;
 
-    if (isSearching && selected.length == shown.length) {
+    if (isSearching && selected.length === shown.length) {
       setPaginatedResults(paginatedRetults.filter(s => !selected.includes(s.id)));
       setSearchQuery('');
     }
 
     if (page > maxPage) {
-      if (page == 0) {
+      if (page === 0) {
         setTotal(0);
         return setLoading(false);
       }
@@ -120,7 +120,7 @@ export const FormSubmissions = () => {
 
       {loading && <Spinner />}
 
-      {!loading && total == 0 && !isSearching && <SubmissionsNoneFound />}
+      {!loading && total === 0 && !isSearching && <SubmissionsNoneFound />}
 
       {total !== 0 && (
         <div>
@@ -146,12 +146,12 @@ export const FormSubmissions = () => {
           <ul>
             {!loading && searchLoading && <SearchLoading />}
             {isSearching && !searchLoading && shown.length !== 0 && <SearchResultsTitle search={searchQuery} onReset={() => setSearchQuery('')} />}
-            {isSearching && !searchLoading && shown.length == 0 && <SearchNoResults query={searchQuery} />}
+            {isSearching && !searchLoading && shown.length === 0 && <SearchNoResults query={searchQuery} />}
 
             {!isSearching && (
               <FormViewContext.Provider value={{ selected, setSelected, submissions: shown }}>
-                {view == 'list' && <ListView />}
-                {view == 'table' && <TableView />}
+                {view === 'list' && <ListView />}
+                {view === 'table' && <TableView />}
               </FormViewContext.Provider>
             )}
           </ul>

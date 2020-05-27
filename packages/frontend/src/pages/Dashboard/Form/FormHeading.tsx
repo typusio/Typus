@@ -40,7 +40,7 @@ export const FormHeading = () => {
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                  {counts.submissions} submission{counts.submissions == 1 ? '' : 's'}
+                  {counts.submissions} submission{counts.submissions === 1 ? '' : 's'}
                 </div>
                 <div className="flex items-center mt-2 text-sm leading-5 text-gray-300 sm:mr-6">
                   <svg fill="currentColor" viewBox="0 0 20 20" className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-500">
@@ -60,7 +60,7 @@ export const FormHeading = () => {
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                  {counts.today} submission{counts.today == 1 ? '' : 's'} today
+                  {counts.today} submission{counts.today === 1 ? '' : 's'} today
                 </div>
               </div>
             )}

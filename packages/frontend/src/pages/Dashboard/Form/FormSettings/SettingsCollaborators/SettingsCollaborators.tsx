@@ -22,7 +22,7 @@ export const SettingsCollaborators = () => {
     async function fetchCollaborators() {
       const res = await fetch(`${API_URL}/collaborator/${form.id}`, { credentials: 'include' });
 
-      if (res.status == 400) {
+      if (res.status === 400) {
         setUnauthorized(true);
         return setLoading(false);
       }
@@ -77,7 +77,7 @@ export const SettingsCollaborators = () => {
 
       {loading && <Spinner />}
 
-      {!loading && collaborators.length == 0 && !unauthorized && <CollaboratorsNoneAdded onClick={() => setModalOpen(true)} />}
+      {!loading && collaborators.length === 0 && !unauthorized && <CollaboratorsNoneAdded onClick={() => setModalOpen(true)} />}
 
       {!loading && collaborators.length !== 0 && (
         <div>
