@@ -26,6 +26,8 @@ services:
       - NODE_ENV=development
       - DATABASE_URL=postgres://typus:typus@postgres:5432/typus
       - PORT=4000
+    env_file:
+      - packages/server/.env
 
   web:
     image: node:13
