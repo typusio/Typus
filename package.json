@@ -1,0 +1,18 @@
+{
+  "name": "typus",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "eslint": "^7.1.0",
+    "eslint-config-airbnb-typescript-prettier": "^2.1.1",
+    "lerna": "^3.22.0",
+    "prettier": "^2.0.5"
+  },
+  "scripts": {
+    "format": "prettier --write packages/**/src/**/*.{js,jsx,ts,tsx}",
+    "lint:fix": "eslint --fix packages/**/src/**/*.{js,jsx,ts,tsx}",
+    "lint": "eslint packages/**/src/**/*.{js,jsx,ts,tsx}"
+  }
+}

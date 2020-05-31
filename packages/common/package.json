@@ -1,0 +1,12 @@
+{
+  "name": "@typus/common",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "typescript": "^3.9.3"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}

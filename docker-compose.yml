@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  server:
+    image: node:13
+    command: yarn workspace @typus/server dev
+    ports:
+      - 4000:4000
+    volumes:
+      - .:/srv/server:rw
+    working_dir: /srv/server
+
+  web:
+    image: node:13
+    command: yarn workspace @typus/web dev
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/srv/web:rw
+    working_dir: /srv/web
+    depends_on:
+      - server

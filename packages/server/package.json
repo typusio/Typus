@@ -1,0 +1,22 @@
+{
+  "name": "@typus/server",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "@typus/common": "1.0.0"
+  },
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts"
+  },
+  "workspaces": {
+    "nohoist": [
+      "typeorm",
+      "typeorm/**"
+    ]
+  }
+}
