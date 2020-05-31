@@ -1,6 +1,6 @@
 import { Input } from '../components/ui/Input';
 import { AuthImage } from '../components/Auth/AuthImage';
-import { AuthSocialButtons } from '../components/Auth/AuthSocialButtons';
+import { AuthGithubButton } from '../components/Auth/AuthGithubButton';
 
 export default function Login() {
   return (
@@ -26,11 +26,7 @@ export default function Login() {
           <div className="mt-8">
             <div>
               <div>
-                <p className="text-sm font-medium leading-5 text-gray-700">
-                  Sign in with
-                </p>
-
-                <AuthSocialButtons />
+                <AuthGithubButton />
               </div>
 
               <div className="relative mt-6">
