@@ -1,14 +1,31 @@
-version: "3"
+version: '3'
 
 services:
+  reverse-proxy:
+    image: traefik
+    command: --api.insecure=true --providers.docker
+    ports:
+      - '80:80'
+      - '443:443'
+      - '8080:8080'
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+
   server:
     image: node:13
     command: yarn workspace @typus/server dev
+    depends_on:
+      - postgres
     ports:
       - 4000:4000
     volumes:
       - .:/srv/server:rw
     working_dir: /srv/server
+    environment:
+      - NODE_ENV=development
+    labels:
+      - 'traefik.http.routers.server.rule=Host(`typus.localhost`) && PathPrefix(`/api`)'
 
   web:
     image: node:13
@@ -20,3 +37,23 @@ services:
     working_dir: /srv/web
     depends_on:
       - server
+    environment:
+      - NODE_ENV=development
+    labels:
+      - 'traefik.http.routers.wev.rule=Host(`typus.localhost`)'
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: 'typus'
+      POSTGRES_DB: 'typus'
+      POSTGRES_PASSWORD: typus
+      PGPORT: 5432
+    volumes:
+      - 'postgres_data:/postgres/data'
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres_data:
