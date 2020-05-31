@@ -24,6 +24,7 @@ services:
     working_dir: /srv/server
     environment:
       - NODE_ENV=development
+      - DATABASE_URL=postgres://typus:typus@postgres:5432/typus
     labels:
       - 'traefik.http.routers.server.rule=Host(`typus.localhost`) && PathPrefix(`/api`)'
 

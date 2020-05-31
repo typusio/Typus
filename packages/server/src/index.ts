@@ -1,3 +1,7 @@
-import { a } from '@typus/common';
+import { createDatabaseConnection } from './createDatabaseConnection';
 
-a();
+async function bootstrap() {
+  await createDatabaseConnection();
+}
+
+bootstrap();
