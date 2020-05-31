@@ -5,7 +5,7 @@ module.exports = {
   url: process.env.DATABASE_URL,
   logging: !isProd,
   synchronize: !isProd,
-  entities: [isProd ? 'dist/entity/**/*.ts' : 'src/entity/**/*.ts'],
+  entities: ['src/**/*.ts'],
   migrations: [isProd ? 'dist/migration/**/*.ts' : 'src/migration/**/*.ts'],
   cli: {
     entitiesDir: 'src/entity',
