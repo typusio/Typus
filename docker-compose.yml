@@ -3,7 +3,7 @@ version: '3'
 services:
   reverse-proxy:
     image: traefik
-    command: --api.insecure=true --providers.docker
+    command: --api.insecure=false --providers.docker
     ports:
       - '80:80'
       - '443:443'
@@ -25,8 +25,7 @@ services:
     environment:
       - NODE_ENV=development
       - DATABASE_URL=postgres://typus:typus@postgres:5432/typus
-    labels:
-      - 'traefik.http.routers.server.rule=Host(`typus.localhost`) && PathPrefix(`/api`)'
+      - PORT=4000
 
   web:
     image: node:13
